@@ -1,0 +1,92 @@
+" mymacvim colorscheme
+"
+
+highlight clear
+
+" Reset String -> Constant links etc if they were reset
+if exists("syntax_on")
+  syntax reset
+endif
+
+let colors_name = "mymacvim"
+
+
+"
+" First list all groups common to both 'light' and 'dark' background.
+"
+
+" `:he highlight-groups`
+hi DiffAdd      guibg=MediumSeaGreen
+hi Directory    guifg=SkyBlue
+hi ErrorMsg     guibg=Firebrick2 guifg=White
+hi FoldColumn   guibg=Grey guifg=DarkBlue
+hi Folded       guibg=#222222 guifg=#EEEEEE
+hi IncSearch    gui=reverse
+hi ModeMsg      gui=bold
+hi MoreMsg      gui=bold guifg=SeaGreen4
+hi NonText      gui=bold guifg=Blue
+hi Pmenu        guifg=Black guibg=LightSteelBlue1
+hi PmenuSbar    guibg=Grey
+hi PmenuSel     guifg=White guibg=SkyBlue4
+hi PmenuThumb   gui=reverse
+hi Question     gui=bold guifg=Chartreuse4
+hi SignColumn   guibg=Grey guifg=DarkBlue
+hi SpecialKey   guifg=Blue
+hi SpellBad     guisp=Firebrick2 gui=undercurl
+hi SpellCap     guisp=Blue gui=undercurl
+hi SpellLocal   guisp=DarkCyan gui=undercurl
+hi SpellRare    guisp=Magenta gui=undercurl
+hi StatusLine   gui=NONE guifg=White guibg=DarkSlateGray
+hi StatusLineNC gui=NONE guifg=SlateGray guibg=Gray90
+hi TabLine      gui=underline guibg=LightGrey
+hi TabLineFill  gui=reverse
+hi TabLineSel   gui=bold
+hi Title        gui=bold guifg=DeepSkyBlue3
+hi VertSplit    gui=NONE guifg=DarkSlateGray guibg=Gray90
+hi visual       guibg=#004400 guifg=white
+hi warningmsg   guifg=firebrick2
+
+" syntax items (`:he group-name` -- more groups are available, these are just
+" the top level syntax items for now).
+hi error        gui=none guifg=white guibg=firebrick3
+hi identifier   gui=none guifg=Cyan4 guibg=NONE
+hi Ignore       gui=NONE guifg=bg guibg=NONE
+hi PreProc      gui=NONE guifg=DodgerBlue3 guibg=NONE
+hi Special      gui=NONE guifg=Grey80 guibg=NONE
+hi String       gui=NONE guifg=#89A2A6 guibg=NONE
+hi Underlined   gui=underline guifg=SteelBlue1
+
+hi Boolean      gui=NONE guifg=skyBlue3 guibg=NONE
+hi Comment      gui=italic guifg=#8F3E3E
+"hi Comment      gui=italic guifg=#9E2432
+hi Constant     gui=NONE guifg=Grey80 guibg=NONE
+hi Cursor       guibg=LightGoldenrod guifg=bg
+hi CursorColumn guibg=Gray20
+hi CursorIM     guibg=LightSlateGrey guifg=bg
+hi CursorLine   guibg=#222222
+hi DiffChange   guibg=MediumPurple4
+hi DiffDelete   gui=bold guifg=White guibg=SlateBlue
+hi DiffText     gui=NONE guifg=White guibg=SteelBlue
+hi LineNr       guifg=DarkYellow guibg=Grey5
+hi matchParen   guifg=White guibg=Magenta
+hi Normal       guifg=Grey80 guibg=Grey8
+"hi Normal       guifg=white guibg=Grey8
+hi Search       guibg=#4B4D00 guifg=White
+hi Statement    gui=bold guifg=#9F632E guibg=NONE
+hi Todo         gui=NONE guifg=Red guibg=NONE
+hi Type         gui=bold guifg=#577FF2 guibg=NONE
+hi WildMenu     guibg=SkyBlue guifg=White
+hi lCursor      guibg=LightSlateGrey guifg=bg
+
+"
+" Change the selection color on focus change (but only if the "macvim"
+" colorscheme is active).
+"
+if has("gui_macvim") && !exists("s:augroups_defined")
+  au FocusLost * if exists("colors_name") && colors_name == "macvim" | hi Visual guibg=MacSecondarySelectedControlColor | endif
+  au FocusGained * if exists("colors_name") && colors_name == "macvim" | hi Visual guibg=MacSelectedTextBackgroundColor | endif
+
+  let s:augroups_defined = 1
+endif
+
+" vim: sw=2
