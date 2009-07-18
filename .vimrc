@@ -47,6 +47,9 @@ set wildmode=longest,list
 "ディレクト自動移動
 au BufEnter * execute ":lcd " . expand("%:p:h")
 
+"ftplugin有効
+filetype plugin on
+
 "------------------------
 " 文字コードとかの設定
 "------------------------
