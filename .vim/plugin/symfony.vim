@@ -103,25 +103,44 @@ endfunction
 "find and edit symfony view file 
 "find and edit xxxError.php if argument is error
 "find executeXXX or execute in line
-function! s:SymfonyView(arg)
-  let l:suffix = "Success.php"
-  if a:arg == "error"
-    let l:suffix = "Error.php"
+function! s:SymfonyView(...)
+  if a:1 == "" || a:1 == "error"
+    let l:suffix = "Success.php"
+    if a:1 == "error"
+      let l:suffix = "Error.php"
+    endif
+    let l:lineNum = line(".")
+    while( l:lineNum > 0 )
+      let l:line = getline(l:lineNum)
+      let l:word = matchstr(l:line,'execute[0-9a-zA-Z_-]*')
+      if (l:word != "")
+        break
+      endif
+      let l:lineNum = l:lineNum - 1
+    endwhile
+    if l:word == 'execute'
+      "if action file is separeted
+      let l:file = substitute(expand('%:t'),"Action.class.php","","").l:suffix
+      call s:openTemplateFile(l:file)
+      unlet l:file
+      return
+    elseif l:word  =~ 'execute' && strlen(l:word)>7
+      let l:file = tolower(l:word[7:7]).l:word[8:].l:suffix
+      call s:openTemplateFile(l:file)
+      unlet l:file
+      return
+    endif
+    call s:error("not find executeXXX in this line")
+  else
+    let words = split(a:1)
+    if len(words) == 1 && words[0] =~ "\.php$"
+      silent edit `=b:sf_root_dir."/apps/".s:GetApp()."/modules/".s:GetModule()."/templates/".words[0]`
+    elseif len(words) == 2 && words[1] =~ "\.php$"
+      silent edit `=b:sf_root_dir."/apps/".words[0]."/templates/".words[1]`
+    else
+      silent edit `=b:sf_root_dir."/apps/".words[0]."/modules/".words[1]."/templates/".words[2]`
+    endif
   endif
-  let l:word = matchstr(getline('.'),'execute[0-9a-zA-Z_-]*')
-  if l:word == 'execute'
-    "if action file is separeted
-    let l:file = substitute(expand('%:t'),"Action.class.php","","").l:suffix
-    call s:openTemplateFile(l:file)
-    unlet l:file
-    return
-  elseif l:word  =~ 'execute' && strlen(l:word)>7
-    let l:file = tolower(l:word[7:7]).l:word[8:].l:suffix
-    call s:openTemplateFile(l:file)
-    unlet l:file
-    return
-  endif
-  call s:error("not find executeXXX in this line")
 endfunction
 
 " find and edit action class file
@@ -242,17 +261,29 @@ function! s:SymfonyComponent()
 endfunction
 
 "find and edit partial template
-function! s:SymfonyPartial()
-  let l:word = matchstr(getline('.'), 'include_partial(["''].\{-}["'']')
-  let l:tmp = l:word[17:-2]
-  if l:tmp[0:5] == "global"
-    silent edit `=b:sf_root_dir.'/apps/'.s:GetApp().'/templates/_'.l:tmp[7:].'.php'`
-  elseif l:tmp =~ "/"
-    let l:list = matchlist(l:tmp, '\(.*\)/\(.*\)')
-    silent edit `=b:sf_root_dir.'/apps/'.s:GetApp().'/modules/'.l:list[1].'/templates/_'.l:list[2].'.php'`
+function! s:SymfonyPartial(arg, line1, line2)
+  if a:arg != ""
+    let tmp = @@
+    silent normal gvy
+    let selected = @@
+    let @@ = tmp
+    call append(a:line1-1, '<?php include_partial("'.s:GetModule().'/'.a:arg.'") ?>')
+    execute a:line1 + 1
+    execute 'delete'.(a:line2 - a:line1 + 1)
+    silent new `=b:sf_root_dir.'/apps/'.s:GetApp().'/modules/'.s:GetModule().'/templates/_'.a:arg.'.php'`
+    call append(0, split(selected, '\n'))
   else
-    silent edit `=b:sf_root_dir.'/apps/'.s:GetApp().'/modules/'.s:GetModule().'/templates/_'.l:tmp.'.php'`
-  endif
+    let l:word = matchstr(getline('.'), 'include_partial(["''].\{-}["'']')
+    let l:tmp = l:word[17:-2]
+    if l:tmp[0:5] == "global"
+      silent edit `=b:sf_root_dir.'/apps/'.s:GetApp().'/templates/_'.l:tmp[7:].'.php'`
+    elseif l:tmp =~ "/"
+      let l:list = matchlist(l:tmp, '\(.*\)/\(.*\)')
+      silent edit `=b:sf_root_dir.'/apps/'.s:GetApp().'/modules/'.l:list[1].'/templates/_'.l:list[2].'.php'`
+    else
+      silent edit `=b:sf_root_dir.'/apps/'.s:GetApp().'/modules/'.s:GetModule().'/templates/_'.l:tmp.'.php'`
+    endif
+  end
 endfunction
 
 
@@ -363,6 +394,17 @@ endfunction
 
 function! s:GetSymfonyViewList(A,L,P)
   if exists("b:sf_root_dir")
+    let words = split(a:L)
+    if len(words) == 4 || (len(words) == 3 && a:A == "")
+      let list = split(s:gsub(glob(b:sf_root_dir."/apps/".words[1]."/modules/".words[2].'/templates/*'), s:escapeback(b:sf_root_dir.'[/\]apps[/\]'.words[1].'[/\]modules[/\]'.words[2].'[/\]templates[/\]'), ""), "\n")
+    elseif len(words) == 3 || (len(words) == 2 && a:A == "")
+      let list = split(s:gsub(glob(b:sf_root_dir."/apps/".words[1]."/modules/*"), s:escapeback(b:sf_root_dir.'[/\]apps[/\]'.words[1].'[/\]modules[/\]'), ""), "\n")
+      let list = list + split(s:gsub(glob(b:sf_root_dir."/apps/".words[1]."/templates/*"), s:escapeback(b:sf_root_dir.'[/\]apps[/\]'.words[1].'[/\]templates[/\]'), ""), "\n")
+    elseif len(words) <= 2
+      let list = split(s:gsub(glob(b:sf_root_dir."/apps/*"), s:escapeback(b:sf_root_dir.'[/\]apps[/\]'), ""), "\n")
+      let list = list + split(s:gsub(glob(b:sf_root_dir."/apps/".s:GetApp()."/modules/".s:GetModule()."/templates/*"), s:escapeback(b:sf_root_dir.'[/\]apps[/\]'.s:GetApp().'[/\]modules[/\]'.s:GetModule().'[/\]templates[/\]'), ""), "\n")
+    endif
+    return filter(list, 'v:val =~ "^".a:A')
   endif
 endfunction
 
@@ -463,13 +505,19 @@ endfunction
 function! s:GetSymfonyCommandList(A, L, P)
   let words = split(a:L)
   if exists("b:sf_version") && len(words) <= 2 
-    echo "hoge"
     if b:sf_version == 10
       let list = ['clear-cache', 'clear-controllers', 'disable', 'downgrade', 'enable', 'fix-perms', 'freeze', 'init-app', 'init-batch', 'init-controller',
             \ 'init-module', 'init-project', 'log-purge', 'log-rotate', 'plugin-install', 'plugin-list', 'plugin-uninstall', 'plugin-upgrade', 'propel-build-all',
             \ 'propel-build-all-load', 'propel-build-db', 'propel-build-model', 'propel-build-schema', 'propel-build-sql', 'propel-convert-xml-schema',
             \ 'propel-convert-yml-schema', 'propel-dump-data', 'propel-generate-crud', 'propel-init-admin', 'propel-init-crud', 'propel-insert-sql',
             \  'propel-load-data', 'sync', 'test-all', 'test-functional', 'test-unit', 'unfreeze', 'upgrade', 'app', 'batch', 'cc', 'controller', 'module', 'new']
+    elseif b:sf_version == 11
+      let list = ['help', 'list', 'configure:author', 'configure:database', 'generate:app', 'generate:module', 'generate:project', 'generate:task',
+            \ 'i18n:extract', 'i18n:find', 'log:clear', 'log:rotate', 'plugin:add-channel', 'plugin:install', 'plugin:list', 'plugin:uninstall', 'plugin:upgrade', 'project:clear-controllers',
+            \ 'prom:deploy', 'project:disable', 'project:enable', 'project:freeze', 'project:permissions', 'project:unfreeze', 'project:upgrade1.1', 'propel:build-all', 'propel:build-all-load',
+            \ 'propel:build-db', 'propel:build-forms', 'propel:build-schema', 'propel:build-sql', 'propel:data-dump', 'propel:data-load', 'propel:generate-crud', 'propel:init-admin', 'propel:insert-sql',
+            \ 'propel:schema-to-xml', 'propel:schema-to-yml', 'test:all', 'test:functional', 'test:unit']
+
     elseif b:sf_version == 12
       let list = ['help', 'list', 'app:routes', 'cache:clear', 'configure:author', 'configure:database', 'generate:app', 'generate:module', 'generate:project',
             \ 'generate:task', 'i18n:extract', 'i18n:find', 'log:clear', 'log:rotate', 'plugin:add-channel', 'plugin:install', 'plugin:list', 'plugin:publish-assets',
@@ -481,7 +529,13 @@ function! s:GetSymfonyCommandList(A, L, P)
     endif
     return filter(list, 'v:val =~ "^".a:A')
   else
-    return []
+    let command = words[1]
+    if command == 'init-module' || command == 'generate:module'
+      let list = split(substitute(glob(b:sf_root_dir."/apps/*"), s:escapeback(b:sf_root_dir.'[/\]apps[/\]'), "", "g"), "\n")
+      return filter(list, 'v:val =~ "^".a:A')
+    else
+      return []
+    endif
   endif
 endfunction
 
@@ -490,7 +544,7 @@ function! s:SetBufferCommand()
   command! -buffer -nargs=* -complete=customlist,s:GetSymfonyActionList Saction :call s:SymfonyAction(<q-args>)
   command! -buffer -nargs=? -complete=customlist,s:GetSymfonyModelList Smodel :call s:SymfonyModel(<q-args>)
   command! -buffer -nargs=? -complete=customlist,s:GetSymfonyFormList Sform :call s:SymfonyForm(<q-args>)
-  command! -buffer -nargs=0 Spartial :call s:SymfonyPartial()
+  command! -buffer -range -nargs=? Spartial :call s:SymfonyPartial(<q-args>, <line1>, <line2>)
   command! -buffer -nargs=0 Scomponent :call s:SymfonyComponent()
   "command! -buffer -complete=file -nargs=1 SymfonyProject :call s:SymfonyProject(<f-args>)
   command! -buffer -nargs=* -complete=customlist,s:GetSymfonyCommandList Symfony :call s:SymfonyCommand(<f-args>)

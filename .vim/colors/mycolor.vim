@@ -48,7 +48,7 @@ hi warningmsg   guifg=firebrick2 ctermfg=red
 
 " syntax items (`:he group-name` -- more groups are available, these are just
 " the top level syntax items for now).
-hi error        gui=none guifg=white guibg=firebrick3
+hi error        gui=none guifg=white guibg=NONE
 hi identifier   gui=none guifg=Cyan4 guibg=NONE ctermfg=cyan
 hi Ignore       gui=NONE guifg=bg guibg=NONE
 hi PreProc      gui=NONE guifg=DodgerBlue3 guibg=NONE

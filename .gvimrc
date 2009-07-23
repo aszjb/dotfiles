@@ -6,11 +6,11 @@ set lines=45
 set guifont=Monaco:h12
 
 "ズーム
-nmap ,z :set guifont=Monaco:h18<CR>
-nmap ,Z :set guifont=Monaco:h12<CR>:set columns=180<CR>:set lines=45<CR>
+nnoremap ,z :set guifont=Monaco:h18<CR>
+nnoremap ,Z :set guifont=Monaco:h12<CR>:set columns=180<CR>:set lines=45<CR>
 
-"\をバックスラッシュに
-map! \ \
+"バックスラッシュ入力
+noremap ¥ \
 
 "不透明度
 set transparency=5

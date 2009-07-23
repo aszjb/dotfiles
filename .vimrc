@@ -45,7 +45,7 @@ set statusline=%<%f\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']['.&ft.']'}
 set wildmode=longest,list
 
 "ディレクト自動移動
-au BufEnter * execute ":lcd " . expand("%:p:h")
+autocmd BufEnter * execute ":lcd " . expand("%:p:h")
 
 "ftplugin有効
 filetype plugin on
@@ -53,8 +53,16 @@ filetype plugin on
 "mtをhtmlに
 autocmd BufNewFile,BufRead *.mt set filetype=html
 
+"シェルにパスを通す
+let $PATH = '/opt/local/bin:'.$PATH
 
-"------------------------
+"twitterとかのアカウントが書いてあるファイル読み込み
+let accountFile = $HOME."/.vim/info/account.vim"
+if (filereadable(accountFile))
+    execute "source " . accountFile
+endif
+
+"-----------------------
 " 文字コードとかの設定
 "------------------------
 set termencoding=utf-8
@@ -151,17 +159,47 @@ nnoremap ,s :<C-u>source ~/.vimrc<CR>:source ~/.gvimrc<CR>
 "help
 nnoremap <Space>h :<C-u>vertical bel h<Space>
 
+"タブで補完
+function! InsertTabWrapper()
+    let col = col('.') - 1
+    if !col || getline('.')[col - 1] !~ '\k'
+        return "\<tab>"
+    else
+        return "\<C-n>"
+    endif
+endfunction
+" Remap the tab key to select action with InsertTabWrapper
+inoremap <tab> <c-r>=InsertTabWrapper()<cr>
+
+"スムーズスクロール
+function! SmoothScroll(action)
+   let l:wh=winheight(0)
+   let l:i=0
+   while l:i < l:wh / 6
+      let l:i = l:i + 1
+      if a:action=="down"
+         execute "normal 3\<C-e>"
+      elseif a:action=="up"
+         execute "normal 3\<C-y>"
+      end
+      sl 1m
+      redraw
+   endwhile 
+endfunction
+nnoremap <silent> <C-d> :<C-u>call SmoothScroll("down")<CR>
+nnoremap <silent> <C-u> :<C-u>call SmoothScroll("up")<CR>
+
 "------------------------
 " プラグインの設定
 "------------------------
-"for align.vim
-"選択範囲を整列
+
+" align.vim
 vmap o <leader>tsp
 
-"for MRU.vim
+" MRU.vim
 nnoremap <silent> <Space>m :<C-u>MRU<CR>
 
-"for surround.vim
+" surround.vim
 "
 " 1 : <h1>|</h1>
 " 2 : <h2>|</h2>
@@ -184,7 +222,6 @@ nnoremap <silent> <Space>m :<C-u>MRU<CR>
 " h : <?php | ?>
 " m : <% | %>
 
-"autocmd FileType xhtml :set filetype=html
 autocmd FileType * let b:surround_49  = "<h1>\r</h1>"
 autocmd FileType * let b:surround_50  = "<h2>\r</h2>"
 autocmd FileType * let b:surround_51  = "<h3>\r</h3>"
@@ -206,7 +243,7 @@ autocmd FileType * let b:surround_68  = "<div class=\"section\">\r</div>"
 autocmd FileType * let b:surround_104  = "<?php \r ?>"
 autocmd FileType * let b:surround_107  = "<% \r %>"
 
-" symfony.vimの設定
+" symfony.vim
 nnoremap <Space>sv :<C-u>Sview<CR>
 nnoremap <Space>sa :<C-u>Saction<CR>
 nnoremap <Space>sm :<C-u>Smodel<CR>
@@ -215,12 +252,13 @@ nnoremap <Space>ss :<C-u>Symfony
 nnoremap <Space>sc :<C-u>Sconfig
 nnoremap <Space>sl :<C-u>Slib
 
-" ku
+" ku.vim
 nnoremap <silent> <Space>kb :<C-u>Ku buffer<CR>
 nnoremap <silent> <Space>kf :<C-u>Ku file<CR>
 nnoremap <silent> <Space>kh :<C-u>Ku history<CR>
-nnoremap <silent> <Space>kc :<C-u>Ku mrucommand<CR>
-nnoremap <silent> <Space>km :<C-u>Ku mrufile<CR>
+nnoremap <silent> <Space>kc :<C-u>Ku cmd_mru/cmd<CR>
+nnoremap <silent> <Space>ks :<C-u>Ku cmd_mru/search<CR>
+nnoremap <silent> <Space>km :<C-u>Ku file_mru<CR>
 
 function! Ku_my_keymappings()
     inoremap <buffer> <silent> <Tab> /
@@ -238,3 +276,8 @@ augroup END
 call ku#custom_prefix('common', '~', $HOME)
 call ku#custom_prefix('common', 'mone', $HOME.'/Works/sites/mone/www')
 call ku#custom_prefix('common', 'mikke', $HOME.'/Works/sites/mikke/www')
+
+
+" twit.vim
+let twitvim_browser_cmd = "open -a /Applications/Firefox.app"
+let twitvim_count = 100
