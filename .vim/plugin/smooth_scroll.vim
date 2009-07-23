@@ -18,15 +18,16 @@ let g:scroll_factor = 5000
 function! SmoothScroll(dir, windiv, factor)
    let wh=winheight(0)
    let i=0
-   while i < wh / a:windiv
+   while i < wh / a:windiv / 3
       let t1=reltime()
       let i = i + 1
       if a:dir=="d"
-         normal j
+         execute "normal 3\<C-e>"
       else
-         normal k
+         execute "normal 3\<C-y>"
       end
       redraw
+      sl 1m
       while 1
          let t2=reltime(t1,reltime())
          if t2[1] > g:scroll_factor * a:factor
@@ -35,7 +36,5 @@ function! SmoothScroll(dir, windiv, factor)
       endwhile
    endwhile
 endfunction
-map  :call SmoothScroll("d",2, 2)
-map  :call SmoothScroll("u",2, 2)
-map  :call SmoothScroll("d",1, 1)
-map  :call SmoothScroll("u",1, 1)
+nnoremap <C-d> :call SmoothScroll("d",2, 2)<CR>
+nnoremap <C-u> :call SmoothScroll("u",2, 2)<CR>

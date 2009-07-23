@@ -4,7 +4,7 @@
 
 "色設定
 syntax on
-colorschem darkblue
+colorschem mycolor
 
 "タブの設定
 set softtabstop=4
@@ -57,6 +57,9 @@ autocmd BufNewFile,BufRead *.mt set filetype=html
 "------------------------
 " 文字コードとかの設定
 "------------------------
+set termencoding=utf-8
+set encoding=utf-8
+set fileencoding=utf-8
 
 " □とか○の文字があってもカーソル位置がずれないようにする
 if exists('&ambiwidth')
@@ -65,41 +68,6 @@ endif
 
 "改行コード
 set fileformats=unix,dos,mac
-
-"文字コード
-"どんなにがんばっても文字化けするのでutf-8決め打ち
-set termencoding=utf-8
-set encoding=utf-8
-set fileencoding=utf-8
-"set   encoding=utf-8
-" 
-"if has('win32') && has('kaoriya')
-"  set   ambiwidth=auto
-"else
-"  set   ambiwidth=double
-"endif
-" 
-"if has('iconv')
-"  let s:enc_euc = 'euc-jp'
-"  let s:enc_jis = 'iso-2022-jp'
-" 
-"  if iconv("\x87\x64\x87\x6a", 'cp932', 'euc-jisx0213') ==# "\xad\xc5\xad\xcb"
-"    let s:enc_euc = 'euc-jisx0213,euc-jp'
-"    let s:enc_jis = 'iso-2022-jp-3'
-"  endif
-" 
-"  set   fileencodings&
-"  let &fileencodings = &fileencodings.','.s:enc_jis.',cp932,'.s:enc_euc
-" 
-"  unlet s:enc_euc
-"  unlet s:enc_jis
-"endif
-" 
-"if has('win32unix')
-"  set   termencoding=cp932
-"elseif !has('macunix')
-"  set   termencoding=euc-jp
-"endif
 
 
 "------------------------
@@ -180,6 +148,9 @@ nnoremap <C-k>e :<C-u>set expandtab<CR>
 " vimrc再読み込み
 nnoremap ,s :<C-u>source ~/.vimrc<CR>:source ~/.gvimrc<CR>
 
+"help
+nnoremap <Space>h :<C-u>vertical bel h<Space>
+
 "------------------------
 " プラグインの設定
 "------------------------
@@ -211,7 +182,7 @@ nnoremap <silent> <Space>m :<C-u>MRU<CR>
 " D : <div class="section">|</div>
 "
 " h : <?php | ?>
-" k : [% | %]
+" m : <% | %>
 
 "autocmd FileType xhtml :set filetype=html
 autocmd FileType * let b:surround_49  = "<h1>\r</h1>"
@@ -233,7 +204,7 @@ autocmd FileType * let b:surround_100 = "<div>\r</div>"
 autocmd FileType * let b:surround_68  = "<div class=\"section\">\r</div>"
 
 autocmd FileType * let b:surround_104  = "<?php \r ?>"
-autocmd FileType * let b:surround_107    = "[% \r %]"
+autocmd FileType * let b:surround_107  = "<% \r %>"
 
 " symfony.vimの設定
 nnoremap <Space>sv :<C-u>Sview<CR>
@@ -267,4 +238,3 @@ augroup END
 call ku#custom_prefix('common', '~', $HOME)
 call ku#custom_prefix('common', 'mone', $HOME.'/Works/sites/mone/www')
 call ku#custom_prefix('common', 'mikke', $HOME.'/Works/sites/mikke/www')
-
