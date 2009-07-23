@@ -50,6 +50,10 @@ au BufEnter * execute ":lcd " . expand("%:p:h")
 "ftplugin有効
 filetype plugin on
 
+"mtをhtmlに
+autocmd BufNewFile,BufRead *.mt set filetype=html
+
+
 "------------------------
 " 文字コードとかの設定
 "------------------------
