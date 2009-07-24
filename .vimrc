@@ -196,9 +196,6 @@ nnoremap <silent> <C-u> :<C-u>call SmoothScroll("up")<CR>
 " align.vim
 vmap o <leader>tsp
 
-" MRU.vim
-nnoremap <silent> <Space>m :<C-u>MRU<CR>
-
 " surround.vim
 "
 " 1 : <h1>|</h1>
@@ -262,9 +259,16 @@ nnoremap <silent> <Space>km :<C-u>Ku file_mru<CR>
 
 function! Ku_my_keymappings()
     inoremap <buffer> <silent> <Tab> /
-    inoremap <buffer> <C-t> <Esc>:<C-u>KuDoAction tab-Right<CR>
-    inoremap <buffer> <C-h> <Esc>:<C-u>KuDoAction left<CR>
-    inoremap <buffer> <C-l> <Esc>:<C-u>KuDoAction right<CR>
+    inoremap <buffer> <C-w>n <Esc>:<C-u>KuDoAction tab-Right<CR>
+    inoremap <buffer> <C-w>p <Esc>:<C-u>KuDoAction tab-Left<CR>
+    inoremap <buffer> <C-w>h <Esc>:<C-u>KuDoAction left<CR>
+    inoremap <buffer> <C-w>l <Esc>:<C-u>KuDoAction right<CR>
+    inoremap <buffer> <C-w>j <Esc>:<C-u>KuDoAction below<CR>
+    inoremap <buffer> <C-w>k <Esc>:<C-u>KuDoAction above<CR>
+    inoremap <buffer> <C-w>H <Esc>:<C-u>KuDoAction Left<CR>
+    inoremap <buffer> <C-w>L <Esc>:<C-u>KuDoAction Right<CR>
+    inoremap <buffer> <C-w>J <Esc>:<C-u>KuDoAction Bottom<CR>
+    inoremap <buffer> <C-w>K <Esc>:<C-u>KuDoAction Top<CR>
 endfunction
 
 augroup KuSetting
