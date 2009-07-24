@@ -25,7 +25,7 @@ hi IncSearch    gui=reverse
 hi ModeMsg      gui=bold
 hi MoreMsg      gui=bold guifg=SeaGreen4
 hi NonText      gui=bold guifg=Blue
-hi Pmenu        guifg=Black guibg=LightSteelBlue1
+hi Pmenu        guifg=white guibg=#444444
 hi PmenuSbar    guibg=Grey
 hi PmenuSel     guifg=White guibg=SkyBlue4
 hi PmenuThumb   gui=reverse
