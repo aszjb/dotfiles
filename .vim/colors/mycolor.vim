@@ -25,9 +25,9 @@ hi IncSearch    gui=reverse
 hi ModeMsg      gui=bold
 hi MoreMsg      gui=bold guifg=SeaGreen4
 hi NonText      gui=bold guifg=Blue
-hi Pmenu        guifg=white guibg=#444444
-hi PmenuSbar    guibg=Grey
-hi PmenuSel     guifg=White guibg=SkyBlue4
+hi Pmenu        guifg=black guibg=#CCCCCC ctermbg=white ctermfg=black
+hi PmenuSbar    guibg=Grey ctermfg=black
+hi PmenuSel     guifg=White guibg=SkyBlue4 ctermbg=cyan ctermfg=white
 hi PmenuThumb   gui=reverse
 hi Question     gui=bold guifg=Chartreuse4
 hi SignColumn   guibg=Grey guifg=DarkBlue

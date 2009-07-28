@@ -16,7 +16,7 @@ set autoindent
 "検索
 set ignorecase
 set smartcase
-set hlsearch
+set nohlsearch
 
 "行数表示
 set number
@@ -104,8 +104,8 @@ vnoremap k gk
 nnoremap * g*
 nnoremap # g#
 
-"サーチハイライト消す
-nnoremap <Esc><Esc> :<C-u>nohlsearch<CR><Esc>
+"サーチハイライトトグル
+nnoremap <silent> <Space>th :set hlsearch!<CR>
 
 "タブ切り替え
 nnoremap <C-l> gt
@@ -137,57 +137,53 @@ nnoremap <silent> eu :<C-u>e ++enc=utf-8<CR>
 nnoremap <silent> ee :<C-u>e ++enc=euc-jp<CR>
 nnoremap <silent> es :<C-u>e ++enc=cp932<CR>
 
-"タブを半角スペースに変換
-nnoremap <silent> et :<C-u>%s/\t/    /g<CR>
+"pasteモードトグル
+nnoremap <Space>tp :<C-u>set paste!<CR>
 
-"スクロールしたときに常にカーソルが真ん中にくる
-nnoremap <C-e> <C-e>M
-nnoremap <C-y> <C-y>M
-
-nnoremap <C-k>p :<C-u>set paste<CR>
-nnoremap <C-k>P :<C-u>set nopaste<CR>
-
-"なぜかたまにexpandtabが無効になることがあるので
-nnoremap <C-k>e :<C-u>set expandtab<CR>
-
-"phpの構文チェック
-"nnoremap ,l :<C-u>w<CR>:!php -l %<CR>
-
-" vimrc再読み込み
-nnoremap ,s :<C-u>source ~/.vimrc<CR>:source ~/.gvimrc<CR>
+" カレントバッファのファイルを再読み込み
+nnoremap <silent> <Space>r :<C-u>execute "source " expand("%:p")<CR>
 
 "help
 nnoremap <Space>h :<C-u>vertical bel h<Space>
 
-"タブで補完
-function! InsertTabWrapper()
+"補完
+set complete=.,w,b,u,k
+set completeopt=menu,preview,longest
+set pumheight=20
+
+function! InsertCompleteTab()
     let col = col('.') - 1
     if !col || getline('.')[col - 1] !~ '\k'
         return "\<tab>"
     else
-        return "\<C-n>"
+        return "\<C-p>\<C-n>"
     endif
 endfunction
-" Remap the tab key to select action with InsertTabWrapper
-inoremap <tab> <c-r>=InsertTabWrapper()<cr>
 
-"スムーズスクロール
+inoremap <tab> <c-r>=InsertCompleteTab()<cr>
+
+"スクロール
+nnoremap <C-e> <C-e>M
+nnoremap <C-y> <C-y>M
+
 function! SmoothScroll(action)
-   let l:wh=winheight(0)
+   let l:h=winheight(0) / 6
    let l:i=0
-   while l:i < l:wh / 6
+   while l:i < l:h
       let l:i = l:i + 1
       if a:action=="down"
          execute "normal 3\<C-e>"
       elseif a:action=="up"
          execute "normal 3\<C-y>"
       end
-      sl 1m
       redraw
+      sleep 1m
    endwhile 
 endfunction
+
 nnoremap <silent> <C-d> :<C-u>call SmoothScroll("down")<CR>
 nnoremap <silent> <C-u> :<C-u>call SmoothScroll("up")<CR>
+
 
 "------------------------
 " プラグインの設定
@@ -281,7 +277,21 @@ call ku#custom_prefix('common', '~', $HOME)
 call ku#custom_prefix('common', 'mone', $HOME.'/Works/sites/mone/www')
 call ku#custom_prefix('common', 'mikke', $HOME.'/Works/sites/mikke/www')
 
-
 " twit.vim
 let twitvim_browser_cmd = "open -a /Applications/Firefox.app"
 let twitvim_count = 100
+
+" autocomplpop.vim
+let g:AutoComplPop_BehaviorKeywordLength = 3
+
+function! ToggleAutoComPop()
+    if exists('#AutoComplPopGlobalAutoCommand#InsertEnter#*')
+        execute ":AutoComplPopDisable"
+    else
+        execute ":AutoComplPopEnable"
+    endif
+endfunction
+nnoremap <silent> <Space>ta :<C-u>call ToggleAutoComPop()<CR>
+
+" snippetsEmu.vim
+let g:snippetsEmu_key = "<C-k>"

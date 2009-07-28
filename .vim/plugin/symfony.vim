@@ -112,9 +112,10 @@ function! s:SymfonyView(...)
     let l:lineNum = line(".")
     while( l:lineNum > 0 )
       let l:line = getline(l:lineNum)
-      let l:word = matchstr(l:line,'execute[0-9a-zA-Z_-]*')
-      if (l:word != "")
-        break
+      let l:word = ""
+      if (match(l:line,'function') != -1)
+          let l:word = matchstr(l:line,'execute[0-9a-zA-Z_-]*')
+          break
       endif
       let l:lineNum = l:lineNum - 1
     endwhile
