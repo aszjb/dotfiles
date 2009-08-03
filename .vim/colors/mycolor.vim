@@ -27,7 +27,7 @@ hi MoreMsg      gui=bold guifg=SeaGreen4
 hi NonText      gui=bold guifg=Blue
 hi Pmenu        guifg=black guibg=#CCCCCC ctermbg=white ctermfg=black
 hi PmenuSbar    guibg=Grey ctermfg=black
-hi PmenuSel     guifg=White guibg=SkyBlue4 ctermbg=cyan ctermfg=white
+hi PmenuSel     guifg=White guibg=SkyBlue4 ctermbg=magenta ctermfg=white
 hi PmenuThumb   gui=reverse
 hi Question     gui=bold guifg=Chartreuse4
 hi SignColumn   guibg=Grey guifg=DarkBlue

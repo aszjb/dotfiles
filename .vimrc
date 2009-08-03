@@ -53,6 +53,9 @@ filetype plugin on
 "mtをhtmlに
 autocmd BufNewFile,BufRead *.mt set filetype=html
 
+"noexpandtabになることがあるので
+autocmd BufNewFile,BufRead * set expandtab
+
 "シェルにパスを通す
 let $PATH = '/opt/local/bin:'.$PATH
 
@@ -132,6 +135,10 @@ cnoremap <C-e> <End>
 cnoremap <C-d> <Del>
 cnoremap <C-h> <BackSpace>
 
+"コマンドモードの履歴
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
+
 "文字コード変更して再読み込み
 nnoremap <silent> eu :<C-u>e ++enc=utf-8<CR>
 nnoremap <silent> ee :<C-u>e ++enc=euc-jp<CR>
@@ -141,7 +148,7 @@ nnoremap <silent> es :<C-u>e ++enc=cp932<CR>
 nnoremap <Space>tp :<C-u>set paste!<CR>
 
 " カレントバッファのファイルを再読み込み
-nnoremap <silent> <Space>r :<C-u>execute "source " expand("%:p")<CR>
+nnoremap <silent> <Space>r :<C-u>execute "source %"<CR>
 
 "help
 nnoremap <Space>h :<C-u>vertical bel h<Space>
@@ -295,3 +302,6 @@ nnoremap <silent> <Space>ta :<C-u>call ToggleAutoComPop()<CR>
 
 " snippetsEmu.vim
 let g:snippetsEmu_key = "<C-k>"
+
+" bluecloth.vim
+vnoremap <C-m> :BlueCloth<CR>
