@@ -158,16 +158,15 @@ set complete=.,w,b,u,k
 set completeopt=menu,preview,longest
 set pumheight=20
 
-function! InsertCompleteTab()
-    let col = col('.') - 1
-    if !col || getline('.')[col - 1] !~ '\k'
-        return "\<tab>"
-    else
-        return "\<C-p>\<C-n>"
-    endif
-endfunction
-
-inoremap <tab> <c-r>=InsertCompleteTab()<cr>
+"function! InsertCompleteTab()
+"    if pumvisible()
+"        return "\<C-p>\<C-n>\<Esc>a"
+"    else
+"        return "\<tab>"
+"    endif
+"endfunction
+"
+"inoremap <tab> <c-r>=InsertCompleteTab()<cr>
 
 "スクロール
 nnoremap <C-e> <C-e>M
@@ -252,6 +251,8 @@ nnoremap <Space>ss :<C-u>Symfony
 nnoremap <Space>sc :<C-u>Sconfig
 nnoremap <Space>sl :<C-u>Slib
 
+vnoremap <Space>sp :<C-u>Spartial 
+
 " ku.vim
 nnoremap <silent> <Space>kb :<C-u>Ku buffer<CR>
 nnoremap <silent> <Space>kf :<C-u>Ku file<CR>
@@ -301,7 +302,7 @@ endfunction
 nnoremap <silent> <Space>ta :<C-u>call ToggleAutoComPop()<CR>
 
 " snippetsEmu.vim
-let g:snippetsEmu_key = "<C-k>"
+" let g:snippetsEmu_key = "<C-k>"
 
 " bluecloth.vim
 vnoremap <C-m> :BlueCloth<CR>

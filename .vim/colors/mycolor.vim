@@ -31,7 +31,7 @@ hi PmenuSel     guifg=White guibg=SkyBlue4 ctermbg=magenta ctermfg=white
 hi PmenuThumb   gui=reverse
 hi Question     gui=bold guifg=Chartreuse4
 hi SignColumn   guibg=Grey guifg=DarkBlue
-hi SpecialKey   guifg=Blue ctermfg=darkcyan
+hi SpecialKey   guifg=DarkBlue ctermfg=darkcyan
 hi SpellBad     guisp=Firebrick2 gui=undercurl
 hi SpellCap     guisp=Blue gui=undercurl
 hi SpellLocal   guisp=DarkCyan gui=undercurl

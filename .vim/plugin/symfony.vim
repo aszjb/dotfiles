@@ -55,6 +55,10 @@
 "   :Spartial
 "       move to partial template file. It judges from line.
 "       Also in global/xxx, it corresponds.
+"       If you call this method after select lines by visual-mode, create new
+"       partial file.
+"       :'<,'>Spartial xxx
+"
 "
 "   :Scomponent
 "       move to component template file or components.class.php.
@@ -112,10 +116,9 @@ function! s:SymfonyView(...)
     let l:lineNum = line(".")
     while( l:lineNum > 0 )
       let l:line = getline(l:lineNum)
-      let l:word = ""
-      if (match(l:line,'function') != -1)
-          let l:word = matchstr(l:line,'execute[0-9a-zA-Z_-]*')
-          break
+      let l:word = matchstr(l:line,'execute[0-9a-zA-Z_-]*')
+      if (l:word != "")
+        break
       endif
       let l:lineNum = l:lineNum - 1
     endwhile
@@ -159,10 +162,10 @@ function! s:SymfonyAction(...)
       let l:file = l:prefix."Action.class.php"
       if filereadable(b:sf_root_dir."/apps/".s:GetApp()."/modules/".s:GetModule()."/actions/".l:file)
         silent edit `=b:sf_root_dir."/apps/".s:GetApp()."/modules/".s:GetModule()."/actions/".l:file`
-        call s:searchWordInFileAndMove('execute')
+        call s:SearchWordInFileAndMove('execute')
       elseif filereadable(b:sf_root_dir."/apps/".s:GetApp()."/modules/".s:GetModule()."/actions/actions.class.php")
         silent edit `=b:sf_root_dir."/apps/".s:GetApp()."/modules/".s:GetModule()."/actions/actions.class.php"`
-        call s:searchWordInFileAndMove('execute'.toupper(l:prefix[0:0]).l:prefix[1:])
+        call s:SearchWordInFileAndMove('execute'.toupper(l:prefix[0:0]).l:prefix[1:])
       else
         call s:error("not exist action class file")
       endif
@@ -257,7 +260,7 @@ function! s:SymfonyComponent()
     let l:file = expand('%:r')
     let l:file = l:file[1:]
     silent edit `=b:sf_root_dir.'/apps/'.s:GetApp().'/modules/'.s:GetModule().'/actions/components.class.php'`
-    call s:searchWordInFileAndMove('execute'.toupper(l:file[0:0]).l:file[1:])
+    call s:SearchWordInFileAndMove('execute'.toupper(l:file[0:0]).l:file[1:])
   endif
 endfunction
 
@@ -377,13 +380,13 @@ function! s:GetSymfonyActionList(A,L,P)
   if exists("b:sf_root_dir")
     let words = split(a:L)
     if len(words) == 4 || (len(words) == 3 && a:A == "")
-      let lists = split(substitute(glob(b:sf_root_dir."/apps/".words[1]."/modules/".words[2].'/actions/*Action\.class\.php'), s:escapeback(b:sf_root_dir.'[/\]apps[/\]'.words[1].'[/\]modules[/\]'.words[2].'[/\]actions[/\]\(.\{-}\)Action\.class\.php'), '\1', "g"), "\n")
+      let lists = split(s:gsub(glob(b:sf_root_dir."/apps/".words[1]."/modules/".words[2].'/actions/*Action\.class\.php'), s:escapeback(b:sf_root_dir.'[/\]apps[/\]'.words[1].'[/\]modules[/\]'.words[2].'[/\]actions[/\](.{-})Action.class.php'), '\1'), "\n")
     elseif len(words) == 3 || (len(words) == 2 && a:A == "")
-      let list1 = split(substitute(glob(b:sf_root_dir."/apps/".words[1]."/modules/*"), s:escapeback(b:sf_root_dir.'[/\]apps[/\]'.words[1].'[/\]modules[/\]'), "", "g"), "\n")
-      let list2 = split(substitute(glob(b:sf_root_dir."/apps/*/modules/".words[1].'/actions/*Action\.class\.php'), s:escapeback(b:sf_root_dir.'[/\]apps[/\].\{-}[/\]modules[/\]'.words[1].'[/\]actions[/\]\(.\{-}\)Action\.class\.php'), '\1', "g"), "\n")
+      let list1 = split(s:gsub(glob(b:sf_root_dir."/apps/".words[1]."/modules/*"), s:escapeback(b:sf_root_dir.'[/\]apps[/\]'.words[1].'[/\]modules[/\]'), ""), "\n")
+      let list2 = split(s:gsub(glob(b:sf_root_dir."/apps/*/modules/".words[1].'/actions/*Action\.class\.php'), s:escapeback(b:sf_root_dir.'[/\]apps[/\].\{-}[/\]modules[/\]'.words[1].'[/\]actions[/\](.{-})Action.class.php'), ''), "\n")
       let lists = list1 + list2
     elseif len(words) <= 2 
-      let list1 = split(substitute(glob(b:sf_root_dir."/apps/*"), s:escapeback(b:sf_root_dir.'[/\]apps[/\]'), "", "g"), "\n")
+      let list1 = split(s:gsub(glob(b:sf_root_dir."/apps/*"), s:escapeback(b:sf_root_dir.'[/\]apps[/\]'), ""), "\n")
       let list2 = split(s:gsub(glob(b:sf_root_dir."/apps/*/modules/*"), s:escapeback(b:sf_root_dir.'[/\]apps[/\].{-}[/\]modules[/\]'), ""), "\n")
       let lists = list1 + list2
     endif
@@ -467,7 +470,7 @@ function! s:SymfonyOpenLibFile(word)
 endfunction
 
 "search argument word in current buffer and move this line
-function! s:searchWordInFileAndMove(str)
+function! s:SearchWordInFileAndMove(str)
   let l:num = 0
   while l:num <= line('$')
     let l:line = getline(l:num)

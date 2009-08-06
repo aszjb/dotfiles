@@ -1,4 +1,4 @@
-function! g:BlueCloth(arg, line1, line2)
+function! s:BlueCloth(line1, line2)
 ruby << EOF
     require 'rubygems'
     require 'bluecloth'
@@ -23,4 +23,4 @@ ruby << EOF
 EOF
 endfunction
 
-command! -range=% -nargs=? BlueCloth :call g:BlueCloth(<q-args>, <line1>, <line2>)
+command! -range=% -nargs=? BlueCloth :call g:BlueCloth(<line1>, <line2>)
