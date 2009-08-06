@@ -251,8 +251,6 @@ nnoremap <Space>ss :<C-u>Symfony
 nnoremap <Space>sc :<C-u>Sconfig
 nnoremap <Space>sl :<C-u>Slib
 
-vnoremap <Space>sp :<C-u>Spartial 
-
 " ku.vim
 nnoremap <silent> <Space>kb :<C-u>Ku buffer<CR>
 nnoremap <silent> <Space>kf :<C-u>Ku file<CR>
