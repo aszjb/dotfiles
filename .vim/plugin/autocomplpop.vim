@@ -10,7 +10,7 @@
 " GetLatestVimScripts: 1879 1 :AutoInstall: autocomplpop.vim
 "
 "=============================================================================
-" DOCUMENT: 
+" DOCUMENT: {{{1
 "   Japanese: http://vim.g.hatena.ne.jp/keyword/autocomplpop.vim
 "
 "-----------------------------------------------------------------------------
@@ -245,17 +245,17 @@
 "   0.1:
 "     - First release.
 "
-" 
+" }}}1
 "=============================================================================
 
-" INCLUDE GUARD: ======================================================== 
+" INCLUDE GUARD: ======================================================== {{{1
 if exists('loaded_autocomplpop') || v:version < 701
   finish
 endif
 let loaded_autocomplpop = 1
 
 
-" FUNCTION: ============================================================= 
+" FUNCTION: ============================================================= {{{1
 
 "-----------------------------------------------------------------------------
 function! s:GetSidPrefix()
@@ -299,7 +299,7 @@ function! s:Disable()
   nnoremap R <Nop> | nunmap R
 endfunction
 
-" FUNCTION: BEHAVIOR ==================================================== 
+" FUNCTION: BEHAVIOR ==================================================== {{{1
 
 "-----------------------------------------------------------------------------
 function! s:MakeDefaultBehavior()
@@ -387,7 +387,7 @@ function! s:MakeDefaultBehavior()
   return behavs
 endfunction
 
-" OBJECT: PopupFeeder: ================================================== 
+" OBJECT: PopupFeeder: ================================================== {{{1
 let s:PopupFeeder = { 'behavs' : [], 'lock_count' : 0 }
 "-----------------------------------------------------------------------------
 function! s:PopupFeeder.feed()
@@ -458,11 +458,7 @@ function! s:PopupFeeder.check_cursor_and_update()
   let prev_pos = (exists('self.last_pos') ? self.last_pos : [-1, -1, -1, -1])
   let self.last_pos = getpos('.')
 
-  if has('gui_macvim')
-    return (prev_pos[2] + 1 == self.last_pos[2] ||
-          \ prev_pos[2] - 1 == self.last_pos[2])
-  elseif has('multi_byte_ime')
-  
+  if has('multi_byte_ime')
     return (prev_pos[1] != self.last_pos[1] || prev_pos[2] + 1 == self.last_pos[2] ||
           \ prev_pos[2] > self.last_pos[2])
   else
@@ -485,7 +481,7 @@ function! s:PopupFeeder.on_popup_post()
   endif
 endfunction
 
-" OBJECT: OptionManager: sets or restores temporary options ============= 
+" OBJECT: OptionManager: sets or restores temporary options ============= {{{1
 let s:OptionManager = { 'originals' : {} }
 "-----------------------------------------------------------------------------
 function! s:OptionManager.set(name, value)
@@ -501,7 +497,7 @@ function! s:OptionManager.restore_all()
   let self.originals = {}
 endfunction
 
-" OBJECT: FeedMapping: manages global mappings ========================== 
+" OBJECT: FeedMapping: manages global mappings ========================== {{{1
 let s:FeedMapping = { 'keys' :  [] }
 "-----------------------------------------------------------------------------
 function! s:FeedMapping.map()
@@ -531,9 +527,9 @@ function! s:FeedMapping.unmap()
   let self.keys = []
 endfunction
 
-" 
+" }}}1
 
-" GLOBAL OPTIONS: ======================================================= 
+" GLOBAL OPTIONS: ======================================================= {{{1
 "...........................................................................
 if !exists('g:AutoComplPop_NotEnableAtStartup')
   let g:AutoComplPop_NotEnableAtStartup = 0
@@ -593,7 +589,7 @@ endif
 call extend(g:AutoComplPop_Behavior, s:MakeDefaultBehavior(), 'keep')
 
 
-" COMMANDS/AUTOCOMMANDS/MAPPINGS/ETC.: ================================== 
+" COMMANDS/AUTOCOMMANDS/MAPPINGS/ETC.: ================================== {{{1
 command! -bar -narg=0 AutoComplPopEnable  call s:Enable()
 command! -bar -narg=0 AutoComplPopDisable call s:Disable()
 command! -bar -narg=0 AutoComplPopLock    call s:PopupFeeder.lock()
@@ -605,6 +601,6 @@ if !g:AutoComplPop_NotEnableAtStartup
   AutoComplPopEnable
 endif
 
-" 
+" }}}1
 "=============================================================================
 " vim: set fdm=marker:

@@ -47,11 +47,20 @@ set wildmode=longest,list
 "ディレクト自動移動
 autocmd BufEnter * execute ":lcd " . expand("%:p:h")
 
+"補完
+set complete=.,w,b,u,k
+set completeopt=menu,preview,longest
+set pumheight=20
+
 "ftplugin有効
 filetype plugin on
 
-"mtをhtmlに
+"mtとttをhtmlに
 autocmd BufNewFile,BufRead *.mt set filetype=html
+autocmd BufNewFile,BufRead *.tt set filetype=html
+
+"markdownのfiletypeをセット
+autocmd BufNewFile,BufRead *.md set filetype=mkd
 
 "noexpandtabになることがあるので
 autocmd BufNewFile,BufRead * set expandtab
@@ -79,7 +88,6 @@ endif
 
 "改行コード
 set fileformats=unix,dos,mac
-
 
 "------------------------
 " キーバインド
@@ -151,22 +159,13 @@ nnoremap <Space>tp :<C-u>set paste!<CR>
 nnoremap <silent> <Space>r :<C-u>execute "source %"<CR>
 
 "help
-nnoremap <Space>h :<C-u>vertical bel h<Space>
+nnoremap <Space>h :<C-u>vert bel h<Space>
 
-"補完
-set complete=.,w,b,u,k
-set completeopt=menu,preview,longest
-set pumheight=20
+"行末まで削除
+inoremap <C-k> <C-o>D
 
-"function! InsertCompleteTab()
-"    if pumvisible()
-"        return "\<C-p>\<C-n>\<Esc>a"
-"    else
-"        return "\<tab>"
-"    endif
-"endfunction
-"
-"inoremap <tab> <c-r>=InsertCompleteTab()<cr>
+"補完候補があってもEnterは改行
+inoremap <expr> <CR> pumvisible() ? "\<C-e>\<CR>" : "\<CR>"
 
 "スクロール
 nnoremap <C-e> <C-e>M
@@ -283,24 +282,11 @@ call ku#custom_prefix('common', '~', $HOME)
 call ku#custom_prefix('common', 'mone', $HOME.'/Works/sites/mone/www')
 call ku#custom_prefix('common', 'mikke', $HOME.'/Works/sites/mikke/www')
 
-" twit.vim
-let twitvim_browser_cmd = "open -a /Applications/Firefox.app"
-let twitvim_count = 100
+" ark.vim
+call ark#set_root_dir($HOME."/dev/perl/ark/ie-buglist.org")
+call ark#set_root_dir($HOME."/Works/sites/shiraberu/www/trunk")
 
-" autocomplpop.vim
-let g:AutoComplPop_BehaviorKeywordLength = 3
-
-function! ToggleAutoComPop()
-    if exists('#AutoComplPopGlobalAutoCommand#InsertEnter#*')
-        execute ":AutoComplPopDisable"
-    else
-        execute ":AutoComplPopEnable"
-    endif
-endfunction
-nnoremap <silent> <Space>ta :<C-u>call ToggleAutoComPop()<CR>
-
-" snippetsEmu.vim
-" let g:snippetsEmu_key = "<C-k>"
-
-" bluecloth.vim
-vnoremap <C-m> :BlueCloth<CR>
+" vimshell
+nnoremap <Space>v :VimShell<CR>
+let g:VimShell_UserPrompt = 'getcwd()'
+let g:VimShell_Prompt = $USER."$ "

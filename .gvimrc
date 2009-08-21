@@ -1,3 +1,5 @@
+"Last Change:12-Aug-2009.
+"
 "ウインドウサイズ
 set columns=180
 set lines=45
@@ -6,8 +8,8 @@ set lines=45
 set guifont=Monaco:h12
 
 "ズーム
-nnoremap ,z :set guifont=Monaco:h18<CR>
-nnoremap ,Z :set guifont=Monaco:h12<CR>:set columns=180<CR>:set lines=45<CR>
+nnoremap <Space>z :set guifont=Monaco:h18<CR>
+nnoremap <Space>Z :set guifont=Monaco:h12<CR>:set columns=180<CR>:set lines=45<CR>
 
 "バックスラッシュ入力
 noremap! ¥ \

@@ -41,14 +41,14 @@ hi StatusLineNC gui=NONE guifg=SlateGray guibg=Gray90 ctermfg=black ctermbg=gray
 hi TabLine      gui=underline guibg=LightGrey
 hi TabLineFill  gui=reverse
 hi TabLineSel   gui=bold ctermfg=white
-hi Title        gui=bold guifg=DeepSkyBlue3 ctermfg=magenta cterm=bold
+hi Title        gui=bold guifg=#a1338b ctermfg=magenta cterm=bold
 hi VertSplit    gui=NONE guifg=DarkSlateGray guibg=Gray90
-hi visual       guibg=#004400 guifg=white ctermfg=white ctermbg=blue cterm=none
+hi visual       guibg=#000099 ctermfg=white ctermbg=blue cterm=none
 hi warningmsg   guifg=firebrick2 ctermfg=red
 
 " syntax items (`:he group-name` -- more groups are available, these are just
 " the top level syntax items for now).
-hi error        gui=none guifg=white guibg=NONE
+hi error        gui=none guifg=white guibg=NONE ctermbg=none
 hi identifier   gui=none guifg=Cyan4 guibg=NONE ctermfg=cyan
 hi Ignore       gui=NONE guifg=bg guibg=NONE
 hi PreProc      gui=NONE guifg=DodgerBlue3 guibg=NONE

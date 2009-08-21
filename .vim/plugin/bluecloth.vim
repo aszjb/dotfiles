@@ -1,4 +1,12 @@
-function! s:BlueCloth(line1, line2)
+" bluecloth.vim
+"
+" @Author Kazuhito Hokamura
+
+if !has('ruby')
+    finish
+endif
+
+function! s:bluecloth(line1, line2)
 ruby << EOF
     require 'rubygems'
     require 'bluecloth'
@@ -23,4 +31,4 @@ ruby << EOF
 EOF
 endfunction
 
-command! -range=% -nargs=? BlueCloth :call g:BlueCloth(<line1>, <line2>)
+command! -range=% -nargs=? BlueCloth :call <SID>bluecloth(<line1>, <line2>)
