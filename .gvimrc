@@ -1,5 +1,3 @@
-"Last Change:12-Aug-2009.
-"
 "ウインドウサイズ
 set columns=180
 set lines=45
@@ -27,7 +25,8 @@ set imdisable
 set guioptions-=T
 
 "カーソル行表示
-set cursorline
+autocmd BufEnter * setlocal cursorline
+autocmd BufLeave * setlocal nocursorline
 
 "---------------------------------------------------------------------------
 " 日本語対応のための設定: from kaoriya

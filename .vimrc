@@ -41,8 +41,8 @@ set autoread
 set laststatus=2
 set statusline=%<%f\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']['.&ft.']'}%=%l,%c%V%8P
 
-"zshっぽい補完
-set wildmode=longest,list
+"exモードの補完
+set wildmode=list:longest,full
 
 "ディレクト自動移動
 autocmd BufEnter * execute ":lcd " . expand("%:p:h")
@@ -88,6 +88,45 @@ endif
 
 "改行コード
 set fileformats=unix,dos,mac
+
+" タブラインの設定
+" from :help setting-tabline
+set tabline=%!MyTabLine()
+
+function! MyTabLine()
+  let s = ''
+  for i in range(tabpagenr('$'))
+    " 強調表示グループの選択
+    if i + 1 == tabpagenr()
+      let s .= '%#TabLineSel#'
+    else
+      let s .= '%#TabLine#'
+    endif
+
+    " タブページ番号の設定 (マウスクリック用)
+    let s .= '%' . (i + 1) . 'T'
+
+    " ラベルは MyTabLabel() で作成する
+    let s .= ' %{MyTabLabel(' . (i + 1) . ')} '
+  endfor
+
+  " 最後のタブページの後は TabLineFill で埋め、タブページ番号をリセッ
+  " トする
+  let s .= '%#TabLineFill#%T'
+
+  " カレントタブページを閉じるボタンのラベルを右添えで作成
+  if tabpagenr('$') > 1
+    let s .= '%=%#TabLine#%999Xclose'
+  endif
+
+  return s
+endfunction
+
+function! MyTabLabel(n)
+  let buflist = tabpagebuflist(a:n)
+  let winnr = tabpagewinnr(a:n)
+  return expand("#".buflist[winnr - 1].":t")
+endfunction
 
 "------------------------
 " キーバインド
@@ -156,10 +195,13 @@ nnoremap <silent> es :<C-u>e ++enc=cp932<CR>
 nnoremap <Space>tp :<C-u>set paste!<CR>
 
 " カレントバッファのファイルを再読み込み
-nnoremap <silent> <Space>r :<C-u>execute "source %"<CR>
+autocmd FileType vim nnoremap <silent> <Space>r :<C-u>execute "source %"<CR>
 
 "help
 nnoremap <Space>h :<C-u>vert bel h<Space>
+
+"svn
+nnoremap <C-s> :<C-u>!svn<Space>
 
 "行末まで削除
 inoremap <C-k> <C-o>D
@@ -170,6 +212,8 @@ inoremap <expr> <CR> pumvisible() ? "\<C-e>\<CR>" : "\<CR>"
 "スクロール
 nnoremap <C-e> <C-e>M
 nnoremap <C-y> <C-y>M
+nnoremap <C-u> <C-u>M
+nnoremap <C-d> <C-d>M
 
 function! SmoothScroll(action)
    let l:h=winheight(0) / 6
@@ -186,9 +230,50 @@ function! SmoothScroll(action)
    endwhile 
 endfunction
 
-nnoremap <silent> <C-d> :<C-u>call SmoothScroll("down")<CR>
-nnoremap <silent> <C-u> :<C-u>call SmoothScroll("up")<CR>
+"nnoremap <silent> <C-d> :<C-u>call SmoothScroll("down")<CR>
+"nnoremap <silent> <C-u> :<C-u>call SmoothScroll("up")<CR>
 
+onoremap aa  a>
+vnoremap aa  a>
+onoremap ia  i>
+vnoremap ia  i>
+
+onoremap ar  a]
+vnoremap ar  a]
+onoremap ir  i]
+vnoremap ir  i]
+ 
+nnoremap gc `[v`]
+onoremap gc :normal gc<CR>
+
+onoremap <silent> q
+\      :for i in range(v:count1)
+\ <Bar>   call search('.\&\(\k\<Bar>\_s\)\@!', 'W')
+\ <Bar> endfor<CR>
+
+function! VisualCurrentIndentBlock()
+    let current_indent = indent('.')
+    let current_line   = line('.')
+    let current_col    = col('.')
+    let last_line      = line('$')
+
+    let start_line = current_line
+    while start_line != 1 && current_indent == indent(start_line - 1) 
+        let start_line = start_line - 1
+    endwhile
+
+    let end_line = current_line
+    while end_line != last_line && current_indent == indent(end_line + 1)
+        let end_line = end_line + 1
+    endwhile
+
+    call cursor(start_line, current_col)
+    normal V
+    call cursor(end_line, current_col)
+endfunction
+
+nnoremap gi :call VisualCurrentIndentBlock()<CR>
+onoremap gi :normal gi<CR>
 
 "------------------------
 " プラグインの設定
@@ -220,26 +305,26 @@ vmap o <leader>tsp
 " h : <?php | ?>
 " m : <% | %>
 
-autocmd FileType * let b:surround_49  = "<h1>\r</h1>"
-autocmd FileType * let b:surround_50  = "<h2>\r</h2>"
-autocmd FileType * let b:surround_51  = "<h3>\r</h3>"
-autocmd FileType * let b:surround_52  = "<h4>\r</h4>"
-autocmd FileType * let b:surround_53  = "<h5>\r</h5>"
-autocmd FileType * let b:surround_54  = "<h6>\r</h6>"
-
-autocmd FileType * let b:surround_112 = "<p>\r</p>"
-autocmd FileType * let b:surround_117 = "<ul>\r</ul>"
-autocmd FileType * let b:surround_111 = "<ol>\r</ol>"
-autocmd FileType * let b:surround_108 = "<li>\r</li>"
-autocmd FileType * let b:surround_97  = "<a href=\"dummy\">\r</a>"
-autocmd FileType * let b:surround_65  = "<a href=\"\r\"></a>"
-autocmd FileType * let b:surround_105 = "<img src=\"\" alt=\"\r\" />"
-autocmd FileType * let b:surround_73  = "<img src=\"\r\" alt=\"\" />"
-autocmd FileType * let b:surround_100 = "<div>\r</div>"
-autocmd FileType * let b:surround_68  = "<div class=\"section\">\r</div>"
-
-autocmd FileType * let b:surround_104  = "<?php \r ?>"
-autocmd FileType * let b:surround_107  = "<% \r %>"
+"autocmd FileType * let b:surround_49  = "<h1>\r</h1>"
+"autocmd FileType * let b:surround_50  = "<h2>\r</h2>"
+"autocmd FileType * let b:surround_51  = "<h3>\r</h3>"
+"autocmd FileType * let b:surround_52  = "<h4>\r</h4>"
+"autocmd FileType * let b:surround_53  = "<h5>\r</h5>"
+"autocmd FileType * let b:surround_54  = "<h6>\r</h6>"
+"
+"autocmd FileType * let b:surround_112 = "<p>\r</p>"
+"autocmd FileType * let b:surround_117 = "<ul>\r</ul>"
+"autocmd FileType * let b:surround_111 = "<ol>\r</ol>"
+"autocmd FileType * let b:surround_108 = "<li>\r</li>"
+"autocmd FileType * let b:surround_97  = "<a href=\"dummy\">\r</a>"
+"autocmd FileType * let b:surround_65  = "<a href=\"\r\"></a>"
+"autocmd FileType * let b:surround_105 = "<img src=\"\" alt=\"\r\" />"
+"autocmd FileType * let b:surround_73  = "<img src=\"\r\" alt=\"\" />"
+"autocmd FileType * let b:surround_100 = "<div>\r</div>"
+"autocmd FileType * let b:surround_68  = "<div class=\"section\">\r</div>"
+"
+"autocmd FileType * let b:surround_104  = "<?php \r ?>"
+"autocmd FileType * let b:surround_107  = "<% \r %>"
 
 " symfony.vim
 nnoremap <Space>sv :<C-u>Sview<CR>

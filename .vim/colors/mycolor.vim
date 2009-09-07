@@ -20,7 +20,7 @@ hi DiffAdd      guibg=MediumSeaGreen
 hi Directory    guifg=SkyBlue ctermfg=cyan
 hi ErrorMsg     guibg=Firebrick2 guifg=White
 hi FoldColumn   guibg=Grey guifg=DarkBlue
-hi Folded       guibg=#222222 guifg=#EEEEEE
+hi Folded       guibg=#003300 guifg=NONE
 hi IncSearch    gui=reverse
 hi ModeMsg      gui=bold
 hi MoreMsg      gui=bold guifg=SeaGreen4
@@ -43,7 +43,7 @@ hi TabLineFill  gui=reverse
 hi TabLineSel   gui=bold ctermfg=white
 hi Title        gui=bold guifg=#a1338b ctermfg=magenta cterm=bold
 hi VertSplit    gui=NONE guifg=DarkSlateGray guibg=Gray90
-hi visual       guibg=#000099 ctermfg=white ctermbg=blue cterm=none
+hi visual       guibg=#102253 ctermfg=white ctermbg=blue cterm=none
 hi warningmsg   guifg=firebrick2 ctermfg=red
 
 " syntax items (`:he group-name` -- more groups are available, these are just
@@ -69,7 +69,7 @@ hi DiffText     gui=NONE guifg=White guibg=SteelBlue
 hi LineNr       guifg=DarkYellow guibg=Grey5 ctermfg=green cterm=none
 hi matchParen   guifg=White guibg=Magenta
 hi Normal       guifg=Grey80 guibg=Grey8
-hi Search       guibg=#4B4D00 guifg=White
+hi Search       guibg=#c5ba24 guifg=black
 hi Statement    gui=bold guifg=#9F632E guibg=NONE
 hi Todo         gui=NONE guifg=Red guibg=NONE
 hi Type         gui=bold guifg=#577FF2 guibg=NONE
