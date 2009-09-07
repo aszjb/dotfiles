@@ -42,8 +42,6 @@ setopt auto_cd
 setopt auto_pushd 
 setopt pushd_ignore_dups
 
-alias gd='dirs -v; echo -n "select number: "; read newdir; cd -"$newdir"'
-
 #キーバインド
 bindkey -e
 
@@ -80,6 +78,11 @@ alias :q='exit'
 
 alias svnadd="svn st | grep '^?' | awk '{ print \$2 }' | xargs svn add"
 alias svndel="svn st | grep '^!' | awk '{ print \$2 }' | xargs svn delete"
+
+alias -g G="| grep"
+alias -g L="| less"
+
+alias gs="git svn"
 
 #改行のない出力をプロンプトで上書きするのを防ぐ
 unsetopt promptcr
