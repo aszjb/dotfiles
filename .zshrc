@@ -5,9 +5,15 @@ export LANG=ja_JP.UTF-8
 autoload colors
 colors
 
+if [ -n ${SSH_CONNECTION} ]; then
 PROMPT="
  %{${fg[yellow]}%}%~%{${reset_color}%} 
 [%n]$ "
+else
+PROMPT="
+ %{${fg[yellow]}%}%~%{${reset_color}%} 
+%{${fg[green]}%}[%n@%m]$%{${reset_color}%} "
+fi
 
 PROMPT2='[%n]> ' 
 
