@@ -44,8 +44,6 @@ set statusline=%<%f\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']['.&ft.']'}
 "exモードの補完
 set wildmode=list:longest,full
 
-"ディレクト自動移動
-autocmd BufEnter * execute ":lcd " . expand("%:p:h")
 
 "補完
 set complete=.,w,b,u,k
@@ -55,16 +53,6 @@ set pumheight=20
 "ftplugin有効
 filetype plugin on
 
-"mtとttをhtmlに
-autocmd BufNewFile,BufRead *.mt set filetype=html
-autocmd BufNewFile,BufRead *.tt set filetype=html
-
-"markdownのfiletypeをセット
-autocmd BufNewFile,BufRead *.md set filetype=mkd
-
-"noexpandtabになることがあるので
-autocmd BufNewFile,BufRead * set expandtab
-
 "シェルにパスを通す
 let $PATH = '/opt/local/bin:'.$PATH
 
@@ -73,6 +61,38 @@ let accountFile = $HOME."/.vim/info/account.vim"
 if (filereadable(accountFile))
     execute "source " . accountFile
 endif
+
+"-----------------------
+" autocmd
+"------------------------
+
+augroup MyAutoCmd
+  autocmd!
+augroup END
+
+"mtとttをhtmlに
+autocmd MyAutoCmd BufNewFile,BufRead *.mt set filetype=html
+autocmd MyAutoCmd BufNewFile,BufRead *.tt set filetype=html
+
+"markdownのfiletypeをセット
+autocmd MyAutoCmd BufNewFile,BufRead *.md set filetype=mkd
+
+"なぜかnoexpandtabになることがあるので
+autocmd MyAutoCmd BufNewFile,BufRead * set expandtab
+
+"ディレクト自動移動
+autocmd MyAutoCmd BufEnter * execute ":lcd " . expand("%:p:h")
+
+" カレントバッファのファイルを再読み込み
+autocmd MyAutoCmd FileType vim nnoremap <silent> <Space>r :<C-u>execute "source %"<CR>
+
+"grepとかmakeのあとにエラーがあればQuickFixだす
+function! OpenQFWindow()
+    
+endfunction
+
+autocmd MyAutoCmd QuickfixCmdPost make,grep,grepadd,vimgrep
+    \ if len(getqflist()) != 0 | copen | endif
 
 "-----------------------
 " 文字コードとかの設定
@@ -145,10 +165,19 @@ nnoremap <Space>w :<C-u>write<CR>
 nnoremap <Space>q :<C-u>quit<CR>
 
 "上下移動
+nnoremap gj j
+nnoremap gk k
+vnoremap gj j
+vnoremap gk k
+
 nnoremap j gj
 nnoremap k gk
 vnoremap j gj
 vnoremap k gk
+
+"改行
+"nnoremap <CR> o<ESC>
+"nnoremap <S-CR> O<ESC>
 
 "単語検索
 nnoremap * g*
@@ -194,14 +223,12 @@ nnoremap <silent> es :<C-u>e ++enc=cp932<CR>
 "pasteモードトグル
 nnoremap <Space>tp :<C-u>set paste!<CR>
 
-" カレントバッファのファイルを再読み込み
-autocmd FileType vim nnoremap <silent> <Space>r :<C-u>execute "source %"<CR>
 
 "help
 nnoremap <Space>h :<C-u>vert bel h<Space>
 
 "svn
-nnoremap <C-s> :<C-u>!svn<Space>
+nnoremap <Space>cs :<C-u>!svn<Space>
 
 "行末まで削除
 inoremap <C-k> <C-o>D
@@ -233,6 +260,10 @@ endfunction
 "nnoremap <silent> <C-d> :<C-u>call SmoothScroll("down")<CR>
 "nnoremap <silent> <C-u> :<C-u>call SmoothScroll("up")<CR>
 
+" \ って遠いよね
+inoremap <C-k> \
+
+" text object
 onoremap aa  a>
 vnoremap aa  a>
 onoremap ia  i>
@@ -282,50 +313,6 @@ onoremap gi :normal gi<CR>
 " align.vim
 vmap o <leader>tsp
 
-" surround.vim
-"
-" 1 : <h1>|</h1>
-" 2 : <h2>|</h2>
-" 3 : <h3>|</h3>
-" 4 : <h4>|</h4>
-" 5 : <h5>|</h5>
-" 6 : <h6>|</h6>
-"
-" p : <p>|</p>
-" u : <ul>|</ul>
-" o : <ol>|</ol>
-" l : <li>|</li>
-" a : <a href="">|</a>
-" A : <a href="|"></a>
-" i : <img src="" alt"|" />
-" I : <img src="|" alt="" />
-" d : <div>|</div>
-" D : <div class="section">|</div>
-"
-" h : <?php | ?>
-" m : <% | %>
-
-"autocmd FileType * let b:surround_49  = "<h1>\r</h1>"
-"autocmd FileType * let b:surround_50  = "<h2>\r</h2>"
-"autocmd FileType * let b:surround_51  = "<h3>\r</h3>"
-"autocmd FileType * let b:surround_52  = "<h4>\r</h4>"
-"autocmd FileType * let b:surround_53  = "<h5>\r</h5>"
-"autocmd FileType * let b:surround_54  = "<h6>\r</h6>"
-"
-"autocmd FileType * let b:surround_112 = "<p>\r</p>"
-"autocmd FileType * let b:surround_117 = "<ul>\r</ul>"
-"autocmd FileType * let b:surround_111 = "<ol>\r</ol>"
-"autocmd FileType * let b:surround_108 = "<li>\r</li>"
-"autocmd FileType * let b:surround_97  = "<a href=\"dummy\">\r</a>"
-"autocmd FileType * let b:surround_65  = "<a href=\"\r\"></a>"
-"autocmd FileType * let b:surround_105 = "<img src=\"\" alt=\"\r\" />"
-"autocmd FileType * let b:surround_73  = "<img src=\"\r\" alt=\"\" />"
-"autocmd FileType * let b:surround_100 = "<div>\r</div>"
-"autocmd FileType * let b:surround_68  = "<div class=\"section\">\r</div>"
-"
-"autocmd FileType * let b:surround_104  = "<?php \r ?>"
-"autocmd FileType * let b:surround_107  = "<% \r %>"
-
 " symfony.vim
 nnoremap <Space>sv :<C-u>Sview<CR>
 nnoremap <Space>sa :<C-u>Saction<CR>
@@ -367,11 +354,24 @@ call ku#custom_prefix('common', '~', $HOME)
 call ku#custom_prefix('common', 'mone', $HOME.'/Works/sites/mone/www')
 call ku#custom_prefix('common', 'mikke', $HOME.'/Works/sites/mikke/www')
 
-" ark.vim
-call ark#set_root_dir($HOME."/dev/perl/ark/ie-buglist.org")
-call ark#set_root_dir($HOME."/Works/sites/shiraberu/www/trunk")
+" perlProject.vim
+let g:perl_projects = []
+call perlProject#add_perl_project({
+    \ 'type': 'ark',
+    \ 'home_dir': $HOME."/dev/perl/ark/ie-buglist.org",
+    \ 'perl_lib_dirs': [$HOME."/dev/perl/ark/ie-buglist.org/ark/lib"]
+\})
 
-" vimshell
-nnoremap <Space>v :VimShell<CR>
-let g:VimShell_UserPrompt = 'getcwd()'
-let g:VimShell_Prompt = $USER."$ "
+call perlProject#add_perl_project({
+    \ 'type': 'ark',
+    \ 'home_dir': $HOME."/Works/sites/shiraberu/www/trunk",
+    \ 'perl_lib_dirs': [$HOME."/Works/sites/shiraberu/www/trunk/ark-perl/lib", $HOME."/local/lib"]
+\})
+
+call perlProject#add_perl_project({
+    \ 'type': 'catalyst',
+    \ 'home_dir', $HOME.'/Works/sites/koebu/www/trunk',
+\})
+
+"call ark#set_home_dir($HOME."/Works/sites/shiraberu/www/trunk")
+

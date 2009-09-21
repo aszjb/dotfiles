@@ -25,8 +25,9 @@ set imdisable
 set guioptions-=T
 
 "カーソル行表示
-autocmd BufEnter * setlocal cursorline
-autocmd BufLeave * setlocal nocursorline
+set cursorline
+"autocmd BufEnter * setlocal cursorline
+"autocmd BufLeave * setlocal nocursorline
 
 "---------------------------------------------------------------------------
 " 日本語対応のための設定: from kaoriya
