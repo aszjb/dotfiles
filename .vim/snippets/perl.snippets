@@ -1,47 +1,39 @@
-# #!/usr/bin/perl
+# #!/usr/bin/env perl
 snippet #!
 	#!/usr/bin/env perl
-
 # use strict, warnings
-snippet st
+snippet strict
 	use strict;
 	use warnings;
-
 # Conditional
 snippet if
 	if (${1}) {
 		${2:# body...}
 	}
-
 # Unless conditional
 snippet unl
 	unless (${1}) {
 		${2:# body...}
 	}
-
 # While Loop
 snippet wh
 	while (${1}) {
 		${2:# body...}
 	}
-
 # For Loop
 snippet for
 	for (my $${2:var} = 0; $$2 < ${1:count}; $$2${3:++}) {
 		${4:# body...}
 	}
-
 # Foreach Loop
 snippet fore
 	foreach my $${1:x} (@${2:array}) {
 		${3:# body...}
 	}
-
 # print Dumper
 snippet pp
 	use Data::Dumper;
 	warn Dumper ${1};
-
 # resultset
 snippet rs
 	resultset(${1})

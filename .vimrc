@@ -44,7 +44,6 @@ set statusline=%<%f\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']['.&ft.']'}
 "exモードの補完
 set wildmode=list:longest,full
 
-
 "補完
 set complete=.,w,b,u,k
 set completeopt=menu,preview,longest
@@ -81,16 +80,29 @@ autocmd MyAutoCmd BufNewFile,BufRead *.md set filetype=mkd
 autocmd MyAutoCmd BufNewFile,BufRead * set expandtab
 
 "ディレクト自動移動
-autocmd MyAutoCmd BufEnter * execute ":lcd " . expand("%:p:h")
+autocmd MyAutoCmd BufRead * execute ":lcd " . expand("%:p:h")
 
 " カレントバッファのファイルを再読み込み
-autocmd MyAutoCmd FileType vim nnoremap <silent> <Space>r :<C-u>execute "source %"<CR>
+" filetypeがvimかsnippetsのときだけ。
+" 関数にするとvimrc（このファイル）の読み込みがうまくいかないので直書き
+nnoremap <silent> <Space>r :<C-u>
+\ if &ft == 'vim' <Bar>
+\     source % <Bar>
+\ elseif &ft == 'snippet' <Bar>
+\     call SnipMateReload() <Bar>
+\ endif<CR>
 
-"grepとかmakeのあとにエラーがあればQuickFixだす
-function! OpenQFWindow()
-    
+function! SnipMateReload()
+    if &ft == 'snippet'
+        let ft = substitute(expand('%'), '.snippets', '', '')
+        if has_key(g:did_ft, ft)
+            unlet g:did_ft[ft]
+        endif
+        silent! call GetSnippets(g:snippets_dir, ft)
+    endif
 endfunction
 
+"grepとかmakeのあとにエラーがあればQuickFixだす
 autocmd MyAutoCmd QuickfixCmdPost make,grep,grepadd,vimgrep
     \ if len(getqflist()) != 0 | copen | endif
 
@@ -147,6 +159,9 @@ function! MyTabLabel(n)
   let winnr = tabpagewinnr(a:n)
   return expand("#".buflist[winnr - 1].":t")
 endfunction
+
+" 開いてるファイルにのディレクトリに移動
+command! -nargs=0 CD :execute 'lcd ' . expand("%:p:h")
 
 "------------------------
 " キーバインド
@@ -260,8 +275,13 @@ endfunction
 "nnoremap <silent> <C-d> :<C-u>call SmoothScroll("down")<CR>
 "nnoremap <silent> <C-u> :<C-u>call SmoothScroll("up")<CR>
 
+" <C-u>とかのundo
+inoremap <C-u>  <C-g>u<C-u>
+inoremap <C-w>  <C-g>u<C-w>
+
 " \ って遠いよね
 inoremap <C-k> \
+cnoremap <C-k> \
 
 " text object
 onoremap aa  a>
@@ -299,7 +319,7 @@ function! VisualCurrentIndentBlock()
     endwhile
 
     call cursor(start_line, current_col)
-    normal V
+    normal! V
     call cursor(end_line, current_col)
 endfunction
 
@@ -351,27 +371,108 @@ autocmd FileType ku call ku#default_key_mappings(1)
 augroup END
 
 call ku#custom_prefix('common', '~', $HOME)
-call ku#custom_prefix('common', 'mone', $HOME.'/Works/sites/mone/www')
+call ku#custom_prefix('common', 'si', $HOME.'/Works/sites/shiraberu/www/dev')
 call ku#custom_prefix('common', 'mikke', $HOME.'/Works/sites/mikke/www')
+nmap <Space>kp <Space>kfsi/
 
-" perlProject.vim
-let g:perl_projects = []
-call perlProject#add_perl_project({
+" anyperl.vim
+let g:anyperl_projects = []
+call anyperl#add_project({
     \ 'type': 'ark',
-    \ 'home_dir': $HOME."/dev/perl/ark/ie-buglist.org",
-    \ 'perl_lib_dirs': [$HOME."/dev/perl/ark/ie-buglist.org/ark/lib"]
+    \ 'home': $HOME."/dev/perl/ark/ie-buglist.org",
+    \ 'libs': [$HOME."/dev/perl/ark/ie-buglist.org/ark/lib"]
+\})
+call anyperl#add_project({
+    \ 'type': 'shiraberu.ark',
+    \ 'home': $HOME."/Works/sites/shiraberu/www/dev",
+    \ 'libs': [$HOME."/Works/sites/shiraberu/www/dev/ark-perl/lib"]
 \})
 
-call perlProject#add_perl_project({
-    \ 'type': 'ark',
-    \ 'home_dir': $HOME."/Works/sites/shiraberu/www/trunk",
-    \ 'perl_lib_dirs': [$HOME."/Works/sites/shiraberu/www/trunk/ark-perl/lib", $HOME."/local/lib"]
-\})
+nnoremap <Space>pt :AnyperlTest<CR>
+nnoremap <Space>pj :AnyperlJumpModule<CR>
 
-call perlProject#add_perl_project({
-    \ 'type': 'catalyst',
-    \ 'home_dir', $HOME.'/Works/sites/koebu/www/trunk',
-\})
 
-"call ark#set_home_dir($HOME."/Works/sites/shiraberu/www/trunk")
+" 絶対パスで開く
+let s:htdocs_dirs = [$HOME.'/dev/site/localhost/test']
+function! GotoAbsFile()
+    let fname = expand('<cfile>')
+    let filepass = fname
+    if (match(fname, '^/') != -1)
+        for dir in s:htdocs_dirs
+            if match(expand("%:p:h"), dir) != -1 && isdirectory(dir) == 1
+                let filepass = dir . fname
+                break
+            endif
+        endfor
+    endif
+    if filereadable(filepass)
+        execute 'edit ' . filepass
+    else
+        echohl ErrorMsg
+        echo 'no such file ' . fname
+        echohl None
+    endif
+endfunction
+nnoremap gaf :<C-u>call GotoAbsFile()<CR>
 
+
+" クリップボード連携 
+if has('mac')
+    function! Pbcopy(type, ...)
+        let reg_save = @@
+        if a:0
+            silent execute "normal! `<" . a:type . "`>y"
+        elseif a:type == 'line'
+            silent execute "normal! '[V']y"
+        elseif a:type == 'block'
+            silent execute "normal! `[\<C-V>`]y"
+        else
+            silent execute "normal! `[v`]y"
+        endif
+        call system('iconv -f utf-8 -t shift-jis | pbcopy', @@)
+        let @@ = reg_save
+    endfunction
+    nnoremap <silent> <Space>y :<C-u>set opfunc=Pbcopy<CR>g@
+    nnoremap <silent> <Space>yy :<C-u>set opfunc=Pbcopy<CR>g@g@
+    vnoremap <silent> <Space>y :<C-u>call Pbcopy(visualmode(), 1)<CR>
+    nnoremap <silent> <Space>p :<C-u>r !pbpaste<CR>
+endif
+
+
+" ウインドウ単位で開いたファイルの履歴をたどる
+"function! FileJumpPush()
+"    if !exists('w:histories')
+"        let w:histories = []
+"    endif
+"    let buf = bufnr('%')
+"    if count(w:histories, buf) == 0
+"        call add(w:histories, buf)
+"    endif
+"endfunction
+"
+"function! FileJumpPrev()
+"    if exists('w:histories')
+"        let buf = bufnr('%')
+"        let current = match(w:histories, '^'.buf.'$')
+"        if current != 0 && exists('w:histories[current - 1]')
+"            execute 'buffer ' . w:histories[current - 1]
+"        endif
+"    endif
+"endfunction
+"
+"function! FileJumpNext()
+"    if exists('w:histories')
+"        let buf = bufnr('%')
+"        let current = match(w:histories, '^'.buf.'$')
+"        if exists('w:histories[current + 1]')
+"            execute 'buffer ' . w:histories[current + 1]
+"        endif
+"    endif
+"endfunction
+"
+"augroup FileJumpAutoCmd
+"    autocmd!
+"augroup END
+"autocmd FileJumpAutoCmd BufReadPre * call FileJumpPush()
+"nnoremap <silent> ,p :<C-u>call FileJumpPrev()<CR>
+"nnoremap <silent> ,n :<C-u>call FileJumpNext()<CR>

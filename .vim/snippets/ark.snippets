@@ -1,0 +1,27 @@
+snippet cfw
+	$c->forword(${1});
+snippet cre
+	$c->redirect(${1});
+snippet cde
+	$c->detach(${1});
+snippet crd
+	$c->redirect_and_detach(${1});
+snippet clog
+	$c->log('${1:debug}', ${2});
+snippet csub
+	sub ${1} :${2} {
+		my ($self, $c) = @_;
+		${3}
+	}
+snippet cst
+	$c->stash->{${1}}
+snippet :ch
+	:Chained('${1}')
+snippet :pp
+	:PathPart('${1}')
+snippet :pr
+	:Private
+snippet :ar
+	:Args(${1:0})
+snippet :lo
+	:Local

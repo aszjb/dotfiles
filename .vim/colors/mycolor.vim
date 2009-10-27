@@ -37,7 +37,7 @@ hi SpellCap     guisp=Blue gui=undercurl
 hi SpellLocal   guisp=DarkCyan gui=undercurl
 hi SpellRare    guisp=Magenta gui=undercurl
 hi StatusLine   gui=NONE guifg=White guibg=DarkSlateGray ctermfg=blue ctermbg=gray term=none cterm=none
-hi StatusLineNC gui=NONE guifg=SlateGray guibg=Gray90 ctermfg=black ctermbg=gray term=none cterm=none
+hi StatusLineNC gui=NONE guifg=black guibg=Gray90 ctermfg=black ctermbg=gray term=none cterm=none
 hi TabLine      gui=underline guibg=LightGrey
 hi TabLineFill  gui=reverse
 hi TabLineSel   gui=bold ctermfg=white
@@ -75,6 +75,7 @@ hi Todo         gui=NONE guifg=Red guibg=NONE
 hi Type         gui=bold guifg=#577FF2 guibg=NONE
 hi WildMenu     guibg=SkyBlue guifg=White ctermfg=yellow ctermbg=black cterm=none term=none
 hi lCursor      guibg=LightSlateGrey guifg=bg
+"hi Keyword      guifg=white guibg=#CC0000
 
 "
 " Change the selection color on focus change (but only if the "macvim"

@@ -43,11 +43,6 @@ snippet for
 	for (var ${2:i} = 0, len = ${1:Things}.length; $2 < len; $2${3:++}) {
 		${4:$1[$2]};
 	}
-# for (...) {...} (Improved Native For-Loop)
-snippet forr
-	for (var ${2:i} = ${1:Things}.length - 1; $2 >= 0; $2${3:--}) {
-		${4:$1[$2]}
-	}
 # while (...) {...}
 snippet wh
 	while (${1:/* condition */}) {
@@ -64,14 +59,16 @@ snippet :f
 		${4}
 	}${3:,}
 # setTimeout function
-snippet timeout
-	setTimeout(function() {${3}}${2}, ${1:10};
+snippet st
+	setTimeout(function() {${3}}${2}, ${1:10});
+snippet si
+	setInterval(function() {${3}}${2}, ${1:10});
 # Get Elements
-snippet get
-	getElementsBy${1:TagName}('${2}')${3}
-# Get Element
 snippet gett
-	getElementBy${1:Id}('${2}')${3}
+	getElementsByTagName('${1}')${2}
+# Get Element
+snippet geti
+	getElementById('${1}')${2}
 # console.log
 snippet cl
 	console.log(${1});

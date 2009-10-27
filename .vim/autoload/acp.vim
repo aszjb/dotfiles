@@ -136,11 +136,15 @@ function s:isCursorMovedSinceLastCall()
   let s:posLast = getpos('.')
   if !exists('posPrev')
     return 1
-  elseif has('multi_byte_ime')
+  else
     return (posPrev[1] != s:posLast[1] || posPrev[2] + 1 == s:posLast[2] ||
           \ posPrev[2] > s:posLast[2])
-  else
-    return (posPrev != s:posLast)
+  "elseif has('multi_byte_ime') || has('gui_macvim')
+  "
+  "  return (posPrev[1] != s:posLast[1] || posPrev[2] + 1 == s:posLast[2] ||
+  "        \ posPrev[2] > s:posLast[2])
+  "else
+  "  return (posPrev != s:posLast)
   endif
 endfunction
 

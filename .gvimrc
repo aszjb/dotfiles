@@ -6,8 +6,23 @@ set lines=45
 set guifont=Monaco:h12
 
 "ズーム
-nnoremap <Space>z :set guifont=Monaco:h18<CR>
-nnoremap <Space>Z :set guifont=Monaco:h12<CR>:set columns=180<CR>:set lines=45<CR>
+function! ZoomToggle()
+    let normal_font = 'Monaco:h12'
+    let zoom_font   = 'Monaco:h25'
+    if &guifont == normal_font
+        let font = zoom_font
+        let columns = 78
+        let lines = 22
+    else
+        let font = normal_font
+        let columns = 180
+        let lines = 45
+    endif
+    execute 'set guifont=' . font
+    execute 'set columns=' . columns
+    execute 'set lines=' . lines
+endfunction
+nnoremap <Space>tz :<C-u>call ZoomToggle()<CR>
 
 "バックスラッシュ入力
 noremap! ¥ \
