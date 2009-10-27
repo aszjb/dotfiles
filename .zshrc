@@ -138,11 +138,9 @@ fi
 #w3m4alc
 function alc() {
   if [ $# != 0 ]; then
-    #lynx "http://eow.alc.co.jp/$*/UTF-8/?ref=sa"
     w3m "http://eow.alc.co.jp/$*/UTF-8/?ref=sa"
   else
-    #lynx "http://www.alc.co.jp/"
-    w3m "http://www.alc.co.jp/"
+    echo 'usage: alc word'
   fi
 }
 
