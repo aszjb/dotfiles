@@ -1,1 +1,0 @@
-/Users/hokamura/dev/vim/vim-shinOnigunso/autoload/shinOnigunso.vim
