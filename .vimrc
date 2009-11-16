@@ -388,21 +388,21 @@ call ku#custom_prefix('common', 'si', $HOME.'/Works/sites/shiraberu/www/dev')
 call ku#custom_prefix('common', 'mikke', $HOME.'/Works/sites/mikke/www')
 
 " anyperl.vim
-let g:anyperl_projects = []
-call anyperl#add_project({
-    \ 'type': 'ark',
-    \ 'home': $HOME."/dev/perl/ark/ie-buglist.org",
-    \ 'libs': [$HOME."/dev/perl/ark/ie-buglist.org/ark/lib"]
-\})
-call anyperl#add_project({
-    \ 'type': 'shiraberu.ark',
-    \ 'home': $HOME."/Works/sites/shiraberu/www/dev",
-    \ 'libs': [$HOME."/Works/sites/shiraberu/www/dev/ark-perl/lib"]
-\})
-
-nnoremap <Space>pt :AnyperlTest<CR>
-nnoremap <Space>pj :AnyperlJumpModule<CR>
-nnoremap <Space>pd :AnyperlDoc<CR>
+"let g:anyperl_projects = []
+"call anyperl#add_project({
+"    \ 'type': 'ark',
+"    \ 'home': $HOME."/dev/perl/ark/ie-buglist.org",
+"    \ 'libs': [$HOME."/dev/perl/ark/ie-buglist.org/ark/lib"]
+"\})
+"call anyperl#add_project({
+"    \ 'type': 'shiraberu.ark',
+"    \ 'home': $HOME."/Works/sites/shiraberu/www/dev",
+"    \ 'libs': [$HOME."/Works/sites/shiraberu/www/dev/ark-perl/lib"]
+"\})
+"
+"nnoremap <Space>pt :AnyperlTest<CR>
+"nnoremap <Space>pj :AnyperlJumpModule<CR>
+"nnoremap <Space>pd :AnyperlDoc<CR>
 
 
 " 絶対パスで開く
