@@ -1,4 +1,7 @@
 'snippets'	snipMate.txt	/*'snippets'*
+,b	camelcasemotion.txt	/*,b*
+,e	camelcasemotion.txt	/*,e*
+,w	camelcasemotion.txt	/*,w*
 .snippet	snipMate.txt	/*.snippet*
 .snippets	snipMate.txt	/*.snippets*
 :AcpDisable	acp.txt	/*:AcpDisable*
@@ -40,6 +43,7 @@ acp-contact	acp.txt	/*acp-contact*
 acp-installation	acp.txt	/*acp-installation*
 acp-introduction	acp.txt	/*acp-introduction*
 acp-options	acp.txt	/*acp-options*
+acp-snipMate	acp.txt	/*acp-snipMate*
 acp-thanks	acp.txt	/*acp-thanks*
 acp-usage	acp.txt	/*acp-usage*
 acp.txt	acp.txt	/*acp.txt*
@@ -122,6 +126,16 @@ alignmap-t~	Align.txt	/*alignmap-t~*
 alignmaps	Align.txt	/*alignmaps*
 alignusage	Align.txt	/*alignusage*
 autocomplpop	acp.txt	/*autocomplpop*
+camelcasemotion-configuration	camelcasemotion.txt	/*camelcasemotion-configuration*
+camelcasemotion-dependencies	camelcasemotion.txt	/*camelcasemotion-dependencies*
+camelcasemotion-description	camelcasemotion.txt	/*camelcasemotion-description*
+camelcasemotion-history	camelcasemotion.txt	/*camelcasemotion-history*
+camelcasemotion-installation	camelcasemotion.txt	/*camelcasemotion-installation*
+camelcasemotion-known-problems	camelcasemotion.txt	/*camelcasemotion-known-problems*
+camelcasemotion-todo	camelcasemotion.txt	/*camelcasemotion-todo*
+camelcasemotion-usage	camelcasemotion.txt	/*camelcasemotion-usage*
+camelcasemotion.txt	camelcasemotion.txt	/*camelcasemotion.txt*
+camelcasemotion.vim	camelcasemotion.txt	/*camelcasemotion.vim*
 filetype-ku	ku.txt	/*filetype-ku*
 g:acp_behavior	acp.txt	/*g:acp_behavior*
 g:acp_behaviorCssOmniPropertyLength	acp.txt	/*g:acp_behaviorCssOmniPropertyLength*
@@ -133,8 +147,10 @@ g:acp_behaviorKeywordLength	acp.txt	/*g:acp_behaviorKeywordLength*
 g:acp_behaviorPythonOmniLength	acp.txt	/*g:acp_behaviorPythonOmniLength*
 g:acp_behaviorRubyOmniMethodLength	acp.txt	/*g:acp_behaviorRubyOmniMethodLength*
 g:acp_behaviorRubyOmniSymbolLength	acp.txt	/*g:acp_behaviorRubyOmniSymbolLength*
+g:acp_behaviorSnipmateLength	acp.txt	/*g:acp_behaviorSnipmateLength*
 g:acp_behaviorUserDefinedFunction	acp.txt	/*g:acp_behaviorUserDefinedFunction*
 g:acp_behaviorUserDefinedPattern	acp.txt	/*g:acp_behaviorUserDefinedPattern*
+g:acp_behaviorXmlOmniLength	acp.txt	/*g:acp_behaviorXmlOmniLength*
 g:acp_completeOption	acp.txt	/*g:acp_completeOption*
 g:acp_completeoptPreview	acp.txt	/*g:acp_completeoptPreview*
 g:acp_enableAtStartup	acp.txt	/*g:acp_enableAtStartup*

@@ -4,7 +4,7 @@
 
 "色設定
 syntax on
-colorschem mycolor
+colorscheme mycolor
 
 "タブの設定
 set softtabstop=4
@@ -14,6 +14,7 @@ set expandtab
 set autoindent
 
 "検索
+set incsearch
 set ignorecase
 set smartcase
 set nohlsearch
@@ -61,6 +62,14 @@ if (filereadable(accountFile))
     execute "source " . accountFile
 endif
 
+" 新規windowを右側に開く
+nnoremap <C-w>v :<C-u>belowright vnew<CR>
+
+" set filetype
+nnoremap <Space>sp :<C-u>set filetype=perl<CR>
+nnoremap <Space>sh :<C-u>set filetype=php<CR>
+nnoremap <Space>sj :<C-u>set filetype=javascript<CR>
+
 "-----------------------
 " autocmd
 "------------------------
@@ -82,9 +91,7 @@ autocmd MyAutoCmd BufNewFile,BufRead * set expandtab
 "ディレクト自動移動
 autocmd MyAutoCmd BufRead * execute ":lcd " . expand("%:p:h")
 
-" カレントバッファのファイルを再読み込み
-" filetypeがvimかsnippetsのときだけ。
-" 関数にするとvimrc（このファイル）の読み込みがうまくいかないので直書き
+" カレントバッファのファイルを再読み込み。filetypeがvimかsnippetsのときだけ。
 nnoremap <silent> <Space>r :<C-u>
 \ if &ft == 'vim' <Bar>
 \     source % <Bar>
@@ -257,21 +264,21 @@ nnoremap <C-y> <C-y>M
 nnoremap <C-u> <C-u>M
 nnoremap <C-d> <C-d>M
 
-function! SmoothScroll(action)
-   let l:h=winheight(0) / 6
-   let l:i=0
-   while l:i < l:h
-      let l:i = l:i + 1
-      if a:action=="down"
-         execute "normal 3\<C-e>"
-      elseif a:action=="up"
-         execute "normal 3\<C-y>"
-      end
-      redraw
-      sleep 1m
-   endwhile 
-endfunction
-
+"function! SmoothScroll(action)
+"   let l:h=winheight(0) / 6
+"   let l:i=0
+"   while l:i < l:h
+"      let l:i = l:i + 1
+"      if a:action=="down"
+"         execute "normal 3\<C-e>"
+"      elseif a:action=="up"
+"         execute "normal 3\<C-y>"
+"      end
+"      redraw
+"      sleep 1m
+"   endwhile 
+"endfunction
+"
 "nnoremap <silent> <C-d> :<C-u>call SmoothScroll("down")<CR>
 "nnoremap <silent> <C-u> :<C-u>call SmoothScroll("up")<CR>
 
@@ -280,19 +287,19 @@ inoremap <C-u>  <C-g>u<C-u>
 inoremap <C-w>  <C-g>u<C-w>
 
 " \ って遠いよね
-inoremap <C-k> \
-cnoremap <C-k> \
+inoremap <C-]> \
+cnoremap <C-]> \
 
 " text object
-onoremap aa  a>
-vnoremap aa  a>
-onoremap ia  i>
-vnoremap ia  i>
-
-onoremap ar  a]
-vnoremap ar  a]
-onoremap ir  i]
-vnoremap ir  i]
+"onoremap aa  a>
+"vnoremap aa  a>
+"onoremap ia  i>
+"vnoremap ia  i>
+"
+"onoremap ar  a]
+"vnoremap ar  a]
+"onoremap ir  i]
+"vnoremap ir  i]
  
 nnoremap gc `[v`]
 onoremap gc :normal gc<CR>
@@ -302,45 +309,51 @@ onoremap <silent> q
 \ <Bar>   call search('.\&\(\k\<Bar>\_s\)\@!', 'W')
 \ <Bar> endfor<CR>
 
-function! VisualCurrentIndentBlock()
+function! VisualCurrentIndentBlock(type)
     let current_indent = indent('.')
     let current_line   = line('.')
     let current_col    = col('.')
     let last_line      = line('$')
 
     let start_line = current_line
-    while start_line != 1 && current_indent == indent(start_line - 1) 
-        let start_line = start_line - 1
+    while start_line != 1 && current_indent <= indent(start_line) || getline(start_line) == ''
+        let start_line -= 1
     endwhile
+    if a:type ==# 'i'
+        let start_line += 1
+    endif
 
     let end_line = current_line
-    while end_line != last_line && current_indent == indent(end_line + 1)
-        let end_line = end_line + 1
+    while end_line != last_line && current_indent <= indent(end_line) || getline(end_line) == ''
+        let end_line += 1
     endwhile
+    if a:type ==# 'i'
+        let end_line -= 1
+    endif
 
     call cursor(start_line, current_col)
     normal! V
     call cursor(end_line, current_col)
 endfunction
 
-nnoremap gi :call VisualCurrentIndentBlock()<CR>
-onoremap gi :normal gi<CR>
+nnoremap vii :call VisualCurrentIndentBlock('i')<CR>
+nnoremap vai :call VisualCurrentIndentBlock('a')<CR>
+onoremap ii :normal vii<CR>
+onoremap ai :normal vai<CR>
 
 "------------------------
 " プラグインの設定
 "------------------------
 
-" align.vim
-vmap o <leader>tsp
 
 " symfony.vim
-nnoremap <Space>sv :<C-u>Sview<CR>
-nnoremap <Space>sa :<C-u>Saction<CR>
-nnoremap <Space>sm :<C-u>Smodel<CR>
-nnoremap <Space>sp :<C-u>Spartial<CR>
-nnoremap <Space>ss :<C-u>Symfony
-nnoremap <Space>sc :<C-u>Sconfig
-nnoremap <Space>sl :<C-u>Slib
+" nnoremap <Space>sv :<C-u>Sview<CR>
+" nnoremap <Space>sa :<C-u>Saction<CR>
+" nnoremap <Space>sm :<C-u>Smodel<CR>
+" nnoremap <Space>sp :<C-u>Spartial<CR>
+" nnoremap <Space>ss :<C-u>Symfony
+" nnoremap <Space>sc :<C-u>Sconfig
+" nnoremap <Space>sl :<C-u>Slib
 
 " ku.vim
 nnoremap <silent> <Space>kb :<C-u>Ku buffer<CR>
@@ -373,7 +386,6 @@ augroup END
 call ku#custom_prefix('common', '~', $HOME)
 call ku#custom_prefix('common', 'si', $HOME.'/Works/sites/shiraberu/www/dev')
 call ku#custom_prefix('common', 'mikke', $HOME.'/Works/sites/mikke/www')
-nmap <Space>kp <Space>kfsi/
 
 " anyperl.vim
 let g:anyperl_projects = []
@@ -390,6 +402,7 @@ call anyperl#add_project({
 
 nnoremap <Space>pt :AnyperlTest<CR>
 nnoremap <Space>pj :AnyperlJumpModule<CR>
+nnoremap <Space>pd :AnyperlDoc<CR>
 
 
 " 絶対パスで開く
@@ -438,8 +451,18 @@ if has('mac')
     nnoremap <silent> <Space>p :<C-u>r !pbpaste<CR>
 endif
 
+" align.vimのおぺれーた
+function! AlignTSP(type, ...)
+    let reg_save = @@
+    silent execute "normal! '[V']"
+    normal o
+    let @@ = reg_save
+endfunction
+vmap o <leader>tsp
+nnoremap <silent> <Space>a :<C-u>set opfunc=AlignTSP<CR>g@
 
 " ウインドウ単位で開いたファイルの履歴をたどる
+" なんかvimgrepでバグる
 "function! FileJumpPush()
 "    if !exists('w:histories')
 "        let w:histories = []
@@ -476,3 +499,13 @@ endif
 "autocmd FileJumpAutoCmd BufReadPre * call FileJumpPush()
 "nnoremap <silent> ,p :<C-u>call FileJumpPrev()<CR>
 "nnoremap <silent> ,n :<C-u>call FileJumpNext()<CR>
+"
+
+" acp.vim
+let g:acp_behaviorSnipmateLength = 1
+
+" see http://vim-users.jp/2009/11/hack96/
+autocmd FileType *
+\   if &l:omnifunc == ''
+\ |   setlocal omnifunc=syntaxcomplete#Complete
+\ | endif

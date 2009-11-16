@@ -8,11 +8,11 @@ set guifont=Monaco:h12
 "ズーム
 function! ZoomToggle()
     let normal_font = 'Monaco:h12'
-    let zoom_font   = 'Monaco:h25'
+    let zoom_font   = 'Monaco:h22'
     if &guifont == normal_font
         let font = zoom_font
-        let columns = 78
-        let lines = 22
+        let columns = 100
+        let lines = 40
     else
         let font = normal_font
         let columns = 180

@@ -20,7 +20,7 @@ hi DiffAdd      guibg=MediumSeaGreen
 hi Directory    guifg=SkyBlue ctermfg=cyan
 hi ErrorMsg     guibg=Firebrick2 guifg=White
 hi FoldColumn   guibg=Grey guifg=DarkBlue
-hi Folded       guibg=#003300 guifg=NONE
+hi Folded       guibg=#333333 guifg=NONE
 hi IncSearch    gui=reverse
 hi ModeMsg      gui=bold
 hi MoreMsg      gui=bold guifg=SeaGreen4
