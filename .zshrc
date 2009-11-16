@@ -5,7 +5,7 @@ export LANG=ja_JP.UTF-8
 autoload colors
 colors
 
-if [ -n ${SSH_CONNECTION} ]; then
+if [ -z "${SSH_CONNECTION}" ]; then
 PROMPT="
  %{${fg[yellow]}%}%~%{${reset_color}%} 
 [%n]$ "
