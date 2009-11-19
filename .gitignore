@@ -2,3 +2,6 @@
 .vim/.VimballRecord
 .vim/.netrwhist
 .vim/info/account.vim
+.vim/plugin/anyperl.vim
+.vim/autoload/anyperl.vim
+.vim/syntax/prove.vim
