@@ -309,6 +309,8 @@ onoremap <silent> q
 \ <Bar>   call search('.\&\(\k\<Bar>\_s\)\@!', 'W')
 \ <Bar> endfor<CR>
 
+
+" インデント選択
 function! VisualCurrentIndentBlock(type)
     let current_indent = indent('.')
     let current_line   = line('.')
