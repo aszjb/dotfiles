@@ -54,7 +54,7 @@ set pumheight=20
 filetype plugin on
 
 "シェルにパスを通す
-let $PATH = '/opt/local/bin:'.$PATH
+let $PATH = '/opt/local/bin:'.$HOME.'/.vim/bin:'.$PATH
 
 "twitterとかのアカウントが書いてあるファイル読み込み
 let accountFile = $HOME."/.vim/info/account.vim"
@@ -390,21 +390,21 @@ call ku#custom_prefix('common', 'si', $HOME.'/Works/sites/shiraberu/www/dev')
 call ku#custom_prefix('common', 'mikke', $HOME.'/Works/sites/mikke/www')
 
 " anyperl.vim
-"let g:anyperl_projects = []
-"call anyperl#add_project({
-"    \ 'type': 'ark',
-"    \ 'home': $HOME."/dev/perl/ark/ie-buglist.org",
-"    \ 'libs': [$HOME."/dev/perl/ark/ie-buglist.org/ark/lib"]
-"\})
+let g:anyperl_projects = []
+call anyperl#add_project({
+    \ 'type': 'ark',
+    \ 'home': $HOME."/tmp/ark-perl",
+    \ 'libs': [$HOME."/tmp/ark-perl/lib"]
+\})
 "call anyperl#add_project({
 "    \ 'type': 'shiraberu.ark',
 "    \ 'home': $HOME."/Works/sites/shiraberu/www/dev",
 "    \ 'libs': [$HOME."/Works/sites/shiraberu/www/dev/ark-perl/lib"]
 "\})
 "
-"nnoremap <Space>pt :AnyperlTest<CR>
-"nnoremap <Space>pj :AnyperlJumpModule<CR>
-"nnoremap <Space>pd :AnyperlDoc<CR>
+nnoremap <Space>pt :AnyperlTest<CR>
+nnoremap <Space>pj :AnyperlJumpModule<CR>
+nnoremap <Space>pd :AnyperlDoc<CR>
 
 
 " 絶対パスで開く
@@ -511,3 +511,8 @@ autocmd FileType *
 \   if &l:omnifunc == ''
 \ |   setlocal omnifunc=syntaxcomplete#Complete
 \ | endif
+
+" perl-completion.vim
+let g:def_perl_comp_bfunction = 1
+let g:def_perl_comp_packagen  = 1
+let g:acp_behaviorPerlOmniLength = 0
