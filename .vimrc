@@ -396,39 +396,41 @@ call anyperl#add_project({
     \ 'home': $HOME."/tmp/ark-perl",
     \ 'libs': [$HOME."/tmp/ark-perl/lib"]
 \})
-"call anyperl#add_project({
-"    \ 'type': 'shiraberu.ark',
-"    \ 'home': $HOME."/Works/sites/shiraberu/www/dev",
-"    \ 'libs': [$HOME."/Works/sites/shiraberu/www/dev/ark-perl/lib"]
-"\})
-"
+call anyperl#add_project({
+    \ 'type': 'shiraberu.ark',
+    \ 'home': $HOME."/Works/sites/shiraberu/www/dev",
+    \ 'libs': [$HOME."/Works/sites/shiraberu/www/dev/ark-perl/lib"]
+\})
+
 nnoremap <Space>pt :AnyperlTest<CR>
-nnoremap <Space>pj :AnyperlJumpModule<CR>
+nnoremap <Space>pj :AnyperlModuleOpen<CR>
 nnoremap <Space>pd :AnyperlDoc<CR>
 
 
 " 絶対パスで開く
-let s:htdocs_dirs = [$HOME.'/dev/site/localhost/test']
-function! GotoAbsFile()
-    let fname = expand('<cfile>')
-    let filepass = fname
-    if (match(fname, '^/') != -1)
-        for dir in s:htdocs_dirs
-            if match(expand("%:p:h"), dir) != -1 && isdirectory(dir) == 1
-                let filepass = dir . fname
-                break
-            endif
-        endfor
-    endif
-    if filereadable(filepass)
-        execute 'edit ' . filepass
-    else
-        echohl ErrorMsg
-        echo 'no such file ' . fname
-        echohl None
-    endif
-endfunction
-nnoremap gaf :<C-u>call GotoAbsFile()<CR>
+"let s:htdocs_dirs = [$HOME.'/dev/site/localhost/test']
+"function! GotoAbsFile()
+"    let fname = expand('<cfile>')
+"    let filepass = fname
+"    if (match(fname, '^/') != -1)
+"        for dir in s:htdocs_dirs
+"            if match(expand("%:p:h"), dir) != -1 && isdirectory(dir) == 1
+"                let filepass = dir . fname
+"                break
+"            endif
+"        endfor
+"    endif
+"    if filereadable(filepass)
+"        execute 'edit ' . filepass
+"    else
+"        echohl ErrorMsg
+"        echo 'no such file ' . fname
+"        echohl None
+"    endif
+"endfunction
+"nnoremap gaf :<C-u>call GotoAbsFile()<CR>
+"
+set includeexpr=substitute(v:fname,'^\\/','','')
 
 
 " クリップボード連携 
