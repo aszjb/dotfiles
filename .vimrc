@@ -518,3 +518,6 @@ autocmd FileType *
 let g:def_perl_comp_bfunction = 1
 let g:def_perl_comp_packagen  = 1
 let g:acp_behaviorPerlOmniLength = 0
+
+" smartchr.vim
+inoremap <expr> = smartchr#one_of(' = ', ' == ', ' === ', '=')
