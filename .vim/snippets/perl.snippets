@@ -22,8 +22,8 @@ snippet wh
 	}
 # For Loop
 snippet for
-	for (my $${2:var} = 0; $$2 < ${1:count}; $$2${3:++}) {
-		${4:# body...}
+	for my ${1} (${2}) {
+		${3:# body...}
 	}
 # Foreach Loop
 snippet fore
@@ -37,3 +37,6 @@ snippet pp
 # resultset
 snippet rs
 	resultset(${1})
+# __PACKAGE__->
+snippet pa
+	__PACKAGE__->
