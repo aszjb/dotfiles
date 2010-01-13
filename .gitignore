@@ -4,3 +4,4 @@
 .vim/plugin/anyperl.vim
 .vim/autoload/anyperl.vim
 .vim/syntax/prove.vim
+.vim/ftplugin/catalyst.vim
