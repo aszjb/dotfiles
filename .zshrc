@@ -155,7 +155,7 @@ function alc() {
 }
 
 #個別設定を読み込む
-[ -f ~/.zshrc.mine ] && source ~/.zshrc.mine
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local
 
 #エディタ
 #どうやらscreenの自動起動前にこれを読み込むと調子悪いらしい
