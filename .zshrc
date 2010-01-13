@@ -5,15 +5,26 @@ export LANG=ja_JP.UTF-8
 autoload colors
 colors
 
-if [ -z "${SSH_CONNECTION}" ]; then
-PROMPT="
- %{${fg[yellow]}%}%~%{${reset_color}%} 
+autoload -Uz vcs_info
+zstyle ':vcs_info:*' enable git svn
+zstyle ':vcs_info:*' formats '%{'${fg[red]}'%}(%s %b) %{'$reset_color'%}'
+
+
+setopt prompt_subst
+precmd () {
+  LANG=en_US.UTF-8 vcs_info
+  LOADAVG=$(sysctl -n vm.loadavg | perl -anpe '$_=$F[1]')
+  if [ -z "${SSH_CONNECTION}" ]; then
+    PROMPT="
+ %{${fg[yellow]}%}%~%{${reset_color}%} ${vcs_info_msg_0_}
 [%n]$ "
-else
-PROMPT="
- %{${fg[yellow]}%}%~%{${reset_color}%} 
+  else
+    PROMPT="
+ %{${fg[yellow]}%}%~%{${reset_color}%} ${vcs_info_msg_0_}
 %{${fg[green]}%}[%n@%m]$%{${reset_color}%} "
-fi
+  fi
+}
+
 
 PROMPT2='[%n]> ' 
 
