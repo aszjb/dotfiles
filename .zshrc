@@ -13,7 +13,6 @@ zstyle ':vcs_info:*' formats '%{'${fg[red]}'%}(%s %b) %{'$reset_color'%}'
 setopt prompt_subst
 precmd () {
   LANG=en_US.UTF-8 vcs_info
-  LOADAVG=$(sysctl -n vm.loadavg | perl -anpe '$_=$F[1]')
   if [ -z "${SSH_CONNECTION}" ]; then
     PROMPT="
  %{${fg[yellow]}%}%~%{${reset_color}%} ${vcs_info_msg_0_}
