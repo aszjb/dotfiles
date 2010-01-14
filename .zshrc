@@ -90,7 +90,7 @@ esac
 
 alias ll='ls -l'
 
-alias :q='exit'
+alias pg="ps auxw | grep"
 
 alias svnadd="svn st | grep '^?' | awk '{ print \$2 }' | xargs svn add"
 alias svndel="svn st | grep '^!' | awk '{ print \$2 }' | xargs svn delete"
