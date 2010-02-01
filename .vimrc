@@ -73,11 +73,10 @@ augroup MyAutoCmd
 augroup END
 
 "mtとttをhtmlに
-autocmd MyAutoCmd BufNewFile,BufRead *.mt set filetype=html
-autocmd MyAutoCmd BufNewFile,BufRead *.tt set filetype=html
+autocmd MyAutoCmd BufNewFile,BufRead *.mt,*.tt set filetype=html
 
-"psgiはperl
-autocmd MyAutoCmd BufNewFile,BufRead *.psgi set filetype=perl
+"psgiとtはperl
+autocmd MyAutoCmd BufNewFile,BufRead *.psgi,*.t set filetype=perl
 
 "ruをrubyに
 autocmd MyAutoCmd BufNewFile,BufRead *.ru set filetype=ruby
