@@ -363,6 +363,7 @@ nnoremap <silent> <Space>kh :<C-u>Ku history<CR>
 nnoremap <silent> <Space>kc :<C-u>Ku cmd_mru/cmd<CR>
 nnoremap <silent> <Space>ks :<C-u>Ku cmd_mru/search<CR>
 nnoremap <silent> <Space>km :<C-u>Ku file_mru<CR>
+nnoremap <silent> <Space>kp :<C-u>Ku ref/perldoc<CR>
 
 function! Ku_my_keymappings()
     inoremap <buffer> <silent> <Tab> /
