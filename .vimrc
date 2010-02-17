@@ -289,6 +289,9 @@ inoremap <C-w>  <C-g>u<C-w>
 inoremap <C-]> \
 cnoremap <C-]> \
 
+" 行末までyank
+nnoremap Y y$
+
 " text object
 "onoremap aa  a>
 "vnoremap aa  a>
