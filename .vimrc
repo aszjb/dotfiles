@@ -455,43 +455,44 @@ nnoremap <silent> <Space>a :<C-u>set opfunc=AlignTSP<CR>g@
 
 " ウインドウ単位で開いたファイルの履歴をたどる
 " なんかvimgrepでバグる
-"function! FileJumpPush()
-"    if !exists('w:histories')
-"        let w:histories = []
-"    endif
-"    let buf = bufnr('%')
-"    if count(w:histories, buf) == 0
-"        call add(w:histories, buf)
-"    endif
-"endfunction
-"
-"function! FileJumpPrev()
-"    if exists('w:histories')
-"        let buf = bufnr('%')
-"        let current = match(w:histories, '^'.buf.'$')
-"        if current != 0 && exists('w:histories[current - 1]')
-"            execute 'buffer ' . w:histories[current - 1]
-"        endif
-"    endif
-"endfunction
-"
-"function! FileJumpNext()
-"    if exists('w:histories')
-"        let buf = bufnr('%')
-"        let current = match(w:histories, '^'.buf.'$')
-"        if exists('w:histories[current + 1]')
-"            execute 'buffer ' . w:histories[current + 1]
-"        endif
-"    endif
-"endfunction
-"
-"augroup FileJumpAutoCmd
-"    autocmd!
-"augroup END
+function! FileJumpPush()
+    if !exists('w:histories')
+        let w:histories = []
+    endif
+    let buf = bufnr('%')
+    if count(w:histories, buf) == 0
+        call add(w:histories, buf)
+    endif
+endfunction
+
+function! FileJumpPrev()
+    if exists('w:histories')
+        let buf = bufnr('%')
+        let current = match(w:histories, '^'.buf.'$')
+        if current != 0 && exists('w:histories[current - 1]')
+            execute 'buffer ' . w:histories[current - 1]
+        endif
+    endif
+endfunction
+
+function! FileJumpNext()
+    if exists('w:histories')
+        let buf = bufnr('%')
+        let current = match(w:histories, '^'.buf.'$')
+        if exists('w:histories[current + 1]')
+            execute 'buffer ' . w:histories[current + 1]
+        endif
+    endif
+endfunction
+
+augroup FileJumpAutoCmd
+    autocmd!
+augroup END
+
 "autocmd FileJumpAutoCmd BufReadPre * call FileJumpPush()
 "nnoremap <silent> ,p :<C-u>call FileJumpPrev()<CR>
 "nnoremap <silent> ,n :<C-u>call FileJumpNext()<CR>
-"
+
 
 " acp.vim
 let g:acp_behaviorSnipmateLength = 1
@@ -537,3 +538,7 @@ function! Rename(file, bang)
     endif
 endfunction
 command! -nargs=1 -bang -complete=file Rename call Rename(<q-args>, "<bang>")
+
+
+"zen-coding
+let g:user_zen_expandabbr_key = '<C-f>'
