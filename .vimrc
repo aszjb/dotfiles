@@ -109,8 +109,16 @@ function! SnipMateReload()
 endfunction
 
 "grepとかmakeのあとにエラーがあればQuickFixだす
-autocmd MyAutoCmd QuickfixCmdPost make,grep,grepadd,vimgrep
-    \ if len(getqflist()) != 0 | copen | endif
+"autocmd MyAutoCmd QuickfixCmdPost make,grep,grepadd,vimgrep
+"    \ if len(getqflist()) != 0 | copen | endif
+
+" オレオレgrep
+command! -complete=file -nargs=+ Grep call s:grep([<f-args>])
+function! s:grep(args)
+    let target = len(a:args) > 1 ? join(a:args[1:]) : '**/*'
+    execute 'vimgrep' '/' . a:args[0] . '/j ' . target
+    if len(getqflist()) != 0 | copen | endif
+endfunction
 
 "-----------------------
 " 文字コードとかの設定
@@ -542,3 +550,5 @@ command! -nargs=1 -bang -complete=file Rename call Rename(<q-args>, "<bang>")
 
 "zen-coding
 let g:user_zen_expandabbr_key = '<C-f>'
+
+set virtualedit+=block
