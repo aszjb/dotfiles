@@ -1,1 +1,1 @@
-syn keyword htmlTagName contained section nav header footer
+syn keyword htmlTagName contained section nav header footer audio video
