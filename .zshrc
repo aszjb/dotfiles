@@ -155,6 +155,33 @@ function alc() {
   fi
 }
 
+#json_view
+function json_view() {
+  if [ $# != 0 ]; then
+    perl -MLWP::Simple -MJSON -MData::Dumper -we 'print Dumper decode_json get $ARGV[0]' $*
+  else
+    echo 'usage: json_view url'
+  fi
+}
+
+#pminfo
+function pminfo() {
+  if [ $# != 0 ]; then
+    perl -le 'eval "require $ARGV[0]";print ${"${ARGV[0]}::VERSION"};print qx/perldoc -ml $ARGV[0]/' $*
+  else
+    echo 'usage: pminfo perlmodule'
+  fi
+}
+
+#url_decode
+function url_decode() {
+  if [ $# != 0 ]; then
+    perl -MURI::Escape -wle 'print uri_unescape $ARGV[0]' $*
+  else
+    echo 'usage: url_decode url'
+  fi
+}
+
 #個別設定を読み込む
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
 
