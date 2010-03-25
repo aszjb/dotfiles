@@ -113,10 +113,9 @@ endfunction
 "    \ if len(getqflist()) != 0 | copen | endif
 
 " オレオレgrep
-command! -complete=file -nargs=+ Grep call s:grep([<f-args>])
+command! -complete=file -nargs=+ Grep call s:grep(<q-args>)
 function! s:grep(args)
-    let target = len(a:args) > 1 ? join(a:args[1:]) : '**/*'
-    execute 'vimgrep' '/' . a:args[0] . '/j ' . target
+    execute 'vimgrep' '/' . a:args . '/j **/*'
     if len(getqflist()) != 0 | copen | endif
 endfunction
 
@@ -243,6 +242,9 @@ cnoremap <C-h> <BackSpace>
 "コマンドモードの履歴
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
+
+"コマンドモードでペースト
+cnoremap <C-y> <C-r>0
 
 "文字コード変更して再読み込み
 nnoremap <silent> eu :<C-u>e ++enc=utf-8<CR>
