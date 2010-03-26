@@ -5,7 +5,7 @@
 " License: MIT License <http://www.opensource.org/licenses/mit-license.php>
 
 if exists('g:loaded_html5validator')
-    finish
+    "finish
 endif
 let g:loaded_html5validator = 1
 
@@ -24,13 +24,13 @@ function! s:html5validate(filename)
     if filename == ''
         let filename = expand('%:p')
         if filename == ''
-            s:error('no such file')
+            call s:error('no such file')
             return
         endif
     else
         let filename = fnamemodify(filename, ':p')
-        if !filereadable(filename) && !isdirectory(filename)
-            s:error('no such file: ' . a:filename)
+        if !filereadable(filename)
+            call s:error('no such file: ' . a:filename)
             return
         endif
     endif
@@ -40,13 +40,15 @@ function! s:html5validate(filename)
     \                 filename, url)
     let res = system(cmd)
     if empty(res)
-        s:error('request faild')
+        call s:error('request faild')
         return
     endif
     let json = eval( substitute(res, '[\n\r]', '', 'g') )
 
     if empty(json.messages)
         echo 'Valid HTML5!!'
+        cgetexpr ''
+        cclose
         return
     endif
 
