@@ -1,8 +1,3 @@
 .vim/info
 .vim/.VimballRecord
 .vim/.netrwhist
-.vim/plugin/anyperl.vim
-.vim/autoload/anyperl.vim
-.vim/syntax/prove.vim
-.vim/ftplugin/catalyst.vim
-.vim/ftplugin/ark.vim

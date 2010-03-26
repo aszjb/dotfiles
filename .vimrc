@@ -258,8 +258,8 @@ nnoremap <Space>tp :<C-u>set paste!<CR>
 "help
 nnoremap <Space>h :<C-u>vert bel h<Space>
 
-"svn
-nnoremap <Space>cs :<C-u>!svn<Space>
+"git
+nnoremap <Space>g :<C-u>!git<Space>
 
 "行末まで削除
 inoremap <C-k> <C-o>D
