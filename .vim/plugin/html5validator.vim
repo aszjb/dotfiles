@@ -1,6 +1,6 @@
-" html5validator.vim - description
+" html5validator.vim - html5 validate using Validator.nu API
 "
-" Author:  Kazuhito Hokamura <Kazuhito Hokamura>
+" Author:  Kazuhito Hokamura <http://webtech-walker.com/>
 " Version: 0.0.1
 " License: MIT License <http://www.opensource.org/licenses/mit-license.php>
 
@@ -19,33 +19,33 @@ function! s:error(str)
     echohl None
 endfunction
 
-function! s:html5validate(filename)
-    let filename = a:filename
-    if filename == ''
-        let filename = expand('%:p')
-        if filename == ''
-            call s:error('no such file')
-            return
-        endif
-    else
-        let filename = fnamemodify(filename, ':p')
-        if !filereadable(filename)
-            call s:error('no such file: ' . a:filename)
-            return
-        endif
+function! s:html5validate()
+    if !executable('curl')
+        call s:error('"curl" not execute able')
+        return
     endif
 
     let url = 'http://html5.validator.nu/'
-    let cmd = printf('curl -s --form out=json --form content=@%s %s',
-    \                 filename, url)
-    let res = system(cmd)
-    if empty(res)
+    let timeout = 5
+    let filename = expand('%:p')
+    let quote = &shellxquote == '"' ?  "'" : '"'
+    let cmd  = 'curl -s --connect-timeout ' . timeout . ' '
+    let cmd .= '--form out=json --form content=@' .quote.filename.quote. ' '
+    let cmd .= url
+
+    let json = system(cmd)
+    if empty(json)
         call s:error('request faild')
         return
     endif
-    let json = eval( substitute(res, '[\n\r]', '', 'g') )
 
-    if empty(json.messages)
+    if has('win32')
+        let json = iconv(json, 'utf-8', 'cp932')
+    endif
+
+    let res_data = eval( substitute(json, '[\n\r]', '', 'g') )
+
+    if empty(res_data.messages)
         echo 'Valid HTML5!!'
         cgetexpr ''
         cclose
@@ -53,7 +53,7 @@ function! s:html5validate(filename)
     endif
 
     let errors = []
-    for row in json.messages
+    for row in res_data.messages
         let lastline = has_key(row, 'lastLine') ? row.lastLine : 1
         let type     = has_key(row, 'type')     ? row.type     : '-'
         let message  = has_key(row, 'message')
@@ -66,7 +66,7 @@ function! s:html5validate(filename)
     copen
 endfunction
 
-command! -complete=file -nargs=? HTML5Vlidate call s:html5validate(<q-args>)
+command! -complete=file -nargs=0 HTML5Validate call s:html5validate()
 
 
 let &cpo = s:save_cpo

@@ -551,6 +551,20 @@ command! -nargs=1 -bang -complete=file Rename call Rename(<q-args>, "<bang>")
 
 
 "zen-coding
-let g:user_zen_expandabbr_key = '<C-f>'
+let g:user_zen_leader_key = '<C-z>'
 
 set virtualedit+=block
+
+" プロジェクト毎に読み込む設定ファイル
+augroup vimrc-project
+    autocmd!
+    autocmd BufNewFile,BufReadPost * call s:vimrc_project(expand('<afile>:p:h'))
+augroup END
+
+function! s:vimrc_project(loc)
+    let files = findfile('.vimrc.project', escape(a:loc, ' ') . ';', -1)
+    for i in reverse(filter(files, 'filereadable(v:val)'))
+        source `=i`
+    endfor
+endfunction
+
