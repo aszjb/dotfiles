@@ -182,6 +182,19 @@ function url_decode() {
   fi
 }
 
+#imageinfo
+function imageinfo() {
+  if [ $# != 0 ]; then
+    perl -MImage::Info -MYAML -le 'print $_, "\n", Dump Image::Info::image_info($_) for @ARGV'
+  else
+    echo 'usage: imageinfo file [file..]'
+  fi
+}
+
+# macvim
+alias vim="/Applications/MacVim.app/Contents/MacOS/Vim -g --remote-tab-silent"
+
+
 #個別設定を読み込む
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
 
