@@ -1,5 +1,5 @@
 " A ref source for perldoc.
-" Version: 0.2.0
+" Version: 0.3.0
 " Author : thinca <thinca+vim@gmail.com>
 " License: Creative Commons Attribution 2.1 Japan License
 "          <http://creativecommons.org/licenses/by/2.1/jp/deed.en>
@@ -9,19 +9,26 @@ set cpo&vim
 
 
 
-if !exists('g:ref_perldoc_cmd')
+" config. {{{1
+if !exists('g:ref_perldoc_cmd')  " {{{2
   let g:ref_perldoc_cmd = executable('perldoc') ? 'perldoc' : ''
+endif
+
+if !exists('g:ref_perldoc_complete_head')  " {{{2
+  let g:ref_perldoc_complete_head = 0
 endif
 
 
 
-function! ref#perldoc#available()  " {{{2
+let s:source = {'name': 'perldoc'}  " {{{1
+
+function! s:source.available()  " {{{2
   return len(g:ref_perldoc_cmd)
 endfunction
 
 
 
-function! ref#perldoc#get_body(query)  " {{{2
+function! s:source.get_body(query)  " {{{2
   let cmdarg = ['-T']
   let q = matchstr(a:query, '\v%(^|\s)\zs[^-]\S*')
 
@@ -44,15 +51,15 @@ function! ref#perldoc#get_body(query)  " {{{2
   let res = ref#system((type(g:ref_perldoc_cmd) == type('') ?
   \   split(g:ref_perldoc_cmd, '\s\+') : g:ref_perldoc_cmd) + cmdarg + [q])
 
-  if res == ''
+  if res.stdout == ''
     throw printf('No documentation found for "%s".', q)
   endif
-  return res
+  return res.stdout
 endfunction
 
 
 
-function! ref#perldoc#opened(query)  " {{{2
+function! s:source.opened(query)  " {{{2
   let b:ref_perldoc_word = matchstr(a:query, '-\@<![^-[:space:]]\+')
   let mode = getline(1) ==# 'NAME' ? (
   \            0 <= index(s:list('basepod'), b:ref_perldoc_word) ? 'perl'
@@ -67,18 +74,19 @@ endfunction
 
 
 
-function! ref#perldoc#complete(query)  " {{{2
+function! s:source.complete(query)  " {{{2
   let q = a:query == '' || a:query =~ '\s$' ? '' : split(a:query)[-1]
   if q =~ '-'
     return ['-f', '-m']
   endif
 
-  return s:match(s:appropriate_list(a:query), q)
+  let list = s:appropriate_list(a:query)
+  return g:ref_perldoc_complete_head ? s:head(list, q) : s:match(list, q)
 endfunction
 
 
 
-function! ref#perldoc#get_keyword()  " {{{2
+function! s:source.get_keyword()  " {{{2
   let isk = &l:iskeyword
   setlocal isk& isk+=:
   let kwd = expand('<cword>')
@@ -88,7 +96,7 @@ endfunction
 
 
 
-function! ref#perldoc#leave()
+function! s:source.leave()  " {{{2
   syntax clear
   unlet! b:current_syntax
   unlet! b:ref_perldoc_mode b:ref_perldoc_word
@@ -96,6 +104,7 @@ endfunction
 
 
 
+" functions. {{{1
 function! s:syntax(mode)  " {{{2
   if exists('b:current_syntax')
   \  && ((a:mode ==# 'source' && b:current_syntax ==# 'perl') ||
@@ -157,7 +166,7 @@ endfunction
 
 
 
-function! s:indent_region(name, indent, option)
+function! s:indent_region(name, indent, option)  " {{{2
   execute 'syntax region' a:name
   \       'start=/^ \{' . a:indent . '}\ze\S/'
   \       'end=/\n\+\ze \{,' . (a:indent - 1) . '}\S/' a:option
@@ -165,7 +174,7 @@ endfunction
 
 
 
-function! s:appropriate_list(query)
+function! s:appropriate_list(query)  " {{{2
   return a:query =~# '-f\>' ? s:list('func'):
   \      a:query =~# '-m\>' ? s:list('modules'):
   \                           s:list('all')
@@ -173,7 +182,7 @@ endfunction
 
 
 
-function! s:match(list, str)
+function! s:match(list, str)  " {{{2
   let matched = filter(copy(a:list), 'v:val =~? "^\\V" . a:str')
   if empty(matched)
     let matched = filter(copy(a:list), 'v:val =~? "\\V" . a:str')
@@ -183,7 +192,14 @@ endfunction
 
 
 
-function! s:list(name)
+function! s:head(list, query)  " {{{2
+  let pat = '^\V' . a:query . '\w\*\v(::)?\zs.*$'
+  return s:uniq(map(filter(copy(a:list), 'v:val =~# pat'), 'substitute(v:val, pat, "", "")'))
+endfunction
+
+
+
+function! s:list(name)  " {{{2
   if a:name ==# 'all'
     return s:list('basepod') + s:list('modules') + s:list('func')
   endif
@@ -192,10 +208,10 @@ endfunction
 
 
 
-function! s:basepod_list(name)
+function! s:basepod_list(name)  " {{{2
   let basepods = []
   let base = ref#system(['perl', '-MConfig', '-e',
-  \                      'print $Config{installprivlib}'])
+  \                      'print $Config{installprivlib}']).stdout
   for dir in ['pod', 'pods']
     if filereadable(printf('%s/%s/perl.pod', base, dir))
       let base .= '/' . dir
@@ -213,8 +229,8 @@ endfunction
 
 
 
-function! s:modules_list(name)
-  let inc = ref#system(['perl', '-e', 'print join('':'', @INC)'])
+function! s:modules_list(name)  " {{{2
+  let inc = ref#system(['perl', '-e', 'print join('':'', @INC)']).stdout
   let sep = '[/\\]'
   let files = {}
   let modules = []
@@ -234,8 +250,8 @@ endfunction
 
 
 
-function! s:func_list(name)
-  let doc = ref#system('perldoc -u perlfunc')
+function! s:func_list(name)  " {{{2
+  let doc = ref#system('perldoc -u perlfunc').stdout
   let i = 0
   let funcs = []
   while 1
@@ -267,7 +283,13 @@ endfunction
 
 
 
-call ref#detect#register('perl', 'perldoc')
+function! ref#perldoc#define()  " {{{2
+  return s:source
+endfunction
+
+
+
+call ref#register_detection('perl', 'perldoc')
 
 
 

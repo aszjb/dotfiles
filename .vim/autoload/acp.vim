@@ -31,7 +31,7 @@ function acp#enable()
 
   nnoremap <silent> i i<C-r>=<SID>feedPopup()<CR>
   nnoremap <silent> a a<C-r>=<SID>feedPopup()<CR>
-  nnoremap <silent> R R<C-r>=<SID>feedPopup()<CR>
+  "nnoremap <silent> R R<C-r>=<SID>feedPopup()<CR>
 endfunction
 
 "
@@ -42,7 +42,7 @@ function acp#disable()
   augroup END
   nnoremap i <Nop> | nunmap i
   nnoremap a <Nop> | nunmap a
-  nnoremap R <Nop> | nunmap R
+  "nnoremap R <Nop> | nunmap R
 endfunction
 
 "

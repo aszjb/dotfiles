@@ -22,6 +22,12 @@ set nohlsearch
 "行数表示
 set number
 
+"対応する括弧表示しない
+set noshowmatch
+
+"コマンドラインの高さ
+set cmdheight=1
+
 "バックスペースで何でも消したい
 set backspace=indent,eol,start
 
@@ -43,6 +49,7 @@ set laststatus=2
 set statusline=%<%f\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']['.&ft.']'}%=%l,%c%V%8P
 
 "exモードの補完
+set wildmenu
 set wildmode=list:longest,full
 
 "補完
@@ -63,6 +70,10 @@ nnoremap <C-w>v :<C-u>belowright vnew<CR>
 nnoremap <Space>sp :<C-u>set filetype=perl<CR>
 nnoremap <Space>sh :<C-u>set filetype=php<CR>
 nnoremap <Space>sj :<C-u>set filetype=javascript<CR>
+
+"windwowの高さ、幅
+set winheight=100
+set winwidth=78
 
 "-----------------------
 " autocmd
@@ -88,7 +99,7 @@ autocmd MyAutoCmd BufNewFile,BufRead *.md set filetype=mkd
 autocmd MyAutoCmd BufNewFile,BufRead * set expandtab
 
 "ディレクト自動移動
-autocmd MyAutoCmd BufRead * execute ":lcd " . expand("%:p:h")
+autocmd MyAutoCmd BufNewFile,BufRead * execute ":lcd " . expand("%:p:h")
 
 " カレントバッファのファイルを再読み込み。filetypeがvimかsnippetsのときだけ。
 nnoremap <silent> <Space>r :<C-u>
@@ -244,7 +255,7 @@ cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
 
 "コマンドモードでペースト
-cnoremap <C-y> <C-r>0
+cnoremap <C-y> <C-r>"
 
 "文字コード変更して再読み込み
 nnoremap <silent> eu :<C-u>e ++enc=utf-8<CR>
@@ -321,6 +332,28 @@ onoremap <silent> q
 \ <Bar>   call search('.\&\(\k\<Bar>\_s\)\@!', 'W')
 \ <Bar> endfor<CR>
 
+" コピペ
+nnoremap y "xy
+vnoremap y "xy
+nnoremap d "xd
+vnoremap d "xd
+nnoremap c "xc
+vnoremap c "xc
+vnoremap p "xp
+nnoremap <C-p> :<C-u>set opfunc=OverridePaste<CR>g@
+nnoremap <C-p><C-p> :<C-u>set opfunc=OverridePaste<CR>g@g@
+
+function! OverridePaste(type, ...)
+    if a:0
+        silent execute "normal! `<" . a:type . "`>\"xp"
+    elseif a:type == 'line'
+        silent execute "normal! '[V']\"xp"
+    elseif a:type == 'block'
+        silent execute "normal! `[\<C-V>`]\"xp"
+    else
+        silent execute "normal! `[v`]\"xp"
+    endif
+endfunction
 
 " インデント選択
 function! VisualCurrentIndentBlock(type)
@@ -354,6 +387,8 @@ nnoremap vii :call VisualCurrentIndentBlock('i')<CR>
 nnoremap vai :call VisualCurrentIndentBlock('a')<CR>
 onoremap ii :normal vii<CR>
 onoremap ai :normal vai<CR>
+
+nnoremap gs :<C-u>setf<Space>
 
 "------------------------
 " プラグインの設定
@@ -400,9 +435,7 @@ augroup END
 
 call ku#custom_prefix('common', '~', $HOME)
 
-nnoremap <Space>pt :AnyperlTest<CR>
-nnoremap <Space>pj :AnyperlModuleOpen<CR>
-nnoremap <Space>pd :AnyperlDoc<CR>
+nnoremap <Space>pr :Prove<CR>
 
 
 " 絶対パスで開く
@@ -568,3 +601,44 @@ function! s:vimrc_project(loc)
     endfor
 endfunction
 
+" package名チェック
+function! s:get_package_name()
+  let mx = '^\s*package\s\+\([^ ;]\+\)'
+  for line in getline(1, 5)
+    if line =~ mx
+      return substitute(matchstr(line, mx), mx, '\1', '')
+    endif
+  endfor
+  return ""
+endfunction
+
+function! s:check_package_name()
+  let path = substitute(expand('%:p'), '\\', '/', 'g')
+  let name = substitute(s:get_package_name(), '::', '/', 'g') . '.pm'
+  if path[-len(name):] != name
+    echohl WarningMsg
+    echomsg "ぱっけーじめいと、ほぞんされているぱすが、ちがうきがします！"
+    echomsg "ちゃんとなおしてください＞＜"
+    echohl None
+  endif
+endfunction
+
+au! BufWritePost *.pm call s:check_package_name()
+
+" ref.vim
+let g:ref_phpmanual_path = $HOME.'/Documents/php-chunked-xhtml'
+let g:ref_perldoc_complete_head = 1
+let g:ref_use_vimproc = 0
+let g:ref_jquery_use_cache = 1
+let g:ref_alc_use_cache = 1
+nnoremap <silent> <Space>rl :<C-u>call ref#jump('normal', 'alc')<CR>
+vnoremap <silent> <Space>rl :<C-u>call ref#jump('visual', 'alc')<CR>
+nnoremap <silent> <Space>rp :<C-u>call ref#jump('normal', 'perldoc')<CR>
+vnoremap <silent> <Space>rp :<C-u>call ref#jump('visual', 'perldoc')<CR>
+nnoremap <C-f><C-f> :<C-u>Ref<Space>
+nnoremap <C-f><C-p> :<C-u>Ref perldoc<Space>
+nnoremap <C-f><C-l> :<C-u>Ref alc<Space>
+nnoremap <C-f><C-h> :<C-u>Ref phpmanual<Space>
+nnoremap <C-f><C-j> :<C-u>Ref jquery<Space>
+
+let g:prove_debug = 1

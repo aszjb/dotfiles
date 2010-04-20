@@ -5,25 +5,6 @@ set lines=45
 "フォント
 set guifont=Monaco:h12
 
-"ズーム
-function! ZoomToggle()
-    let normal_font = 'Monaco:h12'
-    let zoom_font   = 'Monaco:h22'
-    if &guifont == normal_font
-        let font = zoom_font
-        let columns = 100
-        let lines = 40
-    else
-        let font = normal_font
-        let columns = 180
-        let lines = 45
-    endif
-    execute 'set guifont=' . font
-    execute 'set columns=' . columns
-    execute 'set lines=' . lines
-endfunction
-nnoremap <Space>tz :<C-u>call ZoomToggle()<CR>
-
 "バックスラッシュ入力
 noremap! ¥ \
 
@@ -41,8 +22,6 @@ set guioptions-=T
 
 "カーソル行表示
 set cursorline
-"autocmd BufEnter * setlocal cursorline
-"autocmd BufLeave * setlocal nocursorline
 
 "---------------------------------------------------------------------------
 " 日本語対応のための設定: from kaoriya
