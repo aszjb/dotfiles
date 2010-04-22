@@ -109,12 +109,15 @@ nnoremap <silent> <Space>r :<C-u>
 \     call SnipMateReload() <Bar>
 \ endif<CR>
 
+" s:snippetsを外からunletできないので以下の関数をplugin/snipMate.vimに書く
+"fun! ResetSnippet(ft)
+"	if has_key(g:did_ft, ft) | unlet g:did_ft[ft] | endif
+"	if has_key(s:snippets, ft) | unlet s:snippets[ft] | endif
+"endif
 function! SnipMateReload()
     if &ft == 'snippet'
         let ft = substitute(expand('%'), '.snippets', '', '')
-        if has_key(g:did_ft, ft)
-            unlet g:did_ft[ft]
-        endif
+        call ResetSnippet(ft)
         silent! call GetSnippets(g:snippets_dir, ft)
     endif
 endfunction

@@ -96,6 +96,11 @@ fun! ResetSnippets()
 	let s:snippets = {} | let s:multi_snips = {} | let g:did_ft = {}
 endf
 
+fun! ResetSnippet(ft)
+	if has_key(g:did_ft, a:ft) | unlet g:did_ft[a:ft] | endif
+	if has_key(s:snippets, a:ft) | unlet s:snippets[a:ft] | endif
+endf
+
 let g:did_ft = {}
 fun! GetSnippets(dir, filetypes)
 	for ft in split(a:filetypes, '\.')
