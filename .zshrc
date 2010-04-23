@@ -36,19 +36,21 @@ HISTFILE="$HOME/.zsh_history"
 HISTSIZE=100000
 SAVEHIST=100000
 
+#エディタ
+export EDITOR=vi
+
 setopt hist_ignore_dups
 setopt share_history
 setopt hist_ignore_space
+
+#キーバインド
+bindkey -e
 
 autoload history-search-end
 zle -N history-beginning-search-backward-end history-search-end
 zle -N history-beginning-search-forward-end history-search-end
 bindkey "^P" history-beginning-search-backward-end
 bindkey "^N" history-beginning-search-forward-end 
-
-#先方予約
-#autoload predict-on
-#predict-on
 
 #ビープ音ならなさない
 setopt nobeep
@@ -57,18 +59,6 @@ setopt nobeep
 setopt auto_cd
 setopt auto_pushd 
 setopt pushd_ignore_dups
-
-#キーバインド
-bindkey -e
-
-#ターミナルのタイトル
-#case "${TERM}" in
-#kterm*|xterm)
-#    precmd() {
-#        echo -ne "\033]0;${HOST}\007"
-#    }
-#    ;;
-#esac 
 
 #lsと補間にでる一覧の色
 export LSCOLORS=gxfxxxxxcxxxxxxxxxgxgx
@@ -193,7 +183,3 @@ function imageinfo() {
 
 #個別設定を読み込む
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
-
-#エディタ
-#どうやらscreenの自動起動前にこれを読み込むと調子悪いらしい
-export EDITOR=vi
