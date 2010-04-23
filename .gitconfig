@@ -1,0 +1,18 @@
+[user]
+	email = k.hokamura@gmail.com
+	name = hokaccha
+[color]
+	ui = auto
+	status = auto
+	diff = auto
+	branche = auto
+[alias]
+	co = checkout
+	ci = commit
+	st = status
+	br = branch
+	l  = log --date=iso -10
+[push]
+	default = matching
+[core]
+	excludesfile = ~/.gitignore
