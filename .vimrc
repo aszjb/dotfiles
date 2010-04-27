@@ -84,22 +84,22 @@ augroup MyAutoCmd
 augroup END
 
 "mtとttをhtmlに
-autocmd MyAutoCmd BufNewFile,BufRead *.mt,*.tt set filetype=html
+autocmd MyAutoCmd BufNewFile,BufReadPost *.mt,*.tt set filetype=html
 
 "psgiとtはperl
-autocmd MyAutoCmd BufNewFile,BufRead *.psgi,*.t set filetype=perl
+autocmd MyAutoCmd BufNewFile,BufReadPost *.psgi,*.t set filetype=perl
 
 "ruをrubyに
-autocmd MyAutoCmd BufNewFile,BufRead *.ru set filetype=ruby
+autocmd MyAutoCmd BufNewFile,BufReadPost *.ru set filetype=ruby
 
 "markdownのfiletypeをセット
-autocmd MyAutoCmd BufNewFile,BufRead *.md set filetype=mkd
+autocmd MyAutoCmd BufNewFile,BufReadPost *.md set filetype=mkd
 
 "なぜかnoexpandtabになることがあるので
-autocmd MyAutoCmd BufNewFile,BufRead * set expandtab
+autocmd MyAutoCmd BufNewFile,BufReadPost * set expandtab
 
 "ディレクト自動移動
-autocmd MyAutoCmd BufNewFile,BufRead * execute ":lcd " . expand("%:p:h")
+autocmd MyAutoCmd BufNewFile,BufReadPost * execute ":lcd " . expand("%:p:h")
 
 " カレントバッファのファイルを再読み込み。filetypeがvimかsnippetsのときだけ。
 nnoremap <silent> <Space>r :<C-u>
@@ -645,3 +645,19 @@ nnoremap <C-f><C-h> :<C-u>Ref phpmanual<Space>
 nnoremap <C-f><C-j> :<C-u>Ref jquery<Space>
 
 let g:prove_debug = 1
+
+" Capture
+command! -nargs=+ -bang -complete=command Capture call s:cmd_capture([<f-args>], <bang>0)
+
+function! s:cmd_capture(args, banged)
+  new
+  silent put =Capture(join(a:args))
+  1,2delete _
+endfunction
+
+function! Capture(cmd)
+  redir => result
+  silent execute a:cmd
+  redir END
+  return result
+endfunction
