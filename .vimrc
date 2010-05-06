@@ -647,17 +647,20 @@ nnoremap <C-f><C-j> :<C-u>Ref jquery<Space>
 let g:prove_debug = 1
 
 " Capture
-command! -nargs=+ -bang -complete=command Capture call s:cmd_capture([<f-args>], <bang>0)
-
-function! s:cmd_capture(args, banged)
-  new
-  silent put =Capture(join(a:args))
-  1,2delete _
-endfunction
+command! -nargs=1 -complete=command Capture call Capture(<f-args>)
 
 function! Capture(cmd)
   redir => result
   silent execute a:cmd
   redir END
-  return result
+
+  let bufname = 'Capture: ' . a:cmd
+  new
+  setlocal bufhidden=unload
+  setlocal nobuflisted
+  setlocal buftype=nofile
+  setlocal noswapfile
+  silent file `=bufname`
+  silent put =result
+  1,2delete _
 endfunction
