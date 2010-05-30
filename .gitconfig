@@ -16,4 +16,4 @@
 	default = matching
 [core]
 	excludesfile = ~/.gitignore
-	pager = less -R
+	pager = less -r
