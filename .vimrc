@@ -60,9 +60,6 @@ set pumheight=20
 "ftplugin有効
 filetype plugin on
 
-"シェルにパスを通す
-let $PATH = '/opt/local/bin:'.$HOME.'/.vim/bin:'.$PATH
-
 " 新規windowを右側に開く
 nnoremap <C-w>v :<C-u>belowright vnew<CR>
 
@@ -99,7 +96,8 @@ autocmd MyAutoCmd BufNewFile,BufReadPost *.md set filetype=mkd
 autocmd MyAutoCmd BufNewFile,BufReadPost * set expandtab
 
 "ディレクト自動移動
-autocmd MyAutoCmd BufNewFile,BufReadPost * execute ":lcd " . expand("%:p:h")
+autocmd MyAutoCmd BufNewFile,BufReadPost *
+\ execute ":lcd " . substitute(expand("%:p:h"), ' ', '\\ ', 'g')
 
 " カレントバッファのファイルを再読み込み。filetypeがvimかsnippetsのときだけ。
 nnoremap <silent> <Space>r :<C-u>
@@ -282,10 +280,10 @@ inoremap <C-k> <C-o>D
 inoremap <expr> <CR> pumvisible() ? "\<C-e>\<CR>" : "\<CR>"
 
 "スクロール
-nnoremap <C-e> <C-e>M
-nnoremap <C-y> <C-y>M
-nnoremap <C-u> <C-u>M
-nnoremap <C-d> <C-d>M
+nnoremap <C-e> <C-e>j
+nnoremap <C-y> <C-y>k
+nnoremap <C-u> <C-u>zz
+nnoremap <C-d> <C-d>zz
 
 "function! SmoothScroll(action)
 "   let l:h=winheight(0) / 6
@@ -490,14 +488,14 @@ if has('mac')
 endif
 
 " align.vimのおぺれーた
-function! AlignTSP(type, ...)
-    let reg_save = @@
-    silent execute "normal! '[V']"
-    normal o
-    let @@ = reg_save
-endfunction
-vmap o <leader>tsp
-nnoremap <silent> <Space>a :<C-u>set opfunc=AlignTSP<CR>g@
+"function! AlignTSP(type, ...)
+"    let reg_save = @@
+"    silent execute "normal! '[V']\<leader>tsp"
+"    let @@ = reg_save
+"endfunction
+"nnoremap <silent> <Space>a :<C-u>set opfunc=AlignTSP<CR>g@
+vmap <Space>a <leader>tsp
+vnoremap <Space>= :Align =><CR>
 
 " ウインドウ単位で開いたファイルの履歴をたどる
 " なんかvimgrepでバグる
@@ -557,12 +555,6 @@ autocmd FileType *
 " smartchr.vim
 "inoremap <expr> = smartchr#one_of(' = ', ' == ', ' === ', '=')
 "inoremap <expr> => smartchr#one_of(' => ', '=>')
-
-" local設定ファイル
-let local_vimrc = $HOME."/.vimrc.local"
-if (filereadable(local_vimrc))
-    execute "source " . local_vimrc
-endif
 
 " rename
 function! DoRename(file)
@@ -644,7 +636,7 @@ nnoremap <C-f><C-l> :<C-u>Ref alc<Space>
 nnoremap <C-f><C-h> :<C-u>Ref phpmanual<Space>
 nnoremap <C-f><C-j> :<C-u>Ref jquery<Space>
 
-let g:prove_debug = 1
+"let g:prove_debug = 1
 
 " Capture
 command! -nargs=1 -complete=command Capture call Capture(<f-args>)
@@ -664,3 +656,97 @@ function! Capture(cmd)
   silent put =result
   1,2delete _
 endfunction
+
+" パスの追加
+let s:paths = split($PATH, ':')
+function! g:insert_path(path)
+    let index = index(s:paths, a:path)
+    if index != -1
+        call remove(s:paths, index)
+    endif
+    call insert(s:paths, a:path)
+    let $PATH = join(s:paths, ':')
+endfunction
+
+" local設定ファイル
+let local_vimrc = $HOME."/.vimrc.local"
+if (filereadable(local_vimrc))
+    execute "source " . local_vimrc
+endif
+
+
+" こういうHTMLがあったときに
+" <div id="hoge" class="fuga">
+" ...
+" </div>
+"
+" 実行するとこうなる
+" <div id="hoge" class="fuga">
+" ...
+" <!-- /div#hoge.fuga --></div>
+
+function! Endtagcomment()
+    let reg_save = @@
+
+    try
+        silent normal vaty
+    catch
+        execute "normal \<Esc>"
+        echohl ErrorMsg
+        echo 'no match html tags'
+        echohl None
+        return
+    endtry
+
+    let html = @@
+
+    let start_tag = matchstr(html, '\v(\<.{-}\>)')
+    let tag_name  = matchstr(start_tag, '\v([a-zA-Z]+)')
+
+    let id = ''
+    let id_match = matchlist(start_tag, '\vid\=["'']([^"'']+)["'']')
+    if exists('id_match[1]')
+        let id = '#' . id_match[1]
+    endif
+
+    let class = ''
+    let class_match = matchlist(start_tag, '\vclass\=["'']([^"'']+)["'']')
+    if exists('class_match[1]')
+        let class = '.' . join(split(class_match[1], '\v\s+'), '.')
+    endif
+
+    execute "normal `>va<\<Esc>`<"
+
+    let comment = g:endtagcommentFormat
+    let comment = substitute(comment, '%tag_name', tag_name, 'g')
+    let comment = substitute(comment, '%id', id, 'g')
+    let comment = substitute(comment, '%class', class, 'g')
+    let @@ = comment
+
+    normal ""P
+
+    let @@ = reg_save
+endfunction
+
+let g:endtagcommentFormat = '<!-- /%tag_name%id%class -->'
+nnoremap ,t :<C-u>call Endtagcomment()<CR>
+
+" DBICのプレースホルダーで出力されたSQLを実行できるかたちに直して
+" クリップボードにコピる
+function! PlaceholderReplace()
+    let matchs = matchlist(getline('.'), '\v^(.{-}):(.*)$')
+    let value_str = matchs[2]
+    let values = split(value_str, ',')
+    let sql = matchs[1]
+    let i = 1
+    while match(sql, '?') != -1
+        let value = values[0]
+        let sql = substitute(sql, '?', value, '')
+        unlet values[0]
+    endwhile
+    let sql .= ';'
+    call system('pbcopy', sql)
+    echo 'copy: ' . sql
+endfunction
+
+nnoremap ,p :<C-u>call PlaceholderReplace()<CR>

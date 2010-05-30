@@ -235,6 +235,9 @@ function! s:modules_list(name)  " {{{2
   let files = {}
   let modules = []
   for i in split(inc, ':')
+    if i == '.'
+      continue
+    endif
     let f = split(glob(i . '/**/*.pm', 0), "\n")
     call filter(f, '!has_key(files, v:val)')
     for file in f
