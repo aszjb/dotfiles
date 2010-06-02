@@ -90,7 +90,7 @@ autocmd MyAutoCmd BufNewFile,BufReadPost *.psgi,*.t set filetype=perl
 autocmd MyAutoCmd BufNewFile,BufReadPost *.ru set filetype=ruby
 
 "markdownのfiletypeをセット
-autocmd MyAutoCmd BufNewFile,BufReadPost *.md set filetype=mkd
+autocmd MyAutoCmd BufNewFile,BufReadPost *.md set filetype=md
 
 "なぜかnoexpandtabになることがあるので
 autocmd MyAutoCmd BufNewFile,BufReadPost * set expandtab
@@ -394,6 +394,8 @@ nnoremap gs :<C-u>setf<Space>
 "------------------------
 " プラグインの設定
 "------------------------
+
+call pathogen#runtime_append_all_bundles()
 
 
 " symfony.vim
@@ -727,7 +729,6 @@ function! Endtagcomment()
 
     let @@ = reg_save
 endfunction
-
 let g:endtagcommentFormat = '<!-- /%tag_name%id%class -->'
 nnoremap ,t :<C-u>call Endtagcomment()<CR>
 
@@ -738,15 +739,100 @@ function! PlaceholderReplace()
     let value_str = matchs[2]
     let values = split(value_str, ',')
     let sql = matchs[1]
-    let i = 1
     while match(sql, '?') != -1
         let value = values[0]
         let sql = substitute(sql, '?', value, '')
         unlet values[0]
     endwhile
-    let sql .= ';'
-    call system('pbcopy', sql)
+    call system('pbcopy', sql.';')
     echo 'copy: ' . sql
 endfunction
-
 nnoremap ,p :<C-u>call PlaceholderReplace()<CR>
+
+" neocon
+let g:NeoComplCache_EnableAtStartup = 1
+let g:NeoComplCache_SmartCase = 1
+let g:NeoComplCache_MinSyntaxLength = 3
+"let g:neocomplcache_enable_at_startup = 1
+"let g:neocomplcache_enable_smart_case = 1
+"let g:neocomplcache_min_syntax_length = 3
+
+" ディレクトリが存在しなくてもディレクトリつくってファイル作成
+function! s:newFileOpen(file)
+    let dir = fnamemodify(a:file, ':h')
+    if !isdirectory(dir)
+        call mkdir(dir, 'p')
+    endif
+    execute 'edit ' . a:file
+endfunction
+command! -nargs=1 -complete=file New call s:newFileOpen(<q-args>)
+
+" MarkdownをHTMLにする
+function! s:markdown(line1, line2)
+    let markdown_insalled = s:exec_perl('
+    \   eval { require Text::Markdown };
+    \   print $@ ? 0 : 1;
+    \')
+
+    if !markdown_insalled
+        call s:error('Text::Markdown not installed')
+        return
+    endif
+
+    let md_text = join(getline(a:line1, a:line2), "\n")
+    let md_text = substitute(md_text, '''', '''"\\''"''', 'g')
+    let perl_code = '
+    \   use Text::Markdown qw/markdown/;
+    \   my $html;
+    \   eval { $html = markdown(''''''\''''' . md_text . '''''''\''''); };
+    \   print $@ ? "" : $html;
+    \'
+
+    try
+        let html = s:exec_perl(perl_code)
+        if html == ''
+            throw 'parse error'
+        endif
+    catch /shell error/
+        call s:error('perl code invalid')
+        return
+    catch /parse error/
+        call s:error('parse error')
+        return
+    endtry
+
+    let html = substitute(html, "\n</code></pre>", "</code></pre>", 'g')
+
+    " replace
+    "silent execute a:line1 . ',' . a:line2 . 'delete _'
+    "call append(a:line1 - 1, split(html, "\n"))
+
+    " scratch window
+    execute 'new'
+    setlocal bufhidden=unload
+    setlocal nobuflisted
+    setlocal buftype=nofile
+    setlocal noswapfile
+    silent file markdown
+    nnoremap <buffer> <silent> q <C-w>c
+    call append(0, split(html, "\n"))
+    1
+endfunction
+
+function! s:exec_perl(perl_code)
+    let ret = system("perl -e '" . a:perl_code . "'")
+    if v:shell_error
+        throw 'shell error'
+    endif
+
+    return ret
+endfunction
+
+function! s:error(msg)
+    echohl ErrorMsg
+    echomsg a:msg
+    echohl None
+endfunction
+
+command! -range=% -nargs=? Markdown
+\ :call s:markdown(<line1>, <line2>)

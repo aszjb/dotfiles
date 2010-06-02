@@ -1,8 +1,7 @@
 "=============================================================================
-" FILE: interactive.vim
+" FILE: snippets.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 03 Jul 2009
-" Usage: Just source this file.
+" Last Modified: 26 Oct 2009
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -25,13 +24,35 @@
 " }}}
 "=============================================================================
 
-command! -nargs=+ -complete=shellcmd InteractiveRead call interactive#read(split(<q-args>))
-
-" Global options definition."{{{
-if !exists('g:Interactive_EscapeColors')
-    let g:Interactive_EscapeColors = [
-                \'#3c3c3c', '#ff6666', '#66ff66', '#ffd30a', '#1e95fd', '#ff13ff', '#1bc8c8', '#C0C0C0', 
-                \'#686868', '#ff6666', '#66ff66', '#ffd30a', '#6699ff', '#f820ff', '#4ae2e2', '#ffffff'
-                \]
+" Only load this indent file when no other was loaded.
+if exists("b:did_indent")
+  finish
 endif
-"}}}
+let b:did_indent = 1
+
+setlocal expandtab
+setlocal shiftwidth=4
+setlocal softtabstop=4
+if !exists('b:undo_indent')
+    let b:undo_indent = ''
+endif
+
+setlocal indentexpr=SnippetsIndent()
+
+function! SnippetsIndent()"{{{
+    let l:line = getline('.')
+    let l:prev_line = (line('.') == 1)? '' : getline(line('.')-1)
+
+    if l:prev_line =~ '^\s*$'
+        return 0
+    elseif l:prev_line =~ '^\%(include\|snippet\|abbr\|prev_word\|rank\|delete\|alias\|condition\)'
+                \&& l:line !~ '^\s*\%(include\|snippet\|abbr\|prev_word\|rank\|delete\|alias\|condition\)'
+        return &shiftwidth
+    else
+        return match(l:line, '\S')
+    endif
+endfunction"}}}
+
+let b:undo_indent .= '
+    \ | setlocal expandtab< shiftwidth< softtabstop<
+    \'

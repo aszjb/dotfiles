@@ -1,0 +1,12 @@
+[submodule ".vim/bundle/neocomplcache"]
+	path = .vim/bundle/neocomplcache
+	url = http://github.com/Shougo/neocomplcache.git
+[submodule ".vim/bundle/ref"]
+	path = .vim/bundle/ref
+	url = git@github.com:hokaccha/vim-ref.git
+[submodule ".vim/bundle/prove"]
+	path = .vim/bundle/prove
+	url = git@github.com:hokaccha/vim-prove.git
+[submodule ".vim/bundle/perllocallib"]
+	path = .vim/bundle/perllocallib
+	url = git@github.com:hokaccha/vim-perllocallib.git
