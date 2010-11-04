@@ -87,6 +87,7 @@ alias svndel="svn st | grep '^!' | awk '{ print \$2 }' | xargs svn delete"
 
 alias -g G="| grep"
 alias -g L="| less"
+alias -g V="| vi -"
 
 alias gs="git svn"
 
