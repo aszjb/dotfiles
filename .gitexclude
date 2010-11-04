@@ -1,0 +1,8 @@
+.prove
+.vimrc.project
+META.yml
+MYMETA.yml
+Makefile
+*.pyc
+extlib
+.modulebuildrc
