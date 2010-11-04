@@ -94,8 +94,10 @@ alias gs="git svn"
 #改行のない出力をプロンプトで上書きするのを防ぐ
 unsetopt promptcr
 
-#rm *の前に確認しない
-#setopt rm_star_silent
+# screen auto startup
+if [ $TERM != "screen" -a "`screen -ls | grep Attache`" = "" ]; then
+    screen -S hokamura -xRR
+fi
 
 #screenのステータスラインに最後に実行したコマンドを表示
 if [ "$TERM" = "screen" ]; then

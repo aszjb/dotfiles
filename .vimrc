@@ -200,6 +200,9 @@ command! -nargs=0 CD :execute 'lcd ' . expand("%:p:h")
 "leader設定
 let mapleader = ','
 
+"; to :
+nnoremap ; :
+
 "エスケープキー
 inoremap <C-j> <esc>
 vnoremap <C-j> <esc>
