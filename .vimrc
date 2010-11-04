@@ -64,13 +64,16 @@ filetype plugin on
 nnoremap <C-w>v :<C-u>belowright vnew<CR>
 
 " set filetype
-nnoremap <Space>sp :<C-u>set filetype=perl<CR>
-nnoremap <Space>sh :<C-u>set filetype=php<CR>
-nnoremap <Space>sj :<C-u>set filetype=javascript<CR>
+"nnoremap <Space>sp :<C-u>set filetype=perl<CR>
+"nnoremap <Space>sh :<C-u>set filetype=php<CR>
+"nnoremap <Space>sj :<C-u>set filetype=javascript<CR>
 
 "windwowの高さ、幅
-set winheight=100
+"set winheight=100
 set winwidth=78
+
+" 下に開く
+set splitbelow
 
 "-----------------------
 " autocmd
@@ -88,6 +91,9 @@ autocmd MyAutoCmd BufNewFile,BufReadPost *.psgi,*.t set filetype=perl
 
 "ruをrubyに
 autocmd MyAutoCmd BufNewFile,BufReadPost *.ru set filetype=ruby
+
+"asをactionscriptに
+autocmd MyAutoCmd BufNewFile,BufReadPost *.as set filetype=actionscript
 
 "markdownのfiletypeをセット
 autocmd MyAutoCmd BufNewFile,BufReadPost *.md set filetype=md
@@ -749,13 +755,25 @@ function! PlaceholderReplace()
 endfunction
 nnoremap ,p :<C-u>call PlaceholderReplace()<CR>
 
+" acp
+let g:acp_enableAtStartup = 1
+
 " neocon
-let g:NeoComplCache_EnableAtStartup = 1
+let g:NeoComplCache_EnableAtStartup = 0
 let g:NeoComplCache_SmartCase = 1
 let g:NeoComplCache_MinSyntaxLength = 3
-"let g:neocomplcache_enable_at_startup = 1
-"let g:neocomplcache_enable_smart_case = 1
-"let g:neocomplcache_min_syntax_length = 3
+let g:NeoComplCache_EnableAutoSelect = 1
+
+command! -nargs=0 Acp  call s:acp()
+command! -nargs=0 Neco call s:neocon()
+function! s:acp()
+    AcpEnable
+    NeoComplCacheDisable
+endfunction
+function! s:neocon()
+    AcpDisable
+    NeoComplCacheEnable
+endfunction
 
 " ディレクトリが存在しなくてもディレクトリつくってファイル作成
 function! s:newFileOpen(file)
@@ -780,13 +798,13 @@ function! s:markdown(line1, line2)
     endif
 
     let md_text = join(getline(a:line1, a:line2), "\n")
-    let md_text = substitute(md_text, '''', '''"\\''"''', 'g')
-    let perl_code = '
+    let md_text = substitute(md_text, "'", "\\\\'", 'g')
+    let perl_code = "
     \   use Text::Markdown qw/markdown/;
     \   my $html;
-    \   eval { $html = markdown(''''''\''''' . md_text . '''''''\''''); };
-    \   print $@ ? "" : $html;
-    \'
+    \   eval { $html = markdown('" . md_text . "'); };
+    \   print $@ ? '' : $html;
+    \"
 
     try
         let html = s:exec_perl(perl_code)
@@ -813,14 +831,13 @@ function! s:markdown(line1, line2)
     setlocal nobuflisted
     setlocal buftype=nofile
     setlocal noswapfile
-    silent file markdown
     nnoremap <buffer> <silent> q <C-w>c
     call append(0, split(html, "\n"))
     1
 endfunction
 
 function! s:exec_perl(perl_code)
-    let ret = system("perl -e '" . a:perl_code . "'")
+    let ret = system('perl', a:perl_code)
     if v:shell_error
         throw 'shell error'
     endif
@@ -836,3 +853,31 @@ endfunction
 
 command! -range=% -nargs=? Markdown
 \ :call s:markdown(<line1>, <line2>)
+
+
+let s:markdown2inao_script_path = $HOME.'/local/bin/markdown2inao.pl'
+
+function! s:markdown2inao()
+    return system(s:markdown2inao_script_path .' '. expand('%'))
+endfunction
+
+function! s:inao_scratch()
+    let inao = s:markdown2inao()
+    execute 'new'
+    setlocal bufhidden=unload
+    setlocal nobuflisted
+    setlocal buftype=nofile
+    setlocal noswapfile
+    silent file markdown
+    nnoremap <buffer> <silent> q <C-w>c
+    call append(0, split(inao, "\n"))
+    1
+endfunction
+
+function! s:inao_copy()
+    let inao = s:markdown2inao()
+    call system('iconv -f utf-8 -t shift-jis | pbcopy', inao)
+endfunction
+
+command! -nargs=0 Inao     :call s:inao_scratch()
+command! -nargs=0 InaoCopy :call s:inao_copy()
