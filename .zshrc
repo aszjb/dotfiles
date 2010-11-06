@@ -91,6 +91,8 @@ alias -g V="| vi -"
 
 alias gs="git svn"
 
+alias server='python -m SimpleHTTPServer'
+
 #改行のない出力をプロンプトで上書きするのを防ぐ
 unsetopt promptcr
 

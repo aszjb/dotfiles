@@ -22,3 +22,7 @@ set guioptions-=T
 
 "カーソル行表示
 set cursorline
+
+"kayoriyaのgvimrcで上書きされるのでもう一回設定
+set cmdheight=1
+colorscheme mycolor
