@@ -186,5 +186,8 @@ function imageinfo() {
   fi
 }
 
+#perlbrew
+[ -f ~/perl5/perlbrew/etc/bashrc ] && source ~/perl5/perlbrew/etc/bashrc
+
 #個別設定を読み込む
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local

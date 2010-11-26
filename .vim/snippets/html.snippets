@@ -49,7 +49,7 @@ snippet dt
 snippet dd
 	<dd>${1}</dd>
 snippet img
-	<img src="${1}" alt="${2}" />
+	<img src="${1}" alt="${2}">
 snippet a
 	<a href="${1}">${2}</a>
 ## form
@@ -58,11 +58,11 @@ snippet form
 		${3}
 	</form>
 snippet input
-	<input type="${1:text}" name="${2}" value="${3}" />
+	<input type="${1:text}" name="${2}" value="${3}">
 snippet label
-	<label for="${2:$1}">${1:name}</label><input type="${3:text}" name="${4:$2}" value="${5}" id="${6:$2}" />
+	<label for="${2:$1}">${1:name}</label><input type="${3:text}" name="${4:$2}" value="${5}" id="${6:$2}">
 snippet meta
-	<meta name="${1:name}" content="${2:content}" />
+	<meta name="${1:name}" content="${2:content}">
 snippet opt
 	<option value="${1:option}">${2:$1}</option>${3}
 snippet optt
@@ -144,3 +144,19 @@ snippet html5
 	${1}
 	</body>
 	</html>
+snippet page
+	<div class='page plain'><div>
+	${1}
+	</div></div>
+snippet code
+	<pre><code>${1}</code></pre>
+snippet f
+	function() {${1}}${2}
+snippet for
+	for (var i = 0, len = ${1:Things}.length; i < len; i++) {
+		${2:}$1[i];
+	}
+snippet cl
+	console.log(${1});
+snippet $
+	$('${1}')${2}

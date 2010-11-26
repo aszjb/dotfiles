@@ -41,6 +41,9 @@ set listchars=tab:>\
 "swapファイル作らない
 set noswapfile
 
+"backupしない
+set nobackup
+
 "他で編集されたら読み込み直す
 set autoread
 
@@ -99,7 +102,7 @@ autocmd MyAutoCmd BufNewFile,BufReadPost *.as set filetype=actionscript
 autocmd MyAutoCmd BufNewFile,BufReadPost *.md set filetype=md
 
 "なぜかnoexpandtabになることがあるので
-autocmd MyAutoCmd BufNewFile,BufReadPost * set expandtab
+"autocmd MyAutoCmd BufNewFile,BufReadPost * set expandtab
 
 "ディレクト自動移動
 autocmd MyAutoCmd BufNewFile,BufReadPost *
@@ -472,8 +475,10 @@ nnoremap <Space>pr :Prove<CR>
 "    endif
 "endfunction
 "nnoremap gaf :<C-u>call GotoAbsFile()<CR>
-"
+
+"http://hail2u.net/blog/software/support-slash-started-relative-url-in-vim-gf.html
 set includeexpr=substitute(v:fname,'^\\/','','')
+autocmd FileType html :setlocal path+=;/
 
 
 " クリップボード連携 
@@ -590,7 +595,7 @@ command! -nargs=1 -bang -complete=file Rename call Rename(<q-args>, "<bang>")
 
 
 "zen-coding
-let g:user_zen_leader_key = '<C-z>'
+let g:user_zen_leader_key = '<C-f>'
 
 set virtualedit+=block
 
