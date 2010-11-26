@@ -10,3 +10,6 @@
 [submodule ".vim/bundle/perllocallib"]
 	path = .vim/bundle/perllocallib
 	url = git@github.com:hokaccha/vim-perllocallib.git
+[submodule ".vim/bundle/zencoding"]
+	path = .vim/bundle/zencoding
+	url = git@github.com:hokaccha/zencoding-vim.git
