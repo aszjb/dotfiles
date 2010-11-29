@@ -57,7 +57,7 @@ set wildmode=list:longest,full
 
 "補完
 set complete=.,w,b,u,k
-set completeopt=menu,preview,longest
+"set completeopt=menu,preview,longest
 set pumheight=20
 
 "ftplugin有効
@@ -450,8 +450,32 @@ augroup END
 
 call ku#custom_prefix('common', '~', $HOME)
 
-nnoremap <Space>pr :Prove<CR>
+autocmd FileType perl nnoremap <Space>pr :Prove<CR>
 
+" jslint
+function! Jslint()
+    let msg = system('/usr/local/bin/jsl -process ' . expand('%:p'))
+    let m = matchlist(msg, '\(\d\+\) error(s), \(\d\+\) warning(s)')
+    let error = m[1]
+    let warn  = m[2]
+    if (error == 0 && warn == 0)
+        echo 'syntax ok'
+    else
+        let msgs = split(msg, '\n')
+        let errors = []
+        for line in msgs
+            let m = matchlist(line, expand('%:p').'(\(\d\+\)): \(.*\)')
+            if len(m) != 0
+                call add(errors, printf('%s:%s: %s',
+                \                        expand('%:p'), m[1], m[2]))
+            endif
+        endfor
+        setlocal errorformat=%f:%l:%m
+        cgetexpr join(errors, "\n")
+        copen
+    endif
+endfunction
+autocmd! FileType javascript nnoremap <Space>jl :<C-u>call Jslint()<CR>
 
 " 絶対パスで開く
 "let s:htdocs_dirs = [$HOME.'/dev/site/localhost/test']
@@ -596,6 +620,22 @@ command! -nargs=1 -bang -complete=file Rename call Rename(<q-args>, "<bang>")
 
 "zen-coding
 let g:user_zen_leader_key = '<C-f>'
+let g:user_zen_settings = {
+\  'indentation' : '    ',
+\  'html': {
+\     'close_empty_element': 0,
+\     'snippets': {
+\        'html:5': "<!DOCTYPE html>\n"
+\                ."<html lang=\"${lang}\">\n"
+\                ."<head>\n"
+\                ."    <meta charset=\"${charset}\">\n"
+\                ."    <title></title>\n"
+\                ."</head>\n"
+\                ."<body>\n\t${child}|\n</body>\n"
+\                ."</html>"
+\     }
+\  }
+\}
 
 set virtualedit+=block
 
@@ -734,16 +774,16 @@ function! Endtagcomment()
     execute "normal `>va<\<Esc>`<"
 
     let comment = g:endtagcommentFormat
-    let comment = substitute(comment, '%tag_name', tag_name, 'g')
-    let comment = substitute(comment, '%id', id, 'g')
-    let comment = substitute(comment, '%class', class, 'g')
+    let comment = substitute(comment, '{%tag_name}', tag_name, 'g')
+    let comment = substitute(comment, '{%id}', id, 'g')
+    let comment = substitute(comment, '{%class}', class, 'g')
     let @@ = comment
 
     normal ""P
 
     let @@ = reg_save
 endfunction
-let g:endtagcommentFormat = '<!-- /%tag_name%id%class -->'
+let g:endtagcommentFormat = '<!-- /{%tag_name}{%id}{%class} -->'
 nnoremap ,t :<C-u>call Endtagcomment()<CR>
 
 " DBICのプレースホルダーで出力されたSQLを実行できるかたちに直して
@@ -763,25 +803,22 @@ function! PlaceholderReplace()
 endfunction
 nnoremap ,p :<C-u>call PlaceholderReplace()<CR>
 
-" acp
-let g:acp_enableAtStartup = 1
-
 " neocon
-let g:NeoComplCache_EnableAtStartup = 0
-let g:NeoComplCache_SmartCase = 1
-let g:NeoComplCache_MinSyntaxLength = 3
-let g:NeoComplCache_EnableAutoSelect = 1
+" Disable AutoComplPop.
+let g:acp_enableAtStartup = 0
+" Use neocomplcache.
+let g:neocomplcache_enable_at_startup = 1
 
-command! -nargs=0 Acp  call s:acp()
-command! -nargs=0 Neco call s:neocon()
-function! s:acp()
-    AcpEnable
-    NeoComplCacheDisable
-endfunction
-function! s:neocon()
-    AcpDisable
-    NeoComplCacheEnable
-endfunction
+"command! -nargs=0 Acp  call s:acp()
+"command! -nargs=0 Neco call s:neocon()
+"function! s:acp()
+"    AcpEnable
+"    NeoComplCacheDisable
+"endfunction
+"function! s:neocon()
+"    AcpDisable
+"    NeoComplCacheEnable
+"endfunction
 
 " ディレクトリが存在しなくてもディレクトリつくってファイル作成
 function! s:newFileOpen(file)
