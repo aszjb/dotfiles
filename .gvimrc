@@ -15,7 +15,7 @@ set transparency=5
 set guitablabel=%t
 
 "IMEオフ
-set imdisable
+"set imdisable
 
 "ツールバー非表示
 set guioptions-=T
@@ -26,3 +26,6 @@ set cursorline
 "kayoriyaのgvimrcで上書きされるのでもう一回設定
 set cmdheight=1
 colorscheme mycolor
+
+"IME
+inoremap <silent> <ESC> <ESC>:set iminsert=0<CR>

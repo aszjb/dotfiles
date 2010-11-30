@@ -61,7 +61,7 @@ hi Comment      gui=NONE guifg=#8F3E3E ctermfg=darkred
 hi Constant     gui=NONE guifg=Grey80 guibg=NONE ctermfg=magenta cterm=none
 hi Cursor       guibg=#999999 guifg=bg
 hi CursorColumn guibg=Gray20
-hi CursorIM     guibg=LightSlateGrey guifg=bg
+hi CursorIM     guibg=Purple guifg=bg
 hi CursorLine   guibg=#222222
 hi DiffChange   guibg=MediumPurple4
 hi DiffDelete   gui=bold guifg=White guibg=SlateBlue
