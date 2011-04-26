@@ -12,6 +12,7 @@
 	st = status
 	br = branch
 	l  = log --date=iso -10
+	amend = commit --amend -a -C HEAD --date=now
 [push]
 	default = matching
 [core]

@@ -99,7 +99,7 @@ autocmd MyAutoCmd BufNewFile,BufReadPost *.ru set filetype=ruby
 autocmd MyAutoCmd BufNewFile,BufReadPost *.as set filetype=actionscript
 
 "markdownのfiletypeをセット
-autocmd MyAutoCmd BufNewFile,BufReadPost *.md set filetype=md
+autocmd MyAutoCmd BufNewFile,BufReadPost *.md,*.txt set filetype=md
 
 "なぜかnoexpandtabになることがあるので
 "autocmd MyAutoCmd BufNewFile,BufReadPost * set expandtab
@@ -501,9 +501,8 @@ autocmd! FileType javascript nnoremap <Space>jl :<C-u>call Jslint()<CR>
 "nnoremap gaf :<C-u>call GotoAbsFile()<CR>
 
 "http://hail2u.net/blog/software/support-slash-started-relative-url-in-vim-gf.html
-set includeexpr=substitute(v:fname,'^\\/','','')
+autocmd FileType html :setlocal includeexpr=substitute(v:fname,'^\\/','','')
 autocmd FileType html :setlocal path+=;/
-
 
 " クリップボード連携 
 if has('mac')
@@ -808,17 +807,21 @@ nnoremap ,p :<C-u>call PlaceholderReplace()<CR>
 let g:acp_enableAtStartup = 0
 " Use neocomplcache.
 let g:neocomplcache_enable_at_startup = 1
+let g:neocomplcache_enable_smart_case = 1
+let g:neocomplcache_min_syntax_length = 3
+let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
+let g:neocomplcache_enable_auto_select = 1
+imap <C-k>     <Plug>(neocomplcache_snippets_expand)
+smap <C-k>     <Plug>(neocomplcache_snippets_expand)
+inoremap <expr><C-g>     neocomplcache#undo_completion()
+inoremap <expr><C-l>     neocomplcache#complete_common_string()
+inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>"
+inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
+inoremap <expr><C-y>  neocomplcache#close_popup()
+inoremap <expr><C-e>  neocomplcache#cancel_popup()
+inoremap <C-n> <Esc>a<C-n>
 
-"command! -nargs=0 Acp  call s:acp()
-"command! -nargs=0 Neco call s:neocon()
-"function! s:acp()
-"    AcpEnable
-"    NeoComplCacheDisable
-"endfunction
-"function! s:neocon()
-"    AcpDisable
-"    NeoComplCacheEnable
-"endfunction
 
 " ディレクトリが存在しなくてもディレクトリつくってファイル作成
 function! s:newFileOpen(file)

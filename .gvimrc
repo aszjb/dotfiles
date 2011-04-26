@@ -28,4 +28,4 @@ set cmdheight=1
 colorscheme mycolor
 
 "IME
-inoremap <silent> <ESC> <ESC>:set iminsert=0<CR>
+set imdisableactivate

@@ -29,7 +29,7 @@ PROMPT2='[%n]> '
 
 #補間
 autoload -U compinit
-compinit
+compinit -u
 
 #履歴
 HISTFILE="$HOME/.zsh_history"
@@ -51,6 +51,7 @@ zle -N history-beginning-search-backward-end history-search-end
 zle -N history-beginning-search-forward-end history-search-end
 bindkey "^P" history-beginning-search-backward-end
 bindkey "^N" history-beginning-search-forward-end 
+bindkey '^R' history-incremental-pattern-search-backward
 
 #ビープ音ならなさない
 setopt nobeep
@@ -91,7 +92,7 @@ alias -g V="| vi -"
 
 alias gs="git svn"
 
-alias server='python -m SimpleHTTPServer'
+#alias server='python -m SimpleHTTPServer'
 
 #改行のない出力をプロンプトで上書きするのを防ぐ
 unsetopt promptcr
@@ -153,7 +154,7 @@ function alc() {
 #json_view
 function json_view() {
   if [ $# != 0 ]; then
-    perl -MLWP::Simple -MJSON -MData::Dumper -we 'print Dumper decode_json get $ARGV[0]' $*
+    perl -MLWP::Simple -MJSON::XS -MData::Dumper -we 'print Dumper decode_json get $ARGV[0]' $*
   else
     echo 'usage: json_view url'
   fi

@@ -13,3 +13,6 @@
 [submodule ".vim/bundle/zencoding"]
 	path = .vim/bundle/zencoding
 	url = git@github.com:hokaccha/zencoding-vim.git
+[submodule ".vim/bundle/css3-syntax"]
+	path = .vim/bundle/css3-syntax
+	url = git@github.com:hokaccha/vim-css3-syntax.git

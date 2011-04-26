@@ -13,5 +13,7 @@ hardstatus alwayslastline " %-w%{=b rw}%n %t%{-}%+w"
 #スクロールバッファ
 defscrollback 10000
 
+termcapinfo xterm* ti@:te@
+
 #zombie
 #zombie "q^M"
