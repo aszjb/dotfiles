@@ -92,6 +92,8 @@ alias -g V="| vi -"
 
 alias gs="git svn"
 
+alias jsonview="perl -MJSON::XS -e 'print JSON::XS->new->utf8->pretty->encode(decode_json <STDIN>)'"
+
 #alias server='python -m SimpleHTTPServer'
 
 #改行のない出力をプロンプトで上書きするのを防ぐ
@@ -148,15 +150,6 @@ function alc() {
     #w3m "http://eow.alc.co.jp/$*/UTF-8/?ref=sa"
   else
     echo 'usage: alc word'
-  fi
-}
-
-#json_view
-function json_view() {
-  if [ $# != 0 ]; then
-    perl -MLWP::Simple -MJSON::XS -MData::Dumper -we 'print Dumper decode_json get $ARGV[0]' $*
-  else
-    echo 'usage: json_view url'
   fi
 }
 
