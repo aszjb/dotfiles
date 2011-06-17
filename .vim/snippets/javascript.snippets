@@ -8,3 +8,12 @@ snippet cl
 	console.log(${1});
 snippet $
 	$('${1}')${2}
+snippet class
+	var ${1:} = function(${2:}) {
+		return (this instanceof $1) ? this.init($2) : new $1($2);
+	};
+
+	$1.prototype = {
+		init: function($2) {
+		}
+	};

@@ -13,6 +13,8 @@
 	br = branch
 	l  = log --date=iso -10
 	amend = commit --amend -a -C HEAD --date=now
+	graph = log --graph --pretty=oneline
+	a = add -A .
 [push]
 	default = matching
 [core]
