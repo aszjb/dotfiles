@@ -167,7 +167,7 @@ augroup plugin-quickrun
   autocmd Filetype objc  call s:set_quickrun_command('function __rungcc__() { gcc $1 && ./a.out } && __rungcc__')
   autocmd Filetype haskell  call s:set_quickrun_command('runghc')
   autocmd Filetype io  call s:set_quickrun_command('io')
-  autocmd Filetype javascript  call s:set_quickrun_command('v8')
+  autocmd Filetype javascript  call s:set_quickrun_command('node')
   autocmd Filetype perl  call s:set_quickrun_command('perl')
   autocmd Filetype php  call s:set_quickrun_command('php')
   autocmd Filetype python  call s:set_quickrun_command('python')
