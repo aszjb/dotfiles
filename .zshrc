@@ -180,6 +180,15 @@ function imageinfo() {
   fi
 }
 
+#base64 encode
+function base64() {
+  if [ $# != 0 ]; then
+    perl -MMIME::Base64 -0777 -wne 'print encode_base64($_,"")' < $*
+  else
+    echo 'usage: base64 file'
+  fi
+}
+
 #perlbrew
 [ -f ~/perl5/perlbrew/etc/bashrc ] && source ~/perl5/perlbrew/etc/bashrc
 
