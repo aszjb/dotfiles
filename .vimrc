@@ -87,7 +87,7 @@ augroup MyAutoCmd
 augroup END
 
 "mtとttをhtmlに
-autocmd MyAutoCmd BufNewFile,BufReadPost *.mt,*.tt set filetype=html
+autocmd MyAutoCmd BufNewFile,BufReadPost *.mt,*.tt,*.ejs set filetype=html
 
 "psgiとtはperl
 autocmd MyAutoCmd BufNewFile,BufReadPost *.psgi,*.t set filetype=perl
