@@ -90,7 +90,7 @@ alias -g G="| grep"
 alias -g L="| less"
 alias -g V="| vi -"
 
-alias gs="git svn"
+#alias gs="git svn"
 
 alias jsonview="perl -MJSON::XS -e 'print JSON::XS->new->utf8->pretty->encode(decode_json <STDIN>)'"
 
