@@ -101,7 +101,7 @@ unsetopt promptcr
 
 # screen auto startup
 if [ $TERM != "screen" -a "`screen -ls | grep Attache`" = "" ]; then
-    screen -S hokamura -xRR
+    screen -US hokamura -xRR
 fi
 
 #screenのステータスラインに最後に実行したコマンドを表示
