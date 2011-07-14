@@ -417,6 +417,7 @@ filetype plugin on
  
 Bundle 'Shougo/neocomplcache'
 Bundle 'ku'
+Bundle 'thinca/vim-ku_source'
 Bundle 'snipMate'
 Bundle 'hokaccha/vim-css3-syntax'
 Bundle 'hokaccha/vim-html5validator'
