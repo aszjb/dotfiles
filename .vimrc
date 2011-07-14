@@ -410,7 +410,7 @@ nnoremap gs :<C-u>setf<Space>
 set nocompatible
 filetype off
 
-" Vundle '
+" Vundle
 set rtp+=~/.vim/vundle/
 call vundle#rc()
 filetype plugin on
@@ -418,6 +418,9 @@ filetype plugin on
 Bundle 'Shougo/neocomplcache'
 Bundle 'ku'
 Bundle 'snipMate'
+Bundle 'hokaccha/vim-css3-syntax'
+Bundle 'hokaccha/vim-html5validator'
+
 filetype plugin indent on
 
 " ku.vim
