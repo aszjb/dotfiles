@@ -421,7 +421,7 @@ Bundle 'snipMate'
 Bundle 'hokaccha/vim-css3-syntax'
 Bundle 'hokaccha/vim-html5validator'
 
-filetype plugin indent on
+filetype plugin on
 
 " ku.vim
 nnoremap <silent> <Space>kb :<C-u>Ku buffer<CR>
