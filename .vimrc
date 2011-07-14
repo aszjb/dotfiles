@@ -928,3 +928,6 @@ endfunction
 
 command! -nargs=0 Inao     :call s:inao_scratch()
 command! -nargs=0 InaoCopy :call s:inao_copy()
+
+" snipmate
+let g:snippets_dir = $HOME.'/.vim/snippets'
