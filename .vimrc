@@ -407,17 +407,18 @@ nnoremap gs :<C-u>setf<Space>
 " プラグインの設定
 "------------------------
 
-call pathogen#runtime_append_all_bundles()
+set nocompatible
+filetype off
 
-
-" symfony.vim
-" nnoremap <Space>sv :<C-u>Sview<CR>
-" nnoremap <Space>sa :<C-u>Saction<CR>
-" nnoremap <Space>sm :<C-u>Smodel<CR>
-" nnoremap <Space>sp :<C-u>Spartial<CR>
-" nnoremap <Space>ss :<C-u>Symfony
-" nnoremap <Space>sc :<C-u>Sconfig
-" nnoremap <Space>sl :<C-u>Slib
+" Vundle '
+set rtp+=~/.vim/vundle/
+call vundle#rc()
+filetype plugin on
+ 
+Bundle 'Shougo/neocomplcache'
+Bundle 'ku'
+Bundle 'snipMate'
+filetype plugin indent on
 
 " ku.vim
 nnoremap <silent> <Space>kb :<C-u>Ku buffer<CR>
@@ -802,10 +803,10 @@ function! PlaceholderReplace()
 endfunction
 nnoremap ,p :<C-u>call PlaceholderReplace()<CR>
 
-" neocon
 " Disable AutoComplPop.
 let g:acp_enableAtStartup = 0
-" Use neocomplcache.
+
+" neocon
 let g:neocomplcache_enable_at_startup = 1
 let g:neocomplcache_enable_smart_case = 1
 let g:neocomplcache_min_syntax_length = 3
@@ -820,7 +821,6 @@ inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
 inoremap <expr><C-y>  neocomplcache#close_popup()
 inoremap <expr><C-e>  neocomplcache#cancel_popup()
-
 
 " ディレクトリが存在しなくてもディレクトリつくってファイル作成
 function! s:newFileOpen(file)
