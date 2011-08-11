@@ -286,7 +286,7 @@ nnoremap <Space>h :<C-u>vert bel h<Space>
 nnoremap <Space>g :<C-u>!git<Space>
 
 "行末まで削除
-inoremap <C-k> <C-o>D
+"inoremap <C-k> <C-o>D
 
 "補完候補があってもEnterは改行
 inoremap <expr> <CR> pumvisible() ? "\<C-e>\<CR>" : "\<CR>"
@@ -816,15 +816,14 @@ let g:neocomplcache_enable_smart_case = 1
 let g:neocomplcache_min_syntax_length = 3
 let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
 let g:neocomplcache_enable_auto_select = 1
-imap <C-k>     <Plug>(neocomplcache_snippets_expand)
-smap <C-k>     <Plug>(neocomplcache_snippets_expand)
-inoremap <expr><C-g>     neocomplcache#undo_completion()
-inoremap <expr><C-l>     neocomplcache#complete_common_string()
+inoremap <expr><C-g> neocomplcache#undo_completion()
+inoremap <expr><C-l> neocomplcache#complete_common_string()
 inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>"
 inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
-inoremap <expr><C-y>  neocomplcache#close_popup()
-inoremap <expr><C-e>  neocomplcache#cancel_popup()
+inoremap <expr><BS>  neocomplcache#smart_close_popup()."\<C-h>"
+inoremap <expr><C-y> neocomplcache#close_popup()
+inoremap <expr><C-e> neocomplcache#cancel_popup()
+inoremap <C-k> <Esc>a<C-n>
 
 " ディレクトリが存在しなくてもディレクトリつくってファイル作成
 function! s:newFileOpen(file)

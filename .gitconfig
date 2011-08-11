@@ -20,3 +20,4 @@
 [core]
 	excludesfile = ~/.gitexclude
 	pager = less -r
+	editor = /usr/bin/vi

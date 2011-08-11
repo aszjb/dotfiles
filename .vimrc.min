@@ -1,0 +1,54 @@
+syntax on
+
+set softtabstop=4
+set shiftwidth=4
+set tabstop=4
+set expandtab
+set autoindent
+set incsearch
+set ignorecase
+set smartcase
+set nohlsearch
+set number
+set noshowmatch
+set cmdheight=1
+set backspace=indent,eol,start
+set showtabline=2 
+set list
+set listchars=tab:>\ 
+set noswapfile
+set nobackup
+set autoread
+set laststatus=2
+set statusline=%<%f\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']['.&ft.']'}%=%l,%c%V%8P
+set wildmenu
+set wildmode=list:longest,full
+set termencoding=utf-8
+set encoding=utf-8
+set fileencoding=utf-8
+set fileformats=unix,dos,mac
+
+autocmd BufNewFile,BufReadPost * execute ":lcd " . substitute(expand("%:p:h"), ' ', '\\ ', 'g')
+
+nnoremap ; : 
+inoremap <C-j> <esc>
+vnoremap <C-j> <esc>
+nnoremap <Space>w :<C-u>write<CR>
+nnoremap <Space>q :<C-u>quit<CR>
+nnoremap gj j
+nnoremap gk k
+vnoremap gj j
+vnoremap gk k
+nnoremap j gj
+nnoremap k gk
+vnoremap j gj
+vnoremap k gk
+nnoremap * g*
+nnoremap # g#
+nnoremap <silent> <Space>th :set hlsearch!<CR>
+nnoremap <C-l> gt
+nnoremap <C-h> gT
+vnoremap * "zy:let @/ = @z<CR>n
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
+nnoremap <Space>tp :<C-u>set paste!<CR>
