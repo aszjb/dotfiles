@@ -27,6 +27,10 @@ precmd () {
 
 PROMPT2='[%n]> ' 
 
+# 補完関数
+fpath=(~/.zsh_fun $fpath)
+autoload -U ~/.zsh_fun/*(:t)
+
 #補間
 autoload -U compinit
 compinit -u
@@ -81,20 +85,9 @@ esac
 
 alias ll='ls -l'
 
-alias pg="ps auxw | grep"
-
-alias svnadd="svn st | grep '^?' | awk '{ print \$2 }' | xargs svn add"
-alias svndel="svn st | grep '^!' | awk '{ print \$2 }' | xargs svn delete"
-
 alias -g G="| grep"
 alias -g L="| less"
 alias -g V="| vi -"
-
-#alias gs="git svn"
-
-alias jsonview="perl -MJSON::XS -e 'print JSON::XS->new->utf8->pretty->encode(decode_json <STDIN>)'"
-
-#alias server='python -m SimpleHTTPServer'
 
 #改行のない出力をプロンプトで上書きするのを防ぐ
 unsetopt promptcr
@@ -142,55 +135,6 @@ if [ "$TERM" = "screen" ]; then
     }
     chpwd () {}
 fi
-
-#w3m4alc
-function alc() {
-  if [ $# != 0 ]; then
-    w3m "http://eow.alc.co.jp/$*/UTF-8/?ref=sa" | less +37
-    #w3m "http://eow.alc.co.jp/$*/UTF-8/?ref=sa"
-  else
-    echo 'usage: alc word'
-  fi
-}
-
-#pminfo
-function pminfo() {
-  if [ $# != 0 ]; then
-    perl -le 'eval "require $ARGV[0]";print ${"${ARGV[0]}::VERSION"};print qx/perldoc -ml $ARGV[0]/' $*
-  else
-    echo 'usage: pminfo perlmodule'
-  fi
-}
-
-#url_decode
-function url_decode() {
-  if [ $# != 0 ]; then
-    perl -MURI::Escape -wle 'print uri_unescape $ARGV[0]' $*
-  else
-    echo 'usage: url_decode url'
-  fi
-}
-
-#imageinfo
-function imageinfo() {
-  if [ $# != 0 ]; then
-    perl -MImage::Info -MYAML -le 'print $_, "\n", Dump Image::Info::image_info($_) for @ARGV'
-  else
-    echo 'usage: imageinfo file [file..]'
-  fi
-}
-
-#base64 encode
-function base64() {
-  if [ $# != 0 ]; then
-    perl -MMIME::Base64 -0777 -wne 'print encode_base64($_,"")' < $*
-  else
-    echo 'usage: base64 file'
-  fi
-}
-
-#perlbrew
-[ -f ~/perl5/perlbrew/etc/bashrc ] && source ~/perl5/perlbrew/etc/bashrc
 
 #個別設定を読み込む
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
