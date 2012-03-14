@@ -15,9 +15,12 @@
 	amend = commit --amend -a -C HEAD --date=now
 	graph = log --graph --pretty=oneline
 	a = add -A .
+    pr = pull --rebase
 [push]
 	default = matching
 [core]
 	excludesfile = ~/.gitexclude
-	pager = less -r
+	pager = cat
 	editor = /usr/bin/vi
+	autocrlf = false
+	pager = less

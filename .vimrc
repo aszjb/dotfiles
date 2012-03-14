@@ -89,6 +89,12 @@ augroup END
 "mtとttをhtmlに
 autocmd MyAutoCmd BufNewFile,BufReadPost *.mt,*.tt,*.ejs set filetype=html
 
+"jade
+autocmd MyAutoCmd BufNewFile,BufReadPost *.jade set filetype=jade
+
+"less
+autocmd MyAutoCmd BufNewFile,BufReadPost *.less set filetype=less
+
 "psgiとtはperl
 autocmd MyAutoCmd BufNewFile,BufReadPost *.psgi,*.t set filetype=perl
 
@@ -100,6 +106,12 @@ autocmd MyAutoCmd BufNewFile,BufReadPost *.as set filetype=actionscript
 
 "markdownのfiletypeをセット
 autocmd MyAutoCmd BufNewFile,BufReadPost *.md,*.txt set filetype=md
+
+"json
+autocmd MyAutoCmd BufNewFile,BufReadPost *.json set filetype=json
+
+"coffee
+autocmd MyAutoCmd BufNewFile,BufReadPost *.coffee,Cakefile set filetype=coffee
 
 "なぜかnoexpandtabになることがあるので
 "autocmd MyAutoCmd BufNewFile,BufReadPost * set expandtab
@@ -421,8 +433,10 @@ Bundle 'thinca/vim-ku_source'
 Bundle 'snipMate'
 Bundle 'hokaccha/vim-css3-syntax'
 Bundle 'hokaccha/vim-html5validator'
-
-filetype plugin on
+Bundle 'jade.vim'
+Bundle 'groenewege/vim-less'
+Bundle 'scrooloose/syntastic'
+Bundle 'kchmck/vim-coffee-script'
 
 " ku.vim
 nnoremap <silent> <Space>kb :<C-u>Ku buffer<CR>
@@ -621,7 +635,6 @@ function! Rename(file, bang)
 endfunction
 command! -nargs=1 -bang -complete=file Rename call Rename(<q-args>, "<bang>")
 
-
 "zen-coding
 let g:user_zen_leader_key = '<C-f>'
 let g:user_zen_settings = {
@@ -816,6 +829,10 @@ let g:neocomplcache_enable_smart_case = 1
 let g:neocomplcache_min_syntax_length = 3
 let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
 let g:neocomplcache_enable_auto_select = 1
+if !exists('g:neocomplcache_keyword_patterns')
+    let g:neocomplcache_keyword_patterns = {}
+endif
+let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
 inoremap <expr><C-g> neocomplcache#undo_completion()
 inoremap <expr><C-l> neocomplcache#complete_common_string()
 inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>"
@@ -934,3 +951,32 @@ command! -nargs=0 InaoCopy :call s:inao_copy()
 
 " snipmate
 let g:snippets_dir = $HOME.'/.vim/snippets'
+
+" タブの設定を切り替えのトグル
+function! TabToggle()
+    fun! l:Set1()
+        setlocal softtabstop=2
+        setlocal shiftwidth=2
+        setlocal expandtab
+    endfun
+    fun! l:Set2()
+        setlocal softtabstop=4
+        setlocal shiftwidth=4
+        setlocal noexpandtab
+    endfun
+    fun! l:Set3()
+        setlocal softtabstop=4
+        setlocal shiftwidth=4
+        setlocal expandtab
+    endfun
+
+    if !exists('b:idx') || b:idx > 2
+        let b:idx = 0
+    endif
+    let b:idx = b:idx + 1
+    exe 'call l:Set'.b:idx.'()'
+endfunction
+nnoremap <silent> <C-k> :<C-u>call TabToggle()<CR>
+
+" syntastic
+nnoremap <Space>l :SyntasticCheck<CR>

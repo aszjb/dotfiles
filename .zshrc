@@ -9,7 +9,6 @@ autoload -Uz vcs_info
 zstyle ':vcs_info:*' enable git svn
 zstyle ':vcs_info:*' formats '%{'${fg[red]}'%}(%s %b) %{'$reset_color'%}'
 
-
 setopt prompt_subst
 precmd () {
   LANG=en_US.UTF-8 vcs_info
@@ -24,12 +23,13 @@ precmd () {
   fi
 }
 
-
 PROMPT2='[%n]> ' 
 
-# 補完関数
-fpath=(~/.zsh_fun $fpath)
-autoload -U ~/.zsh_fun/*(:t)
+# 補完関数のロード
+if [ -d ~/.zsh_fun ]; then
+  fpath=(~/.zsh_fun $fpath)
+  autoload -U ~/.zsh_fun/*(:t)
+fi
 
 #補間
 autoload -U compinit
@@ -137,4 +137,5 @@ if [ "$TERM" = "screen" ]; then
 fi
 
 #個別設定を読み込む
+[ -f ~/.zshrc.funcs ] && source ~/.zshrc.funcs
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local

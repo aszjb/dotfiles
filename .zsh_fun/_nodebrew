@@ -1,0 +1,3 @@
+#compdef nodebrew
+
+_sub_commands install uninstall use list ls ls-remote ls-all clean selfupdate alias unalias

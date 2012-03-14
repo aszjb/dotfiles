@@ -1,8 +1,10 @@
 .prove
 .vimrc.project
-META.yml
-MYMETA.yml
-Makefile
 *.pyc
 extlib
 .modulebuildrc
+.DS_Store
+mytodo
+.todo
+_onlyme/
+npm-debug.log

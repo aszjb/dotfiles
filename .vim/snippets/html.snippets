@@ -1,6 +1,6 @@
 # Generic Doctype
 snippet css
-	<link rel="stylesheet" href="${1}" type="text/css" media="${2:all}" />
+	<link rel="stylesheet" href="${1}">
 snippet div
 	<div>${1}</div>
 snippet section
@@ -70,14 +70,13 @@ snippet tt
 snippet script
 	<script src="${1}"></script>
 snippet jquery
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 snippet html5
 	<!DOCTYPE html>
 	<html lang="ja">
 	<head>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width">
-	<title></title>
+	<title>Sample</title>
 	</head>
 	<body>
 	${1}
@@ -99,3 +98,8 @@ snippet cl
 	console.log(${1});
 snippet $
 	$('${1}')${2}
+snippet qs
+	document.querySelector('${1}')
+snippet viewport
+	width=device-width, initial-scale=1
+	
