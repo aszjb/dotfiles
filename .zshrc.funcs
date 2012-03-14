@@ -1,0 +1,69 @@
+# 関数やaliasなど
+
+#w3m4alc
+function alc() {
+  if [ $# != 0 ]; then
+    w3m "http://eow.alc.co.jp/$*/UTF-8/?ref=sa" | less +37
+    #w3m "http://eow.alc.co.jp/$*/UTF-8/?ref=sa"
+  else
+    echo 'usage: alc word'
+  fi
+}
+
+#pminfo
+function pminfo() {
+  if [ $# != 0 ]; then
+    perl -le 'eval "require $ARGV[0]";print ${"${ARGV[0]}::VERSION"};print qx/perldoc -ml $ARGV[0]/' $*
+  else
+    echo 'usage: pminfo perlmodule'
+  fi
+}
+
+#url_decode
+function url_decode() {
+  if [ $# != 0 ]; then
+    perl -MURI::Escape -wle 'print uri_unescape $ARGV[0]' $*
+  else
+    echo 'usage: url_decode url'
+  fi
+}
+
+#imageinfo
+function imageinfo() {
+  if [ $# != 0 ]; then
+    perl -MImage::Info -MYAML -le 'print $_, "\n", Dump Image::Info::image_info($_) for @ARGV'
+  else
+    echo 'usage: imageinfo file [file..]'
+  fi
+}
+
+#base64 encode
+function base64() {
+  if [ $# != 0 ]; then
+    perl -MMIME::Base64 -0777 -wne 'print encode_base64($_,"")' < $*
+  else
+    echo 'usage: base64 file'
+  fi
+}
+
+# 補完関数リセット
+function r() {
+  local f
+  f=(~/.zsh_fun/*(.))
+  unfunction $f:t 2> /dev/null
+  autoload -U $f:t
+}
+
+# macvim
+alias vim="/Applications/MacVim.app/Contents/MacOS/Vim -g --remote-tab-silent"
+
+# jsonview
+alias jsonview="perl -MJSON::XS -e 'print JSON::XS->new->utf8->pretty->encode(decode_json <STDIN>)'"
+
+# svn
+alias svnadd="svn st | grep '^?' | awk '{ print \$2 }' | xargs svn add"
+alias svndel="svn st | grep '^!' | awk '{ print \$2 }' | xargs svn delete"
+alias svnrm='find . -name ".svn" -type d | xargs rm -rf'
+
+# pydoc
+alias pydoc="python `which pydoc`"
