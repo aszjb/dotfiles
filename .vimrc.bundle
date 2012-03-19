@@ -1,0 +1,105 @@
+"------------------------
+" プラグインのロードと設定
+"------------------------
+
+set nocompatible
+filetype off
+
+" Vundle
+set rtp+=~/.vim/vundle/
+call vundle#rc()
+filetype plugin on
+ 
+Bundle 'Shougo/neocomplcache'
+Bundle 'Shougo/unite.vim'
+Bundle 't9md/vim-unite-ack'
+Bundle 'h1mesuke/unite-outline'
+Bundle 'snipMate'
+Bundle 'thinca/vim-quickrun'
+Bundle 'thinca/vim-fontzoom'
+Bundle 'hokaccha/vim-html5validator'
+Bundle 'hokaccha/vim-css3-syntax'
+Bundle 'jade.vim'
+Bundle 'groenewege/vim-less'
+Bundle 'kchmck/vim-coffee-script'
+
+" quickrun
+nmap ,r <Plug>(quickrun)
+vmap ,r <Plug>(quickrun)
+
+if !exists("g:quickrun_config")
+    let g:quickrun_config={}
+endif
+
+let g:quickrun_config['_'] = {
+    \ 'outputter/buffer/split' : '%{winwidth(0) * 2 < winheight(0) * 5 ? "" : "vertical belowright"}',
+\ }
+
+let g:quickrun_config['md'] = {
+    \ 'type' : 'markdown',
+\ }
+
+" snipmate
+let g:snippets_dir = $HOME.'/.vim/snippets'
+
+" unite
+let g:unite_enable_start_insert = 1
+let g:unite_update_time = 100
+
+nnoremap <silent> <Space>kf :<C-u>UniteWithBufferDir -buffer-name=files file file/new<CR>
+nnoremap <silent> <Space>km :<C-u>Unite file_mru<CR>
+nnoremap <silent> <Space>kr :<C-u>Unite -buffer-name=register register<CR>
+nnoremap <silent> <Space>kb :<C-u>Unite bookmark<CR>
+nnoremap <silent> <Space>ko :<C-u>Unite outline<CR>
+
+autocmd FileType unite call s:unite_my_settings()
+function! s:unite_my_settings()
+  imap <buffer> <C-w> <Plug>(unite_delete_backward_path)
+  imap <buffer> <C-c> <Plug>(unite_exit)
+  nmap <buffer> <C-c> <Plug>(unite_exit)
+  inoremap <silent> <buffer> <expr> <C-o><C-n> unite#do_action('tabopen')
+  inoremap <silent> <buffer> <expr> <C-o><C-j> unite#do_action('below')
+  inoremap <silent> <buffer> <expr> <C-o><C-k> unite#do_action('above')
+  inoremap <silent> <buffer> <expr> <C-o><C-h> unite#do_action('left')
+  inoremap <silent> <buffer> <expr> <C-o><C-l> unite#do_action('right')
+endfunction
+
+" unite-ack
+let g:unite_source_ack_command = 'ack -a'
+let g:unite_source_ack_ignore_case = 1
+
+function! s:unite_ack_escape(str)
+    let chars = ' :\'
+    return escape(a:str, chars)
+endfunction
+function! s:unite_ack_visual_string()
+    normal `<
+    let s = col('.') - 1
+    normal `>
+    let e = col('.') - 1
+    let line = getline('.')
+    let pat = line[s : e]
+    return s:unite_ack_escape(pat)
+endfunction
+nnoremap <silent> <Space>a  :<C-u>exe 'Unite -buffer-name=ack ack::' . <SID>unite_ack_escape(expand('<cword>'))<CR>
+vnoremap <silent> <Space>a :<C-u>exe 'Unite -buffer-name=ack ack::' . <SID>unite_ack_visual_string()<CR>
+command! -complete=file -nargs=+ Ack :execute 'Unite -buffer-name=ack ack::' . <SID>unite_ack_escape(<q-args>)
+
+" neocon
+let g:neocomplcache_enable_at_startup = 1
+let g:neocomplcache_enable_smart_case = 1
+let g:neocomplcache_min_syntax_length = 3
+let g:neocomplcache_enable_auto_select = 1
+if !exists('g:neocomplcache_keyword_patterns')
+    let g:neocomplcache_keyword_patterns = {}
+endif
+let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
+inoremap <expr><C-g> neocomplcache#undo_completion()
+inoremap <expr><C-l> neocomplcache#complete_common_string()
+inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>"
+inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
+inoremap <expr><BS>  neocomplcache#smart_close_popup()."\<C-h>"
+inoremap <expr><C-y> neocomplcache#close_popup()
+inoremap <expr><C-e> neocomplcache#cancel_popup()
+inoremap <C-k> <Esc>a<C-n>
+

@@ -28,7 +28,8 @@ set encoding=utf-8
 set fileencoding=utf-8
 set fileformats=unix,dos,mac
 
-autocmd BufNewFile,BufReadPost * execute ":lcd " . substitute(expand("%:p:h"), ' ', '\\ ', 'g')
+command! -nargs=0 CD :execute 'lcd ' . substitute(expand("%:p:h"), ' ', '\\ ', 'g')
+autocmd MyAutoCmd BufEnter * execute 'CD'
 
 nnoremap ; : 
 inoremap <C-j> <esc>

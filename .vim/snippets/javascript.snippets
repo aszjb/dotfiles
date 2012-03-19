@@ -6,20 +6,13 @@ snippet for
 	}
 snippet cl
 	console.log(${1});
-snippet $
-	$('${1}')${2}
-snippet class
-	var ${1:} = function(${2:}) {
-		return (this instanceof $1) ? this.init($2) : new $1($2);
-	};
-
-	$1.prototype = {
-		init: function($2) {
-		}
-	};
 snippet r
 	require('${1}');
 snippet qs
-	document.querySelector('${1}')
+	document.querySelector('${1}');
+snippet qsa
+	document.querySelectorAll('${1}');
+snippet id
+	document.getElementById('${1}');
 snippet st
 	'use strict';

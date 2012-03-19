@@ -1,72 +1,5 @@
-# Generic Doctype
 snippet css
 	<link rel="stylesheet" href="${1}">
-snippet div
-	<div>${1}</div>
-snippet section
-	<section>${1}</section>
-snippet h1
-	<h1>${1}</h1>
-snippet h2
-	<h2>${1}</h2>
-snippet h3
-	<h3>${1}</h3>
-snippet h4
-	<h4>${1}</h4>
-snippet h5
-	<h5>${1}</h5>
-snippet h6
-	<h6>${1}</h6>
-snippet ul
-	<ul>
-		<li>${1}</li>
-	</ul>
-snippet ol
-	<ol>
-		<li>${1}</li>
-	</ol>
-snippet li
-	<li>${1}</li>
-snippet dl
-	<dl>
-		<dt>${1}</dt>
-		<dd>${2}</dd>
-	</dl>
-snippet dt
-	<dt>${1}</dt>
-snippet dd
-	<dd>${1}</dd>
-snippet img
-	<img src="${1}" alt="${2}">
-snippet a
-	<a href="${1}">${2}</a>
-## form
-snippet form
-	<form action="${1}" method="${2:post}">
-		${3}
-	</form>
-snippet input
-	<input type="${1:text}" name="${2}" value="${3}">
-snippet label
-	<label for="${2:$1}">${1:name}</label><input type="${3:text}" name="${4:$2}" value="${5}" id="${6:$2}">
-snippet meta
-	<meta name="${1:name}" content="${2:content}">
-snippet opt
-	<option value="${1:option}">${2:$1}</option>${3}
-snippet optt
-	<option>${1:option}</option>${2}
-snippet select
-	<select name="${1:some_name}" id="${2:$1}">
-		<option value="${3:option}">${4:$3}</option>
-	</select>${5}
-snippet table
-	<table>
-		<tr>${1}</tr>
-	</table>
-snippet textarea
-	<textarea name="${1:Name}" rows="${2:8}" cols="${3:40}">${4}</textarea>${5}
-snippet tt
-	[%${1} %]
 snippet script
 	<script src="${1}"></script>
 snippet jquery
@@ -83,7 +16,7 @@ snippet html5
 	</body>
 	</html>
 snippet page
-	<div class='page plain'><div>
+	<div class="page plain"><div>
 	${1}
 	</div></div>
 snippet code
@@ -96,10 +29,7 @@ snippet for
 	}
 snippet cl
 	console.log(${1});
-snippet $
-	$('${1}')${2}
 snippet qs
 	document.querySelector('${1}')
 snippet viewport
-	width=device-width, initial-scale=1
-	
+	<meta name="viewport" content="width=device-width, initial-scale=1">
