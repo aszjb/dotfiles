@@ -8,3 +8,4 @@ mytodo
 .todo
 _onlyme/
 npm-debug.log
+.sass-cache

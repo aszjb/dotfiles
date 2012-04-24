@@ -275,8 +275,9 @@ inoremap <C-w> <C-g>u<C-w>
 nnoremap <Space>f :<C-u>setf<Space>
  
 " 最後に選択したテキスト
-nnoremap vib `[v`]
-onoremap ib :normal ib<CR>
+nnoremap gc `[v`]
+vnoremap gc :<C-u>normal gc<CR>
+onoremap gc :<C-u>normal gc<CR>
 
 " コピペ
 nnoremap y "xy

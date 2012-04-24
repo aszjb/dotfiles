@@ -69,3 +69,6 @@ alias svnrm='find . -name ".svn" -type d | xargs rm -rf'
 
 # pydoc
 alias pydoc="python `which pydoc`"
+
+# bundle exec
+alias be="bundle exec"

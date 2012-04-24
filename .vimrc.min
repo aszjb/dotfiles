@@ -29,7 +29,7 @@ set fileencoding=utf-8
 set fileformats=unix,dos,mac
 
 command! -nargs=0 CD :execute 'lcd ' . substitute(expand("%:p:h"), ' ', '\\ ', 'g')
-autocmd MyAutoCmd BufEnter * execute 'CD'
+autocmd BufEnter * execute 'CD'
 
 nnoremap ; : 
 inoremap <C-j> <esc>
