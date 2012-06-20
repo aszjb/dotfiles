@@ -26,10 +26,7 @@ precmd () {
 PROMPT2='[%n]> ' 
 
 # 補完関数のロード
-if [ -d ~/.zsh_fun ]; then
-  fpath=(~/.zsh_fun $fpath)
-  autoload -U ~/.zsh_fun/*(:t)
-fi
+fpath=($HOME/.zsh_fun $fpath)
 
 #補間
 autoload -U compinit
