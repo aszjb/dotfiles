@@ -26,7 +26,7 @@ set wildmode=list:longest,full
 set termencoding=utf-8
 set encoding=utf-8
 set fileencoding=utf-8
-set fileformats=unix,dos,mac
+set fileformats=unix,dos
 
 command! -nargs=0 CD :execute 'lcd ' . substitute(expand("%:p:h"), ' ', '\\ ', 'g')
 autocmd BufEnter * execute 'CD'

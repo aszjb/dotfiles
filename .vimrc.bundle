@@ -22,6 +22,14 @@ Bundle 'hokaccha/vim-css3-syntax'
 Bundle 'jade.vim'
 Bundle 'groenewege/vim-less'
 Bundle 'kchmck/vim-coffee-script'
+Bundle 'scrooloose/syntastic'
+
+" syntastic
+let g:syntastic_mode_map = { 'mode': 'active',
+  \ 'active_filetypes': [],
+  \ 'passive_filetypes': ['html', 'coffee'] }
+"let g:syntastic_auto_loc_list = 1
+let g:syntastic_javascript_checker = 'jshint'
 
 " quickrun
 nmap ,r <Plug>(quickrun)
