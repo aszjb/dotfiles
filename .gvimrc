@@ -14,8 +14,8 @@ set transparency=5
 "タブのラベルファイル名のみ
 set guitablabel=%t
 
-"IMEオフ
-"set imdisable
+"IME
+set imdisableactivate
 
 "ツールバー非表示
 set guioptions-=T
@@ -27,5 +27,5 @@ set cursorline
 set cmdheight=1
 colorscheme mycolor
 
-"IME
-set imdisableactivate
+"ビープ音オフ
+set visualbell t_vb=

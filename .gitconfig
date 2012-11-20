@@ -8,19 +8,19 @@
 	branche = auto
 [alias]
 	co = checkout
-	ci = commit
+	ci = commit -v
 	st = status
 	br = branch
 	l  = log --date=iso -10
-	amend = commit --amend -a -C HEAD --date=now
+	amend = commit --amend -C HEAD
 	graph = log --graph --pretty=oneline
 	a = add -A .
-    pr = pull --rebase
+	pr = pull --rebase
 [push]
 	default = matching
 [core]
 	excludesfile = ~/.gitexclude
 	pager = cat
-	editor = /usr/bin/vi
+	editor = /usr/bin/vim
 	autocrlf = false
 	pager = less

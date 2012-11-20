@@ -7,6 +7,6 @@
     "sub": true,
     "laxbreak": true,
     "node": true,
-    "es5": true,
-    "devel": true
+    "devel": true,
+    "es5": false
 }

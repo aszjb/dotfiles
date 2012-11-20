@@ -27,7 +27,7 @@ Bundle 'scrooloose/syntastic'
 " syntastic
 let g:syntastic_mode_map = { 'mode': 'active',
   \ 'active_filetypes': [],
-  \ 'passive_filetypes': ['html', 'coffee'] }
+  \ 'passive_filetypes': ['scss', 'html'] }
 "let g:syntastic_auto_loc_list = 1
 let g:syntastic_javascript_checker = 'jshint'
 
@@ -44,7 +44,11 @@ let g:quickrun_config['_'] = {
 \ }
 
 let g:quickrun_config['md'] = {
-    \ 'type' : 'markdown',
+    \ 'type' : 'markdown.pl',
+\ }
+
+let g:quickrun_config['ruby'] = {
+    \ 'command' : $HOME.'/.rbenv/shims/ruby'
 \ }
 
 " snipmate
