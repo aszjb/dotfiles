@@ -1,6 +1,6 @@
 [user]
 	email = k.hokamura@gmail.com
-	name = hokaccha
+	name = Kazuhito Hokamura
 [color]
 	ui = auto
 	status = auto
@@ -17,10 +17,12 @@
 	a = add -A .
 	pr = pull --rebase
 [push]
-	default = matching
+	default = simple
 [core]
 	excludesfile = ~/.gitexclude
 	pager = cat
 	editor = /usr/bin/vim
 	autocrlf = false
 	pager = less
+[github]
+	user = hokaccha

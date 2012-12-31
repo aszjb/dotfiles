@@ -114,6 +114,8 @@ autocmd MyAutoCmd BufNewFile,BufReadPost *.json set filetype=json
 "coffee
 autocmd MyAutoCmd BufNewFile,BufReadPost *.coffee,Cakefile set filetype=coffee
 
+"autocmd BufNewFile *.rb call append(0, '# -*- coding: utf-8 -*-')
+
 " 開いてるファイルにのディレクトリに移動
 command! -nargs=0 CD :execute 'lcd ' . substitute(expand("%:p:h"), ' ', '\\ ', 'g')
 
