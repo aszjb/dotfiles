@@ -23,6 +23,7 @@ Bundle 'jade.vim'
 Bundle 'groenewege/vim-less'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'scrooloose/syntastic'
+Bundle 'wavded/vim-stylus'
 
 " syntastic
 let g:syntastic_mode_map = { 'mode': 'active',
@@ -67,9 +68,9 @@ nnoremap <silent> <Space>ko :<C-u>Unite outline<CR>
 autocmd FileType unite call s:unite_my_settings()
 function! s:unite_my_settings()
   imap <buffer> <C-w> <Plug>(unite_delete_backward_path)
-  imap <buffer> <C-c> <Plug>(unite_exit)
+  imap <buffer> <C-c> <Esc><Plug>(unite_all_exit)
   imap <buffer> <C-y> <Plug>(unite_do_default_action)
-  nmap <buffer> <C-c> <Plug>(unite_exit)
+  nmap <buffer> <C-c> <Plug>(unite_all_exit)
   inoremap <silent> <buffer> <expr> <C-o><C-n> unite#do_action('tabopen')
   inoremap <silent> <buffer> <expr> <C-o><C-j> unite#do_action('below')
   inoremap <silent> <buffer> <expr> <C-o><C-k> unite#do_action('above')

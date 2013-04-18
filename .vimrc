@@ -99,8 +99,8 @@ autocmd MyAutoCmd BufNewFile,BufReadPost *.less set filetype=less
 "psgiとtはperl
 autocmd MyAutoCmd BufNewFile,BufReadPost *.psgi,*.t set filetype=perl
 
-"ruをrubyに
-autocmd MyAutoCmd BufNewFile,BufReadPost *.ru set filetype=ruby
+"ruby
+autocmd MyAutoCmd BufNewFile,BufReadPost *.ru,*.jbuilder set filetype=ruby
 
 "asをactionscriptに
 autocmd MyAutoCmd BufNewFile,BufReadPost *.as set filetype=actionscript
@@ -114,10 +114,16 @@ autocmd MyAutoCmd BufNewFile,BufReadPost *.json set filetype=json
 "coffee
 autocmd MyAutoCmd BufNewFile,BufReadPost *.coffee,Cakefile set filetype=coffee
 
+"stylus
+autocmd MyAutoCmd BufNewFile,BufReadPost *.styl set filetype=stylus
+
 "autocmd BufNewFile *.rb call append(0, '# -*- coding: utf-8 -*-')
 
 " 開いてるファイルにのディレクトリに移動
 command! -nargs=0 CD :execute 'lcd ' . substitute(expand("%:p:h"), ' ', '\\ ', 'g')
+
+" Markedで開く
+command! -nargs=0 Marked :execute 'silent !open -a Marked %'
 
 "ファイルを開いたときにディレクト自動移動
 autocmd MyAutoCmd BufEnter * execute 'CD'

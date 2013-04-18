@@ -1,6 +1,6 @@
 [user]
 	email = k.hokamura@gmail.com
-	name = hokaccha
+	name = Kazuhito Hokamura
 [color]
 	ui = auto
 	status = auto
@@ -20,9 +20,10 @@
 	default = simple
 [core]
 	excludesfile = ~/.gitexclude
-	pager = cat
+	pager = LESS=-R less
 	editor = /usr/bin/vim
 	autocrlf = false
-	pager = less
 [github]
 	user = hokaccha
+[heroku]
+	account = personal

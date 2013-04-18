@@ -1,7 +1,7 @@
-#文字コード
+# 文字コード
 export LANG=ja_JP.UTF-8
 
-#プロンプト
+# プロンプト
 autoload colors
 colors
 
@@ -25,26 +25,23 @@ precmd () {
 
 PROMPT2='[%n]> ' 
 
-# 補完関数のロード
-fpath=($HOME/.zsh_fun $fpath)
-
-#補間
+# 補間
 autoload -U compinit
 compinit -u
 
-#履歴
+# 履歴
 HISTFILE="$HOME/.zsh_history"
 HISTSIZE=100000
 SAVEHIST=100000
 
-#エディタ
+# エディタ
 export EDITOR=vi
 
 setopt hist_ignore_dups
 setopt share_history
 setopt hist_ignore_space
 
-#キーバインド
+# キーバインド
 bindkey -e
 
 autoload history-search-end
@@ -54,23 +51,26 @@ bindkey "^P" history-beginning-search-backward-end
 bindkey "^N" history-beginning-search-forward-end 
 bindkey '^R' history-incremental-pattern-search-backward
 
-#ビープ音ならなさない
+# ビープ音ならなさない
 setopt nobeep
 
-#cd
+# cd
 setopt auto_cd
 setopt auto_pushd 
 setopt pushd_ignore_dups
 
-#lsと補間にでる一覧の色
+# 改行のない出力をプロンプトで上書きするのを防ぐ
+unsetopt promptcr
+
+# lsと補間にでる一覧の色
 export LSCOLORS=gxfxxxxxcxxxxxxxxxgxgx
 export LS_COLORS='di=01;36:ln=01;35:ex=01;32'
 zstyle ':completion:*' list-colors 'di=36' 'ln=35' 'ex=32'
 
-#デフォルトパーミッションの設定
+# デフォルトパーミッションの設定
 umask 022
 
-#alias
+# alias
 case "${OSTYPE}" in
 freebsd*|darwin*)
   alias ls="ls -GFa"
@@ -82,57 +82,8 @@ esac
 
 alias ll='ls -l'
 
-alias -g G="| grep"
-alias -g L="| less"
-alias -g V="| vi -"
+# 環境ごとの設定読み込む
+[ -f ~/.zshrc_env ] && source ~/.zshrc_env
 
-#改行のない出力をプロンプトで上書きするのを防ぐ
-unsetopt promptcr
-
-# screen auto startup
-if [ $TERM != "screen" -a "`screen -ls | grep Attache`" = "" ]; then
-    screen -US hokamura -xRR
-fi
-
-#screenのステータスラインに最後に実行したコマンドを表示
-if [ "$TERM" = "screen" ]; then
-    #chpwd () { echo -n "_`dirs`\\" }
-    preexec() {
-        # see [zsh-workers:13180]
-        # http://www.zsh.org/mla/workers/2000/msg03993.html
-        emulate -L zsh
-        local -a cmd; cmd=(${(z)2})
-        case $cmd[1] in
-            fg)
-                if (( $#cmd == 1 )); then
-                    cmd=(builtin jobs -l %+)
-                else
-                    cmd=(builtin jobs -l $cmd[2])
-                fi
-                ;;
-            %*) 
-                cmd=(builtin jobs -l $cmd[1])
-                ;;
-            cd)
-                if (( $#cmd == 2)); then
-                    cmd[1]=$cmd[2]
-                fi
-                ;&
-            *)
-                echo -n "k$cmd[1]:t\\"
-                return
-                ;;
-        esac
-
-        local -A jt; jt=(${(kv)jobtexts})
-
-        $cmd >>(read num rest
-            cmd=(${(z)${(e):-\$jt$num}})
-            echo -n "k$cmd[1]:t\\") 2>/dev/null
-    }
-    chpwd () {}
-fi
-
-#個別設定を読み込む
-[ -f ~/.zshrc.funcs ] && source ~/.zshrc.funcs
-[ -f ~/.zshrc.local ] && source ~/.zshrc.local
+# 個別設定を読み込む
+[ -f ~/.zshrc_local ] && source ~/.zshrc_local
