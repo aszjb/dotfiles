@@ -26,6 +26,7 @@ precmd () {
 PROMPT2='[%n]> ' 
 
 # 補間
+[ -d ~/.zsh_fn ] && fpath=($HOME/.zsh_fn $fpath)
 autoload -U compinit
 compinit -u
 
@@ -34,12 +35,12 @@ HISTFILE="$HOME/.zsh_history"
 HISTSIZE=100000
 SAVEHIST=100000
 
-# エディタ
-export EDITOR=vi
-
 setopt hist_ignore_dups
 setopt share_history
 setopt hist_ignore_space
+
+# エディタ
+export EDITOR=vi
 
 # キーバインド
 bindkey -e

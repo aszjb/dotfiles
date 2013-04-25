@@ -1,9 +1,6 @@
 # .zshrc.env
 # 環境ごとの設定を書いたりするファイル
 
-# 補完関数のロード
-fpath=($HOME/.zsh_fun $fpath)
-
 # パスの設定
 export PATH=$HOME/local/bin:/usr/local/bin:/usr/local/sbin:$PATH
 
@@ -18,7 +15,7 @@ export WORKON_HOME=$HOME/.virtualenvs
 export PATH=$HOME/.nodebrew/current/bin:$PATH
 
 # rbenv
-eval "$(rbenv init -)"
+#eval "$(rbenv init -)"
 
 # z
 source `brew --prefix`/etc/profile.d/z.sh
