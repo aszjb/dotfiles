@@ -1,4 +1,4 @@
-# .zshrc.env
+# .zshrc_env
 # 環境ごとの設定を書いたりするファイル
 
 # パスの設定
@@ -86,30 +86,6 @@ function pminfo() {
   fi
 }
 
-function url_decode() {
-  if [ $# != 0 ]; then
-    perl -MURI::Escape -wle 'print uri_unescape $ARGV[0]' $*
-  else
-    echo 'usage: url_decode url'
-  fi
-}
-
-function imageinfo() {
-  if [ $# != 0 ]; then
-    perl -MImage::Info -MYAML -le 'print $_, "\n", Dump Image::Info::image_info($_) for @ARGV'
-  else
-    echo 'usage: imageinfo file [file..]'
-  fi
-}
-
-function base64() {
-  if [ $# != 0 ]; then
-    perl -MMIME::Base64 -0777 -wne 'print encode_base64($_,"")' < $*
-  else
-    echo 'usage: base64 file'
-  fi
-}
-
 # 補完関数リセット
 function r() {
   local f
@@ -118,13 +94,32 @@ function r() {
   autoload -U $f:t
 }
 
+# jq wrapper
+#
+# e.g
+# $ jqw package.json
+# $ jqw package.json '.dependencies'
+# $ jqw http://api.example.com/foo.json
+# $ jqw http://api.example.com/foo.json '.query'
+function jqw() {
+  target=$1
+
+  query=$2
+  if [ -z "${query}" ]; then
+    query='.'
+  fi
+
+  if [[ $1 =~ 'http' ]]; then
+    curl -s $1 | jq $query
+  else
+    jq $query $1
+  fi
+}
+
 # macvim
 if [ -f /Applications/MacVim.app/Contents/MacOS/Vim ]; then
   alias vim="/Applications/MacVim.app/Contents/MacOS/Vim -g --remote-tab-silent"
 fi
-
-# jsonview
-alias jsonview="perl -MJSON::XS -e 'print JSON::XS->new->utf8->pretty->encode(decode_json <STDIN>)'"
 
 # svn
 alias svnadd="svn st | grep '^?' | awk '{ print \$2 }' | xargs svn add"

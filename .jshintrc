@@ -8,5 +8,6 @@
     "laxbreak": true,
     "node": true,
     "devel": true,
-    "es5": false
+    "es5": true,
+    "moz": true
 }
