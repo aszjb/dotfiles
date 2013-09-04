@@ -87,7 +87,7 @@ esac
 alias ll='ls -l'
 
 # 環境ごとの設定読み込む
-[ -f ~/.zshrc_env ] && source ~/.zshrc_env
+[ -f ~/.zshrc_ext ] && source ~/.zshrc_ext
 
 # 個別設定を読み込む
 [ -f ~/.zshrc_local ] && source ~/.zshrc_local

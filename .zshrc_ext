@@ -1,5 +1,5 @@
-# .zshrc_env
-# 環境ごとの設定を書いたりするファイル
+# .zshrc_ext
+# 環境ごとの設定とか雑多なものを書いたりするファイル
 
 # パスの設定
 export PATH=$HOME/local/bin:/usr/local/bin:/usr/local/sbin:$PATH
