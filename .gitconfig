@@ -9,7 +9,7 @@
 [alias]
 	co = checkout
 	ci = commit -v
-	st = status
+	st = status -sb
 	br = branch
 	l  = log --date=iso -10
 	amend = commit --amend -C HEAD
