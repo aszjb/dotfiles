@@ -132,3 +132,6 @@ alias pydoc="python `which pydoc`"
 # bundle 
 alias be="bundle exec"
 alias bi="bundle install --without=production --path vendor/bundle"
+
+# added by travis gem
+[ -f ~/.travis/travis.sh ] && source ~/.travis/travis.sh
