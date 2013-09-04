@@ -16,7 +16,6 @@ let colors_name = "mycolor"
 "
 
 " `:he highlight-groups`
-hi DiffAdd      guibg=MediumSeaGreen
 hi Directory    guifg=SkyBlue ctermfg=cyan
 hi ErrorMsg     guibg=Firebrick2 guifg=White
 hi FoldColumn   guibg=Grey guifg=DarkBlue
@@ -63,8 +62,9 @@ hi Cursor       guibg=#999999 guifg=bg
 hi CursorColumn guibg=Gray20
 hi CursorIM     guibg=Purple guifg=bg
 hi CursorLine   guibg=#222222
-hi DiffChange   guibg=MediumPurple4
-hi DiffDelete   gui=bold guifg=White guibg=SlateBlue
+hi DiffAdd      guifg=white guibg=#14810f
+hi DiffChange   guifg=white guibg=#214dad
+hi DiffDelete   guifg=White guibg=#333333
 hi DiffText     gui=NONE guifg=White guibg=SteelBlue
 hi LineNr       guifg=DarkYellow guibg=Grey5 ctermfg=green cterm=none
 hi matchParen   guifg=White guibg=Magenta

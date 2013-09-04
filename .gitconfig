@@ -18,8 +18,13 @@
 	pr = pull --rebase
 [push]
 	default = simple
+[diff]
+	algorithm = patience
+	tool = macvim-diff
+[difftool "macvim-diff"]
+	cmd = "/Applications/MacVim.app/Contents/MacOS/Vim -g -dO -f $LOCAL $REMOTE"
 [core]
-	excludesfile = ~/.gitexclude
+	excludesfile = /Users/hokamura/.gitexclude
 	pager = LESS=-R less
 	editor = /usr/bin/vim
 	autocrlf = false
