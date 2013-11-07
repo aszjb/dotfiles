@@ -4,21 +4,11 @@
 # パスの設定
 export PATH=$HOME/local/bin:/usr/local/bin:/usr/local/sbin:$PATH
 
-# perlbrew
-[ -f ~/perl5/perlbrew/etc/bashrc ] && source ~/perl5/perlbrew/etc/bashrc
-
-# virtualenv
-export WORKON_HOME=$HOME/.virtualenvs
-[ -f /usr/local/bin/virtualenvwrapper.sh ] && source /usr/local/bin/virtualenvwrapper.sh
-
 # nodebrew
 export PATH=$HOME/.nodebrew/current/bin:$PATH
 
 # rbenv
 eval "$(rbenv init -)"
-
-# z
-source `brew --prefix`/etc/profile.d/z.sh
 
 # screen auto startup
 if [ $TERM != "screen" -a "`screen -ls | grep Attache`" = "" ]; then
@@ -120,14 +110,6 @@ function jqw() {
 if [ -f /Applications/MacVim.app/Contents/MacOS/Vim ]; then
   alias vim="/Applications/MacVim.app/Contents/MacOS/Vim -g --remote-tab-silent"
 fi
-
-# svn
-alias svnadd="svn st | grep '^?' | awk '{ print \$2 }' | xargs svn add"
-alias svndel="svn st | grep '^!' | awk '{ print \$2 }' | xargs svn delete"
-alias svnrm='find . -name ".svn" -type d | xargs rm -rf'
-
-# pydoc
-alias pydoc="python `which pydoc`"
 
 # bundle 
 alias be="bundle exec"
