@@ -1,0 +1,35 @@
+snippet css
+	<link rel="stylesheet" href="${1}">
+snippet script
+	<script src="${1}"></script>
+snippet jquery
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+snippet html5
+	<!DOCTYPE html>
+	<html lang="ja">
+	<head>
+	<meta charset="utf-8">
+	<title>Sample</title>
+	</head>
+	<body>
+	${1}
+	</body>
+	</html>
+snippet page
+	<div class="page plain"><div>
+	${1}
+	</div></div>
+snippet code
+	<pre><code>${1}</code></pre>
+snippet f
+	function() {${1}}${2}
+snippet for
+	for (var i = 0, len = ${1:Things}.length; i < len; i++) {
+		${2:}$1[i];
+	}
+snippet cl
+	console.log(${1});
+snippet qs
+	document.querySelector('${1}')
+snippet viewport
+	<meta name="viewport" content="width=device-width, initial-scale=1">
