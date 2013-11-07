@@ -12,8 +12,7 @@ filetype plugin on
  
 Bundle 'Shougo/neocomplcache'
 Bundle 'Shougo/unite.vim'
-Bundle 't9md/vim-unite-ack'
-Bundle 'h1mesuke/unite-outline'
+Bundle "git://github.com/Shougo/vimproc" 
 Bundle 'snipMate'
 Bundle 'thinca/vim-quickrun'
 Bundle 'thinca/vim-fontzoom'
@@ -58,12 +57,13 @@ let g:snippets_dir = $HOME.'/.vim/snippets'
 " unite
 let g:unite_enable_start_insert = 1
 let g:unite_update_time = 100
+let g:unite_enable_ignore_case = 1
+let g:unite_enable_smart_case = 1
 
 nnoremap <silent> <Space>kf :<C-u>UniteWithBufferDir -buffer-name=files file file/new<CR>
 nnoremap <silent> <Space>km :<C-u>Unite file_mru<CR>
 nnoremap <silent> <Space>kr :<C-u>Unite -buffer-name=register register<CR>
-nnoremap <silent> <Space>kb :<C-u>Unite bookmark<CR>
-nnoremap <silent> <Space>ko :<C-u>Unite outline<CR>
+nnoremap <silent> <Space>kg :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
 
 autocmd FileType unite call s:unite_my_settings()
 function! s:unite_my_settings()
@@ -79,26 +79,12 @@ function! s:unite_my_settings()
   inoremap <silent> <buffer> ~ <C-u>~
 endfunction
 
-" unite-ack
-let g:unite_source_ack_command = 'ack -a'
-let g:unite_source_ack_ignore_case = 1
-
-function! s:unite_ack_escape(str)
-    let chars = ' :\'
-    return escape(a:str, chars)
-endfunction
-function! s:unite_ack_visual_string()
-    normal `<
-    let s = col('.') - 1
-    normal `>
-    let e = col('.') - 1
-    let line = getline('.')
-    let pat = line[s : e]
-    return s:unite_ack_escape(pat)
-endfunction
-nnoremap <silent> <Space>a  :<C-u>exe 'Unite -buffer-name=ack ack::' . <SID>unite_ack_escape(expand('<cword>'))<CR>
-vnoremap <silent> <Space>a :<C-u>exe 'Unite -buffer-name=ack ack::' . <SID>unite_ack_visual_string()<CR>
-command! -complete=file -nargs=+ Ack :execute 'Unite -buffer-name=ack ack::' . <SID>unite_ack_escape(<q-args>)
+" unite grep に ag(The Silver Searcher) を使う
+if executable('ag')
+  let g:unite_source_grep_command = 'ag'
+  let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
+  let g:unite_source_grep_recursive_opt = ''
+endif
 
 " neocon
 let g:neocomplcache_enable_at_startup = 1
