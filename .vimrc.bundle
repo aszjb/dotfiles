@@ -23,13 +23,21 @@ Bundle 'groenewege/vim-less'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'scrooloose/syntastic'
 Bundle 'wavded/vim-stylus'
+Bundle 'maksimr/vim-jsbeautify'
+Bundle 'gcmt/wildfire.vim'
+
+" wildfire
+let g:wildfire_objects = ["ic", "i'", 'i"', 'i)', 'i]', 'i}', 'ip', 'it', 'i>']
+
+" jsbeautify
+vnoremap <silent> ff :call RangeJsBeautify()<CR>
 
 " syntastic
 let g:syntastic_mode_map = { 'mode': 'active',
   \ 'active_filetypes': [],
   \ 'passive_filetypes': ['scss', 'html'] }
 "let g:syntastic_auto_loc_list = 1
-let g:syntastic_javascript_checker = 'jshint'
+let g:syntastic_javascript_checkers = ['jshint']
 
 " quickrun
 nmap ,r <Plug>(quickrun)
@@ -59,6 +67,7 @@ let g:unite_enable_start_insert = 1
 let g:unite_update_time = 100
 let g:unite_enable_ignore_case = 1
 let g:unite_enable_smart_case = 1
+let g:unite_source_file_mru_limit = 100
 
 nnoremap <silent> <Space>kf :<C-u>UniteWithBufferDir -buffer-name=files file file/new<CR>
 nnoremap <silent> <Space>km :<C-u>Unite file_mru<CR>
@@ -95,6 +104,10 @@ if !exists('g:neocomplcache_keyword_patterns')
     let g:neocomplcache_keyword_patterns = {}
 endif
 let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
+
+" https://github.com/Shougo/neocomplcache.vim/issues/463
+call neocomplcache#custom_source('_', 'converters', ['converter_remove_next_keyword', 'converter_delimiter', 'converter_abbr'])
+
 inoremap <expr><C-g> neocomplcache#undo_completion()
 inoremap <expr><C-l> neocomplcache#complete_common_string()
 inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>"

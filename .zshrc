@@ -77,7 +77,7 @@ umask 022
 # alias
 case "${OSTYPE}" in
 freebsd*|darwin*)
-  alias ls="ls -GFa"
+  alias ls="ls -GFah"
   ;;
 linux*)
   alias ls="ls -Fa --color"
@@ -87,7 +87,4 @@ esac
 alias ll='ls -l'
 
 # 環境ごとの設定読み込む
-[ -f ~/.zshrc_ext ] && source ~/.zshrc_ext
-
-# 個別設定を読み込む
-[ -f ~/.zshrc_local ] && source ~/.zshrc_local
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local

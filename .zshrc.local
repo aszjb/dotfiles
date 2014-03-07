@@ -1,0 +1,73 @@
+# .zshrc.local
+# 環境ごとの設定とか雑多なものを書いたりするファイル
+
+# パスの設定
+export PATH=$HOME/local/bin:/usr/local/bin:/usr/local/sbin:$PATH
+
+# nodebrew
+export PATH=$HOME/.nodebrew/current/bin:$PATH
+
+# perlbrew
+source ~/perl5/perlbrew/etc/bashrc
+
+# rbenv
+eval "$(rbenv init -)"
+
+# screen auto startup
+if [ -z "$TMUX" ] && ! tmux ls 2>/dev/null | grep attached >/dev/null; then
+    tmux new -As hokamura
+fi
+
+# alc for CLI
+function alc() {
+  if [ $# != 0 ]; then
+    w3m "http://eow.alc.co.jp/$*/UTF-8/?ref=sa" | less +37
+  else
+    echo 'usage: alc word'
+  fi
+}
+
+# 補完関数リセット
+function r() {
+  local f
+  f=(~/.zsh_fn/*(.))
+  unfunction $f:t 2> /dev/null
+  autoload -U $f:t
+}
+
+# jq wrapper
+#
+# e.g
+# $ jqw package.json
+# $ jqw package.json '.dependencies'
+# $ jqw http://api.example.com/foo.json
+# $ jqw http://api.example.com/foo.json '.query'
+function jqw() {
+  target=$1
+
+  query=$2
+  if [ -z "${query}" ]; then
+    query='.'
+  fi
+
+  if [[ $1 =~ 'http' ]]; then
+    curl -s $1 | jq $query
+  else
+    jq $query $1
+  fi
+}
+
+# macvim
+if [ -f /Applications/MacVim.app/Contents/MacOS/Vim ]; then
+  alias vim="/Applications/MacVim.app/Contents/MacOS/Vim -g --remote-tab-silent"
+fi
+
+# bundle 
+alias be="bundle exec"
+alias bi="bundle install --without=production --path vendor/bundle"
+
+# added by travis gem
+[ -f ~/.travis/travis.sh ] && source ~/.travis/travis.sh
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
