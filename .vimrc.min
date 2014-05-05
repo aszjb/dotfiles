@@ -31,7 +31,7 @@ set fileformats=unix,dos
 command! -nargs=0 CD :execute 'lcd ' . substitute(expand("%:p:h"), ' ', '\\ ', 'g')
 autocmd BufEnter * execute 'CD'
 
-nnoremap ; : 
+nnoremap ; :
 inoremap <C-j> <esc>
 vnoremap <C-j> <esc>
 nnoremap <Space>w :<C-u>write<CR>

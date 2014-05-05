@@ -16,7 +16,6 @@
 	g = log --graph --all --oneline --decorate
 	a = add -A .
 	pr = pull --rebase
-	rm-branch = !sh -c 'git branch -d $1 && git branch -rd origin/$1 && git push --delete origin $1' -
 	i = !git init && git commit --allow-empty -m 'initial commit'
 	s = !tig status
 [push]
