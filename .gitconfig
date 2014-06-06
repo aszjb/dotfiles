@@ -18,6 +18,7 @@
 	pr = pull --rebase
 	i = !git init && git commit --allow-empty -m 'initial commit'
 	s = !tig status
+	clean-branch = !git remote prune origin && git branch --merged | grep -v master | xargs git br -d
 [push]
 	default = simple
 [diff]
