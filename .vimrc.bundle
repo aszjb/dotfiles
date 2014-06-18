@@ -25,6 +25,7 @@ Bundle 'scrooloose/syntastic'
 Bundle 'wavded/vim-stylus'
 Bundle 'maksimr/vim-jsbeautify'
 Bundle 'gcmt/wildfire.vim'
+Bundle 'nginx.vim'
 
 " wildfire
 let g:wildfire_objects = ["ic", "i'", 'i"', 'i)', 'i]', 'i}', 'ip', 'it', 'i>']

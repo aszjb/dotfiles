@@ -86,5 +86,10 @@ esac
 
 alias ll='ls -l'
 
+# tmux auto startup
+if type tmux >/dev/null 2>&1 && ! tmux ls 2>/dev/null | grep ^`whoami` >/dev/null; then
+    tmux new -As `whoami`
+fi
+
 # 環境ごとの設定読み込む
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local

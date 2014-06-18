@@ -13,10 +13,9 @@ source ~/perl5/perlbrew/etc/bashrc
 # rbenv
 eval "$(rbenv init -)"
 
-# screen auto startup
-if [ -z "$TMUX" ] && ! tmux ls 2>/dev/null | grep attached >/dev/null; then
-    tmux new -As hokamura
-fi
+# go
+export GOPATH=$HOME/local/go
+export PATH=$PATH:$GOPATH/bin
 
 # alc for CLI
 function alc() {
@@ -33,28 +32,6 @@ function r() {
   f=(~/.zsh_fn/*(.))
   unfunction $f:t 2> /dev/null
   autoload -U $f:t
-}
-
-# jq wrapper
-#
-# e.g
-# $ jqw package.json
-# $ jqw package.json '.dependencies'
-# $ jqw http://api.example.com/foo.json
-# $ jqw http://api.example.com/foo.json '.query'
-function jqw() {
-  target=$1
-
-  query=$2
-  if [ -z "${query}" ]; then
-    query='.'
-  fi
-
-  if [[ $1 =~ 'http' ]]; then
-    curl -s $1 | jq $query
-  else
-    jq $query $1
-  fi
 }
 
 # macvim
