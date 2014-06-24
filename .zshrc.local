@@ -48,3 +48,17 @@ alias bi="bundle install --without=production --path vendor/bundle"
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
+
+# peco
+function g {
+  local _path=$(ghq list -p | peco)
+  if [ "$_path" != "" ]; then
+    cd $_path
+  fi
+}
+function gh {
+  local _path=$(ghq list -p | peco)
+  if [ "$_path" != "" ]; then
+    gh-open $_path
+  fi
+}

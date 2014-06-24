@@ -344,6 +344,20 @@ onoremap ii :normal vii<CR>
 onoremap ai :normal vai<CR>
 
 "------------------------
+" go
+"------------------------
+
+filetype off
+filetype plugin off
+let g:gofmt_command = 'goimports'
+let $GOROOT = '/usr/local/opt/go/libexec'
+let $GOPATH = $HOME . '/local/go'
+set rtp+=$GOROOT/misc/vim
+set rtp+=$GOPATH/src/github.com/nsf/gocode/vim
+filetype plugin on
+syntax on
+
+"------------------------
 " その他の設定のロード
 "------------------------
 

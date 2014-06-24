@@ -41,3 +41,5 @@
 	ff = false
 [pull]
 	rebase = true
+[ghq]
+	root = ~/repos
