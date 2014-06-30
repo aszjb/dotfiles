@@ -50,15 +50,40 @@ alias bi="bundle install --without=production --path vendor/bundle"
 export PATH="/usr/local/heroku/bin:$PATH"
 
 # peco
-function g {
-  local _path=$(ghq list -p | peco)
-  if [ "$_path" != "" ]; then
-    cd $_path
+function peco-cd-ghq {
+  local ghq_dir=$(ghq list | peco --query "$LBUFFER")
+  if [ -n "$ghq_dir" ]; then
+    BUFFER="cd $(git config --global ghq.root)/$ghq_dir"
+    zle accept-line
+    zle clear-screen
   fi
 }
-function gh {
-  local _path=$(ghq list -p | peco)
-  if [ "$_path" != "" ]; then
-    gh-open $_path
+function peco-open-github {
+  local ghq_dir=$(ghq list | peco --query "$LBUFFER")
+  if [ -n "$ghq_dir" ]; then
+    gh-open $(git config --global ghq.root)/$ghq_dir
+  fi
+}
+zle -N peco-cd-ghq
+zle -N peco-open-github
+bindkey '^j^j' peco-cd-ghq
+bindkey '^j^o' peco-open-github
+
+function cdgem() {
+  local gem_name=$(bundle list | sed -e 's/^ *\* *//g' | peco | cut -d \  -f 1)
+  if [ -n "$gem_name" ]; then
+    local gem_dir=$(bundle show ${gem_name})
+    echo "cd to ${gem_dir}"
+    cd ${gem_dir}
+  fi
+}
+
+function cdnpm() {
+  local npm_root=`npm root`
+  local npm_name=$(ls $npm_root | grep -v '^\.' | sed -e 's/\/$//' | peco)
+  if [ -n "$npm_name" ]; then
+    local npm_dir="$npm_root/$npm_name"
+    echo "cd to ${npm_dir}"
+    cd ${npm_dir}
   fi
 }

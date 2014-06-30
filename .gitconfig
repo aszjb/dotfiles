@@ -42,4 +42,4 @@
 [pull]
 	rebase = true
 [ghq]
-	root = ~/repos
+	root = /Users/hokamura/repos
