@@ -43,6 +43,7 @@ set noswapfile
 
 "backupしない
 set nobackup
+set backupdir=/tmp
 
 "他で編集されたら読み込み直す
 set autoread
@@ -354,8 +355,10 @@ let $GOROOT = '/usr/local/opt/go/libexec'
 let $GOPATH = $HOME . '/local/go'
 set rtp+=$GOROOT/misc/vim
 set rtp+=$GOPATH/src/github.com/nsf/gocode/vim
+"auto BufWritePre *.go Fmt
 filetype plugin on
 syntax on
+nnoremap <silent> ,f :<C-u>Fmt<CR>
 
 "------------------------
 " その他の設定のロード

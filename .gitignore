@@ -2,3 +2,4 @@
 .vim/.VimballRecord
 .vim/.netrwhist
 .vim/bundle
+*.pyc

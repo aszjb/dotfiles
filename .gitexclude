@@ -1,9 +1,1 @@
-.prove
-.vimrc.project
-*.pyc
-extlib
-.modulebuildrc
-.DS_Store
-npm-debug.log
-.sass-cache
 .me

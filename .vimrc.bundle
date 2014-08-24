@@ -52,8 +52,8 @@ let g:quickrun_config['_'] = {
     \ 'outputter/buffer/split' : '%{winwidth(0) * 2 < winheight(0) * 5 ? "" : "vertical belowright"}',
 \ }
 
-let g:quickrun_config['md'] = {
-    \ 'type' : 'markdown.pl',
+let g:quickrun_config['markdown'] = {
+    \ 'command': 'marked',
 \ }
 
 let g:quickrun_config['ruby'] = {

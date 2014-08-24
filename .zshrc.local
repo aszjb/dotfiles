@@ -58,16 +58,26 @@ function peco-cd-ghq {
     zle clear-screen
   fi
 }
+zle -N peco-cd-ghq
+bindkey '^j^j' peco-cd-ghq
+
 function peco-open-github {
   local ghq_dir=$(ghq list | peco --query "$LBUFFER")
   if [ -n "$ghq_dir" ]; then
     gh-open $(git config --global ghq.root)/$ghq_dir
   fi
 }
-zle -N peco-cd-ghq
 zle -N peco-open-github
-bindkey '^j^j' peco-cd-ghq
 bindkey '^j^o' peco-open-github
+
+function peco-vim-git-files {
+  local target_file=$(git ls-files | peco --query "$LBUFFER")
+  if [ -n "$target_file" ]; then
+    vim $target_file
+  fi
+}
+zle -N peco-vim-git-files
+bindkey '^j^v' peco-vim-git-files
 
 function cdgem() {
   local gem_name=$(bundle list | sed -e 's/^ *\* *//g' | peco | cut -d \  -f 1)

@@ -27,7 +27,7 @@
 [difftool "macvim-diff"]
 	cmd = "/Applications/MacVim.app/Contents/MacOS/Vim -g -dO -f $LOCAL $REMOTE"
 [core]
-	excludesfile = /Users/hokamura/.gitexclude
+	excludesfile = ~/.gitexclude
 	pager = LESS=-R less
 	editor = /usr/bin/vim
 	autocrlf = false
@@ -43,3 +43,5 @@
 	rebase = true
 [ghq]
 	root = /Users/hokamura/repos
+[credential]
+	helper = osxkeychain

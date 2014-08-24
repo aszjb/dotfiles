@@ -6,6 +6,11 @@ set main-view = id date author commit-title:graph=yes,refs=yes
 
 # コミットのときdiffを表示する
 bind generic C !git commit -v
+bind status C !git commit -v
 
 # `l`（line）で一行addを行う
 bind stage l stage-update-line
+
+# 選択したコミットからrebase -i
+bind main R !git rebase -i %(commit)^
+bind diff R !git rebase -i %(commit)^
