@@ -14,13 +14,12 @@ source ~/perl5/perlbrew/etc/bashrc
 eval "$(rbenv init -)"
 
 # go
-export GOPATH=$HOME/local/go
-export PATH=$PATH:$GOPATH/bin
+export GOPATH=$HOME/local
 
 # alc for CLI
 function alc() {
   if [ $# != 0 ]; then
-    w3m "http://eow.alc.co.jp/$*/UTF-8/?ref=sa" | less +37
+    w3m "http://eow.alc.co.jp/$*/UTF-8/?ref=sa" | less +27
   else
     echo 'usage: alc word'
   fi
@@ -50,6 +49,7 @@ alias bi="bundle install --without=production --path vendor/bundle"
 export PATH="/usr/local/heroku/bin:$PATH"
 
 # peco
+bindkey -r '^j'
 function peco-cd-ghq {
   local ghq_dir=$(ghq list | peco --query "$LBUFFER")
   if [ -n "$ghq_dir" ]; then
@@ -59,6 +59,7 @@ function peco-cd-ghq {
   fi
 }
 zle -N peco-cd-ghq
+bindkey '^jj' peco-cd-ghq
 bindkey '^j^j' peco-cd-ghq
 
 function peco-open-github {
@@ -68,6 +69,7 @@ function peco-open-github {
   fi
 }
 zle -N peco-open-github
+bindkey '^jo' peco-open-github
 bindkey '^j^o' peco-open-github
 
 function peco-vim-git-files {
@@ -77,6 +79,7 @@ function peco-vim-git-files {
   fi
 }
 zle -N peco-vim-git-files
+bindkey '^jv' peco-vim-git-files
 bindkey '^j^v' peco-vim-git-files
 
 function cdgem() {
@@ -96,4 +99,8 @@ function cdnpm() {
     echo "cd to ${npm_dir}"
     cd ${npm_dir}
   fi
+}
+
+function gorun() {
+  go build -o /tmp/gorun-out && /tmp/gorun-out $*
 }

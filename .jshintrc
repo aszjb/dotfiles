@@ -7,7 +7,6 @@
     "laxbreak": true,
     "node": true,
     "devel": true,
-    "es5": true,
     "moz": true,
     "multistr": true
 }

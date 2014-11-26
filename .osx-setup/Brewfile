@@ -1,11 +1,6 @@
 update
 upgrade
 
-tap homebrew/binary
-tap phinze/homebrew-cask
-
-install brew-cask
-
 install zsh
 install git
 install w3m
@@ -22,20 +17,7 @@ install openssl
 install rbenv
 install ruby-build
 install tmux
-
-cask install vagrant
-cask install virtualbox
-cask install iterm2
-cask install google-chrome
-cask install dropbox
-cask install kobito
-cask install firefox
-cask install alfred
-cask install keyremap4macbook
-cask install witch
-cask install firefox
-cask install alfred
-
-cask alfred link
+install go
+install mysql
 
 cleanup

@@ -352,13 +352,13 @@ filetype off
 filetype plugin off
 let g:gofmt_command = 'goimports'
 let $GOROOT = '/usr/local/opt/go/libexec'
-let $GOPATH = $HOME . '/local/go'
+let $GOPATH = $HOME . '/local'
 set rtp+=$GOROOT/misc/vim
 set rtp+=$GOPATH/src/github.com/nsf/gocode/vim
 "auto BufWritePre *.go Fmt
 filetype plugin on
 syntax on
-nnoremap <silent> ,f :<C-u>Fmt<CR>
+nnoremap <silent> ,f :<C-u>Fmt<CR>:<C-u>write<CR>
 
 "------------------------
 " その他の設定のロード

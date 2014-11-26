@@ -14,7 +14,13 @@ snippet m
 	}
 snippet p
 	log.Println(${1})
-snippet f
-	log.Printf("", ${1})
-snippet v
+snippet pp
 	log.Printf("%#v", ${1})
+snippet f
+	if err != nil {
+		log.Fatal(err)
+	}
+snippet e
+	if err != nil {
+		${1}
+	}

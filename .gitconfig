@@ -20,7 +20,7 @@
 	s = !tig status
 	clean-branch = !git remote prune origin && git branch --merged | grep -v master | xargs git br -d
 [push]
-	default = simple
+	default = current
 [diff]
 	algorithm = patience
 	tool = macvim-diff
@@ -42,6 +42,6 @@
 [pull]
 	rebase = true
 [ghq]
-	root = /Users/hokamura/repos
+	root = /Users/hokamura/local/src
 [credential]
 	helper = osxkeychain
