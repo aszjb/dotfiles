@@ -1,0 +1,14 @@
+.gitconfig
+.gitexclude
+.gitignore
+.gvimrc
+.jshintrc
+.peco
+.tigrc
+.tmux.conf
+.vim
+.vimrc
+.vimrc.bundle
+.zsh_fn
+.zshrc
+.zshrc.local
