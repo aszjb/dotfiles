@@ -9,6 +9,7 @@
 .vim
 .vimrc
 .vimrc.bundle
+.vimrc_first.vim
 .zsh_fn
 .zshrc
 .zshrc.local
