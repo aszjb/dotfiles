@@ -69,7 +69,7 @@ nnoremap <C-w>v :<C-u>belowright vnew<CR>
 
 "windwowの高さ、幅
 "set winheight=100
-set winwidth=78
+"set winwidth=78
 
 " 下に開く
 set splitbelow
@@ -79,6 +79,9 @@ set virtualedit+=block
 
 " vimscriptをリロード
 nnoremap <silent> <Space>r :<C-u>source %<CR>
+
+" http://www.kaoriya.net/blog/2014/03/30/
+set noundofile
 
 "-----------------------
 " autocmd

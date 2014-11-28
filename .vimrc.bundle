@@ -12,6 +12,7 @@ filetype plugin on
  
 Bundle 'Shougo/neocomplcache'
 Bundle 'Shougo/unite.vim'
+Bundle 'Shougo/neomru.vim'
 Bundle "git://github.com/Shougo/vimproc" 
 Bundle 'snipMate'
 Bundle 'thinca/vim-quickrun'
