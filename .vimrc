@@ -367,17 +367,6 @@ nnoremap <silent> ,f :<C-u>Fmt<CR>:<C-u>write<CR>
 " その他の設定のロード
 "------------------------
 
-" パスを追加する関数
-let s:paths = split($PATH, ':')
-function! g:insert_path(path)
-    let index = index(s:paths, a:path)
-    if index != -1
-        call remove(s:paths, index)
-    endif
-    call insert(s:paths, a:path)
-    let $PATH = join(s:paths, ':')
-endfunction
-
 " プロジェクト毎に読み込む設定ファイル
 function! s:vimrc_project(loc)
     let files = findfile('.vimrc.project', escape(a:loc, ' ') . ';', -1)
