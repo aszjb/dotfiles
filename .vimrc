@@ -83,6 +83,9 @@ nnoremap <silent> <Space>r :<C-u>source %<CR>
 " http://www.kaoriya.net/blog/2014/03/30/
 set noundofile
 
+" オムニ補完でpreviewを出さない
+set completeopt=menuone
+
 "-----------------------
 " autocmd
 "------------------------
@@ -358,6 +361,7 @@ let $GOROOT = '/usr/local/opt/go/libexec'
 let $GOPATH = $HOME . '/local'
 set rtp+=$GOROOT/misc/vim
 set rtp+=$GOPATH/src/github.com/nsf/gocode/vim
+exe "set rtp+=".globpath($GOPATH, "src/github.com/nsf/gocode/vim")
 "auto BufWritePre *.go Fmt
 filetype plugin on
 syntax on

@@ -70,11 +70,11 @@ let g:unite_update_time = 100
 let g:unite_enable_ignore_case = 1
 let g:unite_enable_smart_case = 1
 
-nnoremap <silent> <Space>kf :<C-u>Unite -buffer-name=files file file/new<CR>
-nnoremap <silent> <Space>kd :<C-u>UniteWithBufferDir -buffer-name=files file file/new<CR>
+nnoremap <silent> <Space>kf :<C-u>UniteWithBufferDir -buffer-name=files file file/new<CR>
 nnoremap <silent> <Space>km :<C-u>Unite file_mru<CR>
 nnoremap <silent> <Space>kr :<C-u>Unite -buffer-name=register register<CR>
-nnoremap <silent> <Space>kg :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
+nnoremap <silent> <Space>k/ :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
+nnoremap <silent> <Space>kk :<C-u>Unite bookmark<CR>
 
 autocmd FileType unite call s:unite_my_settings()
 function! s:unite_my_settings()
@@ -87,6 +87,7 @@ function! s:unite_my_settings()
   inoremap <silent> <buffer> <expr> <C-o><C-k> unite#do_action('above')
   inoremap <silent> <buffer> <expr> <C-o><C-h> unite#do_action('left')
   inoremap <silent> <buffer> <expr> <C-o><C-l> unite#do_action('right')
+  inoremap <silent> <buffer> ~ <C-u><C-u>~/
 endfunction
 
 " unite grep に ag(The Silver Searcher) を使う
@@ -118,3 +119,7 @@ inoremap <expr><C-y> neocomplcache#close_popup()
 inoremap <expr><C-e> neocomplcache#cancel_popup()
 inoremap <C-k> <Esc>a<C-n>
 
+if !exists('g:neocomplcache_omni_patterns')
+    let g:neocomplcache_omni_patterns = {}
+endif
+let g:neocomplcache_omni_patterns.go = '\h\w*\.\?'

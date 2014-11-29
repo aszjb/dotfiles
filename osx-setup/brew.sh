@@ -9,5 +9,5 @@ cat brew | while read line; do
 done
 
 brew cleanup
-ln -sfv /usr/local/opt/**/*/*.plist ~/Library/LaunchAgents
+zsh -c 'ln -sfv /usr/local/opt/**/*/*.plist ~/Library/LaunchAgents'
 launchctl load ~/Library/LaunchAgents/*
