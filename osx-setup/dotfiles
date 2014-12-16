@@ -12,4 +12,5 @@
 .vimrc_first.vim
 .zsh_fn
 .zshrc
+.zshenv
 .zshrc.local
