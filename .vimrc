@@ -121,6 +121,9 @@ autocmd MyAutoCmd BufNewFile,BufReadPost *.json set filetype=json
 "coffee
 autocmd MyAutoCmd BufNewFile,BufReadPost *.coffee,Cakefile set filetype=coffee
 
+"jsx
+autocmd MyAutoCmd BufNewFile,BufReadPost *.jsx set filetype=javascript.jsx
+
 "stylus
 autocmd MyAutoCmd BufNewFile,BufReadPost *.styl set filetype=stylus
 
