@@ -30,9 +30,6 @@ alias bi="bundle install --without=production --path vendor/bundle"
 # added by travis gem
 [ -f ~/.travis/travis.sh ] && source ~/.travis/travis.sh
 
-### Added by the Heroku Toolbelt
-export PATH="/usr/local/heroku/bin:$PATH"
-
 # peco
 bindkey -r '^j'
 function peco-cd-ghq {
@@ -46,45 +43,6 @@ function peco-cd-ghq {
 zle -N peco-cd-ghq
 bindkey '^jj' peco-cd-ghq
 bindkey '^j^j' peco-cd-ghq
-
-function peco-open-github {
-  local ghq_dir=$(ghq list | peco --query "$LBUFFER")
-  if [ -n "$ghq_dir" ]; then
-    gh-open $(git config --global ghq.root)/$ghq_dir
-  fi
-}
-zle -N peco-open-github
-bindkey '^jo' peco-open-github
-bindkey '^j^o' peco-open-github
-
-function peco-vim-git-files {
-  local target_file=$(git ls-files | peco --query "$LBUFFER")
-  if [ -n "$target_file" ]; then
-    vim $target_file
-  fi
-}
-zle -N peco-vim-git-files
-bindkey '^jv' peco-vim-git-files
-bindkey '^j^v' peco-vim-git-files
-
-function cdgem() {
-  local gem_name=$(bundle list | sed -e 's/^ *\* *//g' | peco | cut -d \  -f 1)
-  if [ -n "$gem_name" ]; then
-    local gem_dir=$(bundle show ${gem_name})
-    echo "cd to ${gem_dir}"
-    cd ${gem_dir}
-  fi
-}
-
-function cdnpm() {
-  local npm_root=`npm root`
-  local npm_name=$(ls $npm_root | grep -v '^\.' | sed -e 's/\/$//' | peco)
-  if [ -n "$npm_name" ]; then
-    local npm_dir="$npm_root/$npm_name"
-    echo "cd to ${npm_dir}"
-    cd ${npm_dir}
-  fi
-}
 
 function gorun() {
   go build -o /tmp/gorun-out && /tmp/gorun-out $*
