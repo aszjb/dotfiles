@@ -29,6 +29,7 @@ precmd () {
 PROMPT2='[%n]> ' 
 
 # 補間
+fpath=(/usr/local/share/zsh-completions $fpath)
 [ -d ~/.zsh_fn ] && fpath=($HOME/.zsh_fn $fpath)
 autoload -U compinit
 compinit -u

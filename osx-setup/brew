@@ -17,3 +17,4 @@ go
 mysql
 hg
 reattach-to-user-namespace
+zsh-completions

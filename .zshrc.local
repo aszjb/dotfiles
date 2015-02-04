@@ -44,6 +44,13 @@ zle -N peco-cd-ghq
 bindkey '^jj' peco-cd-ghq
 bindkey '^j^j' peco-cd-ghq
 
+alias -g B='`git branch -a \
+| grep -v remotes/origin/HEAD \
+| sed -e "s/  remotes\//  /g" \
+| peco --prompt "git checkout>" \
+| head -n 1  \
+| sed -e "s/^\*\s*//g"`'
+
 function gorun() {
   go build -o /tmp/gorun-out && /tmp/gorun-out $*
 }

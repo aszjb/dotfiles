@@ -18,7 +18,7 @@
 	pr = pull --rebase
 	i = !git init && git commit --allow-empty -m 'initial commit'
 	s = !tig status
-	clean-branch = !git remote prune origin && git branch --merged | grep -v master | xargs git br -d
+	clean-branch = !bash -c 'git remote prune origin && comm -23 <(git branch --merged | grep -v "^*") <(git branch -r | sed -e "s%origin/%%") | xargs git branch -d'
 [push]
 	default = current
 [diff]
