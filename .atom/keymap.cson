@@ -1,0 +1,23 @@
+'.platform-darwin':
+  'cmd-t': 'application:new-file'
+  'cmd-p': 'project-manager:toggle'
+
+'atom-text-editor':
+  'ctrl-u': 'editor:delete-to-beginning-of-line'
+
+'atom-text-editor.vim-mode:not(.command-mode)':
+  'ctrl-j': 'vim-mode:activate-command-mode'
+
+'atom-text-editor.vim-mode:not(.insert-mode)':
+  'space w': 'core:save'
+  'space q': 'core:close'
+  'space r': 'script:run'
+  'space f': 'grammar-selector:show'
+  'space k f': 'fuzzy-finder:toggle-file-finder'
+  ';': 'command-palette:toggle'
+  '/': 'find-and-replace:show'
+  'ctrl-/': 'project-find:show'
+
+'atom-text-editor.vim-mode.visual-mode':
+  'shift-u': 'editor:upper-case'
+  'u': 'editor:lower-case'

@@ -1,0 +1,46 @@
+"*":
+  editor:
+    invisibles: {}
+    softWrap: true
+    lineHeight: 1.4
+    fontSize: 14
+  core:
+    disabledPackages: [
+      "quickrun"
+      "linter-flow"
+      "linter-eslint"
+    ]
+    themes: [
+      "seti-ui"
+      "seti-syntax"
+    ]
+    audioBeep: false
+    followSymlinks: true
+  "exception-reporting":
+    userId: "390393ef-fa61-4460-e622-416b9d4ae3cb"
+  welcome:
+    showOnStartup: false
+  preview:
+    _analyticsUserId: "c6efd522-e838-494e-aa5e-b37094797c74"
+  script:
+    enableExecTime: false
+  "autocomplete-plus":
+    confirmCompletion: "enter"
+    navigateCompletions: "ctrl-p,ctrl-n"
+  "bracket-matcher":
+    autocompleteBrackets: false
+    autocompleteSmartQuotes: false
+  "japanese-wrap":
+    characterWidth: {}
+  "markdown-preview":
+    breakOnSingleNewline: true
+  linter:
+    lintOnChange: false
+    statusBar: "Show error of the selected line"
+    showErrorInline: false
+  "linter-jshint": {}
+  "linter-jsonlint": {}
+  "linter-eslint":
+    disableWhenNoEslintrcFileInPath: true
+  react: {}
+  "linter-jsxhint": {}
