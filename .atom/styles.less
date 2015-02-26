@@ -5,10 +5,17 @@ atom-text-editor::shadow {
   .line-number {
     color: #8A9298;
   }
-  .scroll-view {
-    padding: 5px;
-  }
   .selection .region {
     border: none;
+  }
+}
+
+// .pane-row .pane:not(.active) {
+//   max-width: 550px;
+// }
+
+atom-text-editor:not(.mini)::shadow {
+  .scroll-view {
+    padding: 5px;
   }
 }

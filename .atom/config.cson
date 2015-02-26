@@ -1,9 +1,9 @@
 "*":
   editor:
     invisibles: {}
-    softWrap: true
     lineHeight: 1.4
-    fontSize: 14
+    fontSize: 13
+    softWrap: true
   core:
     disabledPackages: [
       "quickrun"
@@ -25,8 +25,9 @@
   script:
     enableExecTime: false
   "autocomplete-plus":
-    confirmCompletion: "enter"
     navigateCompletions: "ctrl-p,ctrl-n"
+    includeCompletionsFromAllBuffers: true
+    suggestionListFollows: "Word"
   "bracket-matcher":
     autocompleteBrackets: false
     autocompleteSmartQuotes: false
@@ -36,11 +37,12 @@
     breakOnSingleNewline: true
   linter:
     lintOnChange: false
-    statusBar: "Show error of the selected line"
-    showErrorInline: false
   "linter-jshint": {}
   "linter-jsonlint": {}
   "linter-eslint":
     disableWhenNoEslintrcFileInPath: true
   react: {}
   "linter-jsxhint": {}
+  "find-and-replace":
+    focusEditorAfterSearch: true
+  minimap: {}

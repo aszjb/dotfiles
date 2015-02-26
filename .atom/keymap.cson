@@ -1,6 +1,11 @@
 '.platform-darwin':
   'cmd-t': 'application:new-file'
   'cmd-p': 'project-manager:toggle'
+  'cmd-h': 'tree-view:toggle-focus'
+  'cmd-shift-h': 'tree-view:toggle'
+
+'.tree-view':
+  'cmd-u': 'tree-view:reveal-active-file'
 
 'atom-text-editor':
   'ctrl-u': 'editor:delete-to-beginning-of-line'
@@ -9,15 +14,25 @@
   'ctrl-j': 'vim-mode:activate-command-mode'
 
 'atom-text-editor.vim-mode:not(.insert-mode)':
+  'cmd-j': 'editor:add-selection-below'
+  'cmd-k': 'editor:add-selection-above'
   'space w': 'core:save'
   'space q': 'core:close'
   'space r': 'script:run'
   'space f': 'grammar-selector:show'
   'space k f': 'fuzzy-finder:toggle-file-finder'
   ';': 'command-palette:toggle'
-  '/': 'find-and-replace:show'
-  'ctrl-/': 'project-find:show'
+  # '/': 'find-and-replace:show'
+  # 'n': 'find-and-replace:find-next'
+  # 'shift-n': 'find-and-replace:find-previous'
+  # 'ctrl-/': 'project-find:show'
+  # 'space t h': 'find-and-replace:toggle'
 
 'atom-text-editor.vim-mode.visual-mode':
   'shift-u': 'editor:upper-case'
   'u': 'editor:lower-case'
+  # '*': 'find-and-replace:use-selection-as-find-pattern'
+
+'atom-text-editor:not(mini).autocomplete-active':
+  'tab': 'snippets:expand'
+  'ctrl-y': 'autocomplete-plus:confirm'
