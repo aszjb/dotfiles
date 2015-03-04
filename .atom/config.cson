@@ -2,8 +2,9 @@
   editor:
     invisibles: {}
     lineHeight: 1.4
-    fontSize: 13
     softWrap: true
+    fontFamily: "Monaco, NotoSansCJKjp-Light"
+    fontSize: 14
   core:
     disabledPackages: [
       "quickrun"
@@ -16,6 +17,7 @@
     ]
     audioBeep: false
     followSymlinks: true
+    projectHome: "/Users/hokamura/local/src/github.com/hokaccha"
   "exception-reporting":
     userId: "390393ef-fa61-4460-e622-416b9d4ae3cb"
   welcome:
@@ -35,8 +37,10 @@
     characterWidth: {}
   "markdown-preview":
     breakOnSingleNewline: true
+    liveUpdate: false
   linter:
     lintOnChange: false
+    lintOnEditorFocus: false
   "linter-jshint": {}
   "linter-jsonlint": {}
   "linter-eslint":
@@ -44,5 +48,8 @@
   react: {}
   "linter-jsxhint": {}
   "find-and-replace":
-    focusEditorAfterSearch: true
+    focusEditorAfterSearch: false
   minimap: {}
+  "tree-view": {}
+  "vim-mode":
+    useSmartcaseForSearch: true

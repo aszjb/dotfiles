@@ -1,17 +1,25 @@
 '.platform-darwin':
+  'cmd-r': 'window:reload'
   'cmd-t': 'application:new-file'
   'cmd-p': 'project-manager:toggle'
   'cmd-h': 'tree-view:toggle-focus'
-  'cmd-shift-h': 'tree-view:toggle'
+  'cmd-shift-h': 'tree-view:reveal-active-file'
+  'cmd-ctrl-h': 'tree-view:toggle'
+
+'.platform-darwin atom-text-editor':
+  'cmd-r': 'unset!'
 
 '.tree-view':
-  'cmd-u': 'tree-view:reveal-active-file'
+  'cmd-h': 'tree-view:toggle-focus'
 
 'atom-text-editor':
   'ctrl-u': 'editor:delete-to-beginning-of-line'
 
 'atom-text-editor.vim-mode:not(.command-mode)':
   'ctrl-j': 'vim-mode:activate-command-mode'
+
+'atom-text-editor.vim-mode.insert-mode':
+  'ctrl-k': 'autocomplete:toggle'
 
 'atom-text-editor.vim-mode:not(.insert-mode)':
   'cmd-j': 'editor:add-selection-below'
@@ -21,6 +29,8 @@
   'space r': 'script:run'
   'space f': 'grammar-selector:show'
   'space k f': 'fuzzy-finder:toggle-file-finder'
+  'space k b': 'fuzzy-finder:toggle-buffer-finder'
+  'space k s': 'symbols-view:toggle-file-symbols'
   ';': 'command-palette:toggle'
   # '/': 'find-and-replace:show'
   # 'n': 'find-and-replace:find-next'
