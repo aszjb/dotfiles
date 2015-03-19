@@ -2,14 +2,14 @@
   editor:
     invisibles: {}
     lineHeight: 1.4
+    showIndentGuide: true
+    showInvisibles: true
+    scrollPastEnd: true
     softWrap: true
-    fontFamily: "Monaco, NotoSansCJKjp-Light"
     fontSize: 14
   core:
     disabledPackages: [
-      "quickrun"
-      "linter-flow"
-      "linter-eslint"
+      "autocomplete"
     ]
     themes: [
       "seti-ui"
@@ -30,11 +30,13 @@
     navigateCompletions: "ctrl-p,ctrl-n"
     includeCompletionsFromAllBuffers: true
     suggestionListFollows: "Word"
+    builtinProviderBlacklist: "N/A"
   "bracket-matcher":
     autocompleteBrackets: false
     autocompleteSmartQuotes: false
   "japanese-wrap":
     characterWidth: {}
+    lineBreakingRule: {}
   "markdown-preview":
     breakOnSingleNewline: true
     liveUpdate: false
@@ -43,8 +45,6 @@
     lintOnEditorFocus: false
   "linter-jshint": {}
   "linter-jsonlint": {}
-  "linter-eslint":
-    disableWhenNoEslintrcFileInPath: true
   react: {}
   "linter-jsxhint": {}
   "find-and-replace":
@@ -53,3 +53,16 @@
   "tree-view": {}
   "vim-mode":
     useSmartcaseForSearch: true
+  "copy-as-rtf": {}
+  "fuzzy-finder":
+    ignoredNames: [
+      "cmd-r"
+    ]
+  term2:
+    colors: {}
+    cursorBlink: false
+  autocomplete:
+    includeCompletionsFromAllBuffers: true
+  "go-plus": {}
+  toolbar:
+    position: "Right"

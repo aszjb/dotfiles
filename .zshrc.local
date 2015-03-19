@@ -27,6 +27,9 @@ fi
 alias be="bundle exec"
 alias bi="bundle install --without=production --path vendor/bundle"
 
+# iojs
+alias iojs="nodebrew exec io@latest -- iojs"
+
 # added by travis gem
 [ -f ~/.travis/travis.sh ] && source ~/.travis/travis.sh
 

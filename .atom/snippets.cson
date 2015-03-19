@@ -32,4 +32,48 @@
     'body': 'function() {$1}'
   'require':
     'prefix': 'r'
-    'body': 'require(\'$1\')'
+    'body': 'require(\'$1\');'
+
+'.source.coffee':
+  'console.log':
+    'prefix': 'cl'
+    'body': 'console.log $1'
+
+'.source.go':
+  'main':
+    'prefix': 'm'
+    'body': '''
+      package main
+      
+      import (
+      	"log"
+      )
+      
+      func init() {
+      	log.SetFlags(log.Lshortfile)
+      }
+      
+      func main() {
+      	${1}
+      }
+    '''
+  'print':
+    'prefix': 'p'
+    'body': 'log.Println(${1})'
+  'printv':
+    'prefix': 'pp'
+    'body': 'log.Printf("%#v", ${1})'
+  'fatal':
+    'prefix': 'f'
+    'body': '''
+      if err != nil {
+      	log.Fatal(err)
+      }
+    '''
+  'error':
+    'prefix': 'e'
+    'body': '''
+      if err != nil {
+      	${1}
+      }
+    '''

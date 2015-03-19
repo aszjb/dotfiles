@@ -8,10 +8,21 @@ atom-text-editor::shadow {
   .selection .region {
     border: none;
   }
+  .source.gfm .markup.heading {
+    color: #B04D4D;
+  }
 }
 
 atom-text-editor:not(.mini)::shadow {
   .scroll-view {
     padding: 5px;
+  }
+}
+
+#toolbar {
+  background-color: #262728;
+
+  > .icon {
+    cursor: pointer;
   }
 }
