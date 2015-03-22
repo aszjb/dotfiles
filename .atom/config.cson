@@ -24,6 +24,8 @@
     showOnStartup: false
   preview:
     _analyticsUserId: "c6efd522-e838-494e-aa5e-b37094797c74"
+    liveUpdate: false
+    updateOnTabChange: false
   script:
     enableExecTime: false
   "autocomplete-plus":
@@ -54,10 +56,7 @@
   "vim-mode":
     useSmartcaseForSearch: true
   "copy-as-rtf": {}
-  "fuzzy-finder":
-    ignoredNames: [
-      "cmd-r"
-    ]
+  "fuzzy-finder": {}
   term2:
     colors: {}
     cursorBlink: false
@@ -66,3 +65,7 @@
   "go-plus": {}
   toolbar:
     position: "Right"
+  "recent-files-fuzzy-finder":
+    maxFilesToRemember: 100
+  "project-finder":
+    rootPath: "/Users/hokamura/local/src"

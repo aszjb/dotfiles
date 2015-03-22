@@ -1,3 +1,5 @@
+@import "ui-variables";
+
 atom-text-editor::shadow {
   .gutter {
     padding: 5px 0;
@@ -20,9 +22,15 @@ atom-text-editor:not(.mini)::shadow {
 }
 
 #toolbar {
-  background-color: #262728;
+  background-color: @tab-background-color;
 
   > .icon {
     cursor: pointer;
+  }
+}
+
+.fuzzy-finder {
+  .secondary-line {
+    color: @text-color-highlight !important;
   }
 }
