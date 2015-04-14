@@ -8,5 +8,6 @@
     "node": true,
     "devel": true,
     "moz": true,
-    "multistr": true
+    "multistr": true,
+    "esnext": true
 }

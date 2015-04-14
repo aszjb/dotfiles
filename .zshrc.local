@@ -23,7 +23,7 @@ if [ -f /Applications/MacVim.app/Contents/MacOS/Vim ]; then
   alias vim="/Applications/MacVim.app/Contents/MacOS/Vim -g --remote-tab-silent"
 fi
 
-# bundle 
+# bundle
 alias be="bundle exec"
 alias bi="bundle install --without=production --path vendor/bundle"
 
@@ -43,10 +43,20 @@ function peco-cd-ghq {
     zle clear-screen
   fi
 }
-zle -N peco-cd-ghq
-bindkey '^jj' peco-cd-ghq
-bindkey '^j^j' peco-cd-ghq
+function peco-kill() {
+  for pid in `ps -axo pid,command | peco | awk '{ print $1 }'`
+  do
+    kill $pid
+    echo "Killed ${pid}"
+  done
+}
 
+zle -N peco-cd-ghq
+zle -N peco-kill
+bindkey '^j^j' peco-cd-ghq
+bindkey '^j^k' peco-kill
+
+# git co B
 alias -g B='`git branch -a \
 | grep -v remotes/origin/HEAD \
 | sed -e "s/  remotes\//  /g" \
@@ -56,4 +66,11 @@ alias -g B='`git branch -a \
 
 function gorun() {
   go build -o /tmp/gorun-out && /tmp/gorun-out $*
+}
+
+function tmpdir() {
+  NAME=$(date "+%Y%m%d-%H%M%S")
+  DIR="$HOME/tmp/$NAME"
+  mkdir $DIR
+  cd $DIR
 }

@@ -69,3 +69,7 @@
     maxFilesToRemember: 100
   "project-finder":
     rootPath: "/Users/hokamura/local/src"
+  "japanese-dictionary": {}
+  "symbols-tree-view": {}
+  "tmp-project":
+    basePath: "/Users/hokamura/tmp"

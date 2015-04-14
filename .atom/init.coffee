@@ -21,8 +21,10 @@ atom.workspaceView.command 'custom:copy-and-exit-visual-mode', ->
 atom.packages.activatePackage('toolbar').then (pkg) =>
   @toolbar = pkg.mainModule
   @toolbar.appendButton 'octoface', (-> dispachCommand 'open-on-github:repository'), 'Open On GitHub'
-  @toolbar.appendButton 'link-external', 'open-in-browser:open', 'Open In Browser'
+  @toolbar.appendButton 'browser', 'open-in-browser:open', 'Open In Browser'
   @toolbar.appendButton 'terminal', 'term2:open', 'Term2 Open'
+  @toolbar.appendButton 'diff-added', 'tmp-project:open', 'Tmp Project Open'
+  @toolbar.appendButton 'book', 'japanese-dictionary:open-by-input', 'Dictionary'
   @toolbar.appendButton 'gear', 'settings-view:open', 'Open Settings View'
 
 dispachCommand = (commands...) ->

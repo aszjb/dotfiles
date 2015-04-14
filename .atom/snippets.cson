@@ -33,6 +33,12 @@
   'require':
     'prefix': 'r'
     'body': 'require(\'$1\');'
+  'describe':
+    'prefix': 'desc'
+    'body': 'describe(\'$1\', () => {\n});'
+  'describe':
+    'prefix': 'it'
+    'body': 'it(\'$1\', () => {\n});'
 
 '.source.coffee':
   'console.log':

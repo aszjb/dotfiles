@@ -1,11 +1,12 @@
 'atom-workspace':
   'cmd-r': 'window:reload'
   'cmd-t': 'application:new-file'
-  'cmd-p': 'project-manager:toggle'
+  'cmd-p': 'project-finder:toggle'
   'cmd-;': 'command-palette:toggle'
   'cmd-h': 'tree-view:toggle-focus'
   'cmd-shift-h': 'tree-view:reveal-active-file'
   'cmd-ctrl-h': 'tree-view:toggle'
+  'cmd-n': 'tree-view:add-file'
 
 'atom-text-editor':
   'ctrl-u': 'editor:delete-to-beginning-of-line'
@@ -29,9 +30,6 @@
   'space k b': 'fuzzy-finder:toggle-buffer-finder'
   'space k s': 'symbols-view:toggle-file-symbols'
   'space k m': 'recent-files-fuzzy-finder:toggle-finder'
-  'space t a': 'tree-view:add-file'
-  'space t d': 'tree-view:add-folder'
-  'space t r': 'tree-view:remove'
   # 'space f m': 'tree-view:move'
   # '/': 'find-and-replace:show'
   # 'n': 'find-and-replace:find-next'
@@ -40,11 +38,10 @@
   # 'space t h': 'find-and-replace:toggle'
 
 'atom-text-editor.vim-mode.visual-mode':
-  'shift-u': 'editor:upper-case'
-  'u': 'editor:lower-case'
   'shift-i': 'custom:beginning-multi-cursor'
   '*': 'find-and-replace:use-selection-as-find-pattern'
   'cmd-c': 'custom:copy-and-exit-visual-mode'
+  'shift-D': 'japanese-dictionary:open-by-selection'
 
 'atom-text-editor:not(mini).autocomplete-active':
   'tab': 'snippets:expand'

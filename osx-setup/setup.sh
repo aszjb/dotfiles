@@ -2,7 +2,12 @@
 
 set -e
 
-cd $(dirname $0)
+$DIR=$HOME/local/src/github.com/hokaccha
+
+mkdir -p $DIR
+cd $DIR
+git clone https://github.com/hokaccha/dotfiles
+cd dotfiles/osx-setup
 
 ./dotfiles.sh
 ./brew.sh
