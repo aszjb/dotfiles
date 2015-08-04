@@ -1,0 +1,14 @@
+{
+	"console.log": {
+		"prefix": "cl",
+		"body": [
+			"console.log($1);"
+		],
+		"description": "console.log"
+	},
+	"initialize": {
+		"prefix": "c",
+		"body": ["constructor($1) {", "}"],
+		"description": "constructor"
+	}
+}

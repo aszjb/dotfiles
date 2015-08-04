@@ -1,0 +1,10 @@
+castwide.solargraph
+dbaeumer.vscode-eslint
+esbenp.prettier-vscode
+heptio.jsonnet
+karunamurti.haml
+PeterJausovec.vscode-docker
+rebornix.ruby
+robertohuertasm.vscode-icons
+streetsidesoftware.code-spell-checker
+vscodevim.vim

@@ -3,7 +3,7 @@ set columns=180
 set lines=50
 
 "フォント
-set guifont=Monaco:h13
+set guifont=Monaco:h14
 
 "バックスラッシュ入力
 noremap! ¥ \

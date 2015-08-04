@@ -1,5 +1,8 @@
 .p
 .DS_Store
 npm-debug.log
-Gemfile.local
-Gemfile.local.lock
+/tags
+.sass-cache
+.vscode
+yarn-error.log
+.idea

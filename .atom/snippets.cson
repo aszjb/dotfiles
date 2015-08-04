@@ -33,15 +33,30 @@
   'require':
     'prefix': 'r'
     'body': 'require(\'$1\');'
+  'import':
+    'prefix': 'i'
+    'body': 'import $1 from \'$2\';'
   'describe':
     'prefix': 'desc'
     'body': 'describe(\'$1\', () => {\n});'
-  'describe':
+  'it':
     'prefix': 'it'
     'body': 'it(\'$1\', () => {\n});'
+  'preventDefault':
+    'prefix': 'prev'
+    'body': 'preventDefault();'
+  'stopPropagation':
+    'prefix': 'stop'
+    'body': 'stopPropagation();'
   'constructor':
-    'prefix': 'con'
-    'body': 'constructor() {\n  $1\n}\n'
+    'prefix': 'co'
+    'body': 'constructor() {\n  $1\n}'
+  'react component':
+    'prefix': 'rc'
+    'body': 'class $1 extends React.Component {\n}'
+  'export default':
+    'prefix': 'e'
+    'body': 'export default '
 
 '.source.coffee':
   'console.log':
@@ -88,18 +103,4 @@
       if err != nil {
       	${1}
       }
-    '''
-
-'.source.ruby':
-  'pp':
-    'prefix': 'pp'
-    'body': '''
-      require 'pp'
-      pp ${1}
-    '''
-  'ap':
-    'prefix': 'ap'
-    'body': '''
-      require 'ap'
-      ap ${1}
     '''

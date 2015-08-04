@@ -6,4 +6,5 @@ dev
 packages
 projects.cson
 .tmp-projects
+.npm
 blob-store

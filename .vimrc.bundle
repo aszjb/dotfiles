@@ -27,6 +27,7 @@ Bundle 'wavded/vim-stylus'
 Bundle 'maksimr/vim-jsbeautify'
 Bundle 'gcmt/wildfire.vim'
 Bundle 'nginx.vim'
+Bundle 'google/vim-jsonnet'
 
 " wildfire
 let g:wildfire_objects = ["ic", "i'", 'i"', 'i)', 'i]', 'i}', 'ip', 'it', 'i>']

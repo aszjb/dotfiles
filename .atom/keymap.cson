@@ -8,7 +8,6 @@
   'cmd-n': 'tree-view:add-file'
   'ctrl-i': 'cursor-history:next'
   'ctrl-o': 'cursor-history:prev'
-  'ctrl-alt-p': 'fuzzy-finder:toggle-file-finder'
   'cmd-b': 'goto-definition:go'
 
 '.platform-darwin atom-text-editor':
@@ -18,6 +17,8 @@
   'cmd-h': 'tree-view:toggle-focus'
 
 'atom-text-editor.vim-mode-plus:not(.insert-mode)':
+  'j': 'vim-mode-plus:move-down-screen'
+  'k': 'vim-mode-plus:move-up-screen'
   'space w': 'core:save'
   'space q': 'core:close'
   'space r': 'script:run'

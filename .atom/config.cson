@@ -1,12 +1,15 @@
 "*":
+  "atom-beautify":
+    _analyticsUserId: "b94c099b-e9cf-48fb-b755-a283ea267f35"
+  "atom-ctags":
+    cmdArgs: "--exclude node_modules"
   "atom-package-deps":
     ignored: [
-      "linter-ui-default"
+      "linter"
     ]
   autocomplete:
     includeCompletionsFromAllBuffers: true
   "autocomplete-plus":
-    builtinProviderBlacklist: "N/A"
     confirmCompletion: "tab"
     includeCompletionsFromAllBuffers: true
     navigateCompletions: "ctrl-p,ctrl-n"
@@ -16,22 +19,19 @@
     autocompleteSmartQuotes: false
   "copy-as-rtf": {}
   core:
-    audioBeep: false
     disabledPackages: [
       "autocomplete"
+      "toolbar"
+      "go-plus"
+      "linter-rubocop"
     ]
-    followSymlinks: false
-    packagesWithKeymapsDisabled: [
-      "autocomplete-plus"
-    ]
-    projectHome: "/Users/hokamura/local/src/github.com/hokaccha"
+    followSymlinks: true
+    projectHome: "/Users/hokaccha/local/src/github.com/hokaccha"
     themes: [
-      "seti-classic"
-      "seti-classic-syntax"
+      "seti-ui"
+      "seti-syntax"
     ]
     titleBar: "custom"
-  "cursor-history": {}
-  docblockr: {}
   editor:
     invisibles: {}
     lineHeight: 1.4
@@ -42,12 +42,12 @@
     softWrapHangingIndent: 4
   "exception-reporting":
     userId: "390393ef-fa61-4460-e622-416b9d4ae3cb"
+  "file-types":
+    "^Gemfile": "source.ruby"
+    schema: "source.ruby"
   "find-and-replace":
     focusEditorAfterSearch: false
   "fuzzy-finder": {}
-  "git-plus":
-    includeStagedDiff: false
-    openInPane: false
   "go-plus": {}
   "goto-definition":
     performanceMode: true
@@ -58,68 +58,82 @@
   linter:
     lintOnChange: false
     lintOnEditorFocus: false
-  "linter-erb": {}
   "linter-eslint":
-    disableWhenNoEslintrcFileInPath: true
-    globalNodePath: "/Users/hokamura/.nodebrew/current"
+    disableWhenNoEslintConfig: false
     useGlobalEslint: true
+  "linter-haml":
+    copyRubocopYml: false
   "linter-jshint": {}
   "linter-jsonlint": {}
   "linter-jsxhint": {}
+  "linter-rubocop":
+    command: "/Users/hokaccha/.rbenv/shims/rubocop"
   "linter-ruby": {}
-  "linter-ui-default": {}
+  "linter-scss-lint": {}
+  "linter-ui-default":
+    tooltipFollows: "Mouse"
   "markdown-preview":
     breakOnSingleNewline: true
     liveUpdate: false
     openPreviewInSplitPane: false
     useGitHubStyle: true
   minimap: {}
-  "package-reloader":
-    targets: [
-      "query"
-    ]
   preview:
     _analyticsUserId: "c6efd522-e838-494e-aa5e-b37094797c74"
     liveUpdate: false
     updateOnTabChange: false
   "project-finder":
-    rootPath: "/Users/hokamura/local/src"
-  react: {}
+    rootPath: "/Users/hokaccha/local/src"
+  react:
+    enabledForAllJavascriptFiles: true
   "recent-files-fuzzy-finder":
     maxFilesToRemember: 100
+  rspec:
+    command: "bin/rspec"
+  "run-command": {}
   script:
     enableExecTime: false
-  "spell-check":
-    locales: [
-      "en-US"
-    ]
+  "seti-syntax": {}
+  "seti-ui":
+    compactView: true
+    disableAnimations: true
+  "spell-check": {}
   "symbols-tree-view": {}
   term2:
     colors: {}
     cursorBlink: false
   "tmp-project":
-    basePath: "/Users/hokamura/tmp"
+    basePath: "/Users/hokaccha/tmp"
   "tool-bar":
     position: "Right"
   toolbar:
     position: "Right"
-  "tree-view": {}
+  "tree-view":
+    hideVcsIgnoredFiles: true
   "vim-mode":
+    useClipboardAsDefaultRegister: false
     useSmartcaseForSearch: true
   "vim-mode-plus":
+    flashOnOperate: false
+    flashOnUndoRedo: false
     flashScreenOnSearchHasNoMatch: false
     highlightSearch: false
+    useClipboardAsDefaultRegister: false
   welcome:
     showOnStartup: false
-".diff.source":
-  editor:
-    softWrapHangingIndent: 4
-".erb.html.text":
+  "wrap-style":
+    strictMode: true
+    style: {}
+  zentabs:
+    maximumOpenedTabs: 8
+".coffee.jsx.source":
   editor:
     softWrapHangingIndent: 4
 ".gfm.source":
   editor:
+    softWrap: true
+    softWrapAtPreferredLineLength: true
     softWrapHangingIndent: 0
-".ruby.source":
+".js.jsx.source":
   editor:
     softWrapHangingIndent: 4

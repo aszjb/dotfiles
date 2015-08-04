@@ -1,0 +1,17 @@
+{
+	"binding.pry": {
+		"prefix": "pry",
+		"body": ["binding.pry"],
+		"description": "binding.pry"
+	},
+	"binding.pry": {
+		"prefix": "irb",
+		"body": ["binding.irb"],
+		"description": "binding.irb"
+	},
+	"initialize": {
+		"prefix": "i",
+		"body": ["def initialize$1", "end"],
+		"description": "def initialize"
+	}
+}

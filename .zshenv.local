@@ -1,0 +1,12 @@
+typeset -U path PATH
+
+path=(
+  $HOME/.nodebrew/current/bin
+  /usr/local/opt/go/libexec/bin
+  $path
+)
+
+source ~/perl5/perlbrew/etc/bashrc
+eval "$(rbenv init -)"
+
+export GOPATH=$HOME/local

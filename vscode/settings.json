@@ -1,0 +1,99 @@
+{
+    "window.newWindowDimensions": "maximized",
+    "window.zoomLevel": 1,
+    "editor.fontSize": 14,
+    "editor.fontFamily": "Monaco, 'Courier New', monospace",
+    "editor.renderWhitespace": "all",
+    "editor.minimap.enabled": false,
+    "editor.renderControlCharacters": false,
+    "editor.tabCompletion": true,
+    "editor.tabSize": 2,
+    "editor.autoClosingBrackets": false,
+    "terminal.integrated.fontSize": 14,
+    "workbench.editor.enablePreview": false,
+    "workbench.editor.enablePreviewFromQuickOpen": false,
+    "workbench.iconTheme": "vscode-icons",
+    "workbench.colorTheme": "Visual Studio Dark",
+    "workbench.activityBar.visible": true,
+    "files.insertFinalNewline": true,
+    "files.trimTrailingWhitespace": true,
+    "files.trimFinalNewlines": true,
+    "vim.incsearch": true,
+    "vim.hlsearch": true,
+    "vim.leader": "<space>",
+    "vim.normalModeKeyBindingsNonRecursive": [
+        {
+            "before": ["leader", "w"],
+            "commands": [{ "command": "workbench.action.files.save" }]
+        },
+        {
+            "before": ["leader", "q"],
+            "commands": [{ "command": "workbench.action.closeActiveEditor" }]
+        }
+    ],
+    "ruby.lint": {
+        "ruby": true
+    },
+    "cSpell.enabledLanguageIds": [
+        "c",
+        "cpp",
+        "csharp",
+        "css",
+        "go",
+        "handlebars",
+        "html",
+        "jade",
+        "javascript",
+        "javascriptreact",
+        "json",
+        "latex",
+        "less",
+        "markdown",
+        "php",
+        "plaintext",
+        "pub",
+        "python",
+        "restructuredtext",
+        "ruby",
+        "rust",
+        "scss",
+        "text",
+        "typescript",
+        "typescriptreact",
+        "yml"
+    ],
+    "cSpell.userWords": [
+        "ad",
+        "backtrace",
+        "concat",
+        "fixnum",
+        "hashie",
+        "httpd",
+        "isucon",
+        "itamae",
+        "mbsize",
+        "nginx",
+        "numericality",
+        "preload",
+        "rect",
+        "repo",
+        "resizable",
+        "simpacker",
+        "strftime",
+        "stylesheet"
+    ],
+    "cSpell.flagWords": [
+        "dose"
+    ],
+    "jsonnet.executablePath": "/tmp/dummy",
+    "eslint.validate": [
+        "javascript",
+        "javascriptreact",
+        "typescript",
+        "typescriptreact"
+    ],
+    "prettier.disableLanguages": [
+        "markdown",
+        "html"
+    ]
+}

@@ -100,6 +100,9 @@ autocmd MyAutoCmd BufNewFile,BufReadPost *.mt,*.tt,*.ejs set filetype=html
 "jade
 autocmd MyAutoCmd BufNewFile,BufReadPost *.jade set filetype=jade
 
+"jsonnet
+autocmd MyAutoCmd BufNewFile,BufReadPost *.jsonnet set filetype=jsonnet
+
 "less
 autocmd MyAutoCmd BufNewFile,BufReadPost *.less set filetype=less
 
@@ -204,10 +207,6 @@ endfunction
 
 "; to :
 nnoremap ; :
-
-"エスケープキー
-inoremap <C-j> <esc>
-vnoremap <C-j> <esc>
 
 "保存
 nnoremap <Space>w :<C-u>write<CR>

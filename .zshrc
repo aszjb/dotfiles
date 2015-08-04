@@ -1,24 +1,17 @@
-# 文字コード
 export LANG=ja_JP.UTF-8
 
-# プロンプト
+# load colors
 autoload colors
 colors
 
-autoload -Uz vcs_info
-zstyle ':vcs_info:*' enable git svn
-zstyle ':vcs_info:git:*' check-for-changes true
-zstyle ':vcs_info:git:*' stagedstr "+"
-zstyle ':vcs_info:git:*' unstagedstr "*"
-zstyle ':vcs_info:*' formats '%{${fg[green]}%}(%b%{${fg[red]}%}%c%u%{${fg[green]}%}) %{$reset_color%}'
-
+# prompt
 setopt prompt_subst
 precmd () {
   LANG=en_US.UTF-8 vcs_info
   if [ -z "${SSH_CONNECTION}" ]; then
     PROMPT="
  %{${fg[yellow]}%}%~%{${reset_color}%} ${vcs_info_msg_0_}
-🍺  "
+$ "
   else
     PROMPT="
  %{${fg[yellow]}%}%~%{${reset_color}%} ${vcs_info_msg_0_}
@@ -26,15 +19,23 @@ precmd () {
   fi
 }
 
-PROMPT2='🍻  ' 
+PROMPT2='> '
 
-# 補間
+# vcs info
+autoload -Uz vcs_info
+zstyle ':vcs_info:*' enable git svn
+zstyle ':vcs_info:git:*' check-for-changes true
+zstyle ':vcs_info:git:*' stagedstr "+"
+zstyle ':vcs_info:git:*' unstagedstr "*"
+zstyle ':vcs_info:*' formats '%{${fg[green]}%}(%b%{${fg[red]}%}%c%u%{${fg[green]}%})%{$reset_color%}'
+
+# completions
 fpath=(/usr/local/share/zsh-completions $fpath)
 [ -d ~/.zsh_fn ] && fpath=($HOME/.zsh_fn $fpath)
 autoload -U compinit
 compinit -u
 
-# 履歴
+# history
 HISTFILE="$HOME/.zsh_history"
 HISTSIZE=100000
 SAVEHIST=100000
@@ -43,10 +44,10 @@ setopt hist_ignore_dups
 setopt share_history
 setopt hist_ignore_space
 
-# エディタ
+# editor
 export EDITOR=vi
 
-# キーバインド
+# key bind
 bindkey -e
 
 autoload history-search-end
@@ -56,27 +57,18 @@ bindkey "^P" history-beginning-search-backward-end
 bindkey "^N" history-beginning-search-forward-end 
 bindkey '^R' history-incremental-pattern-search-backward
 
-# ビープ音ならなさない
-setopt nobeep
-
 # cd
 setopt auto_cd
 setopt auto_pushd 
 setopt pushd_ignore_dups
 
-# 改行のない出力をプロンプトで上書きするのを防ぐ
-unsetopt promptcr
-
-# lsと補間にでる一覧の色
+# ls colors
 export LSCOLORS=exfxxxxxcxxxxxxxxxgxgx
 export LS_COLORS='di=01;34:ln=01;35:ex=01;32'
 zstyle ':completion:*' list-colors 'di=34' 'ln=35' 'ex=32'
 
-# デフォルトパーミッションの設定
+# default permission
 umask 022
-
-# スラッシュを区切り文字に含める
-WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 
 # alias
 case "${OSTYPE}" in
@@ -90,16 +82,49 @@ esac
 
 alias ll='ls -l'
 
-# tmux auto startup
-if type tmux >/dev/null 2>&1 && ! tmux ls -F '#{session_name}:#{session_attached}' 2>/dev/null | grep ^`whoami`:1$ >/dev/null; then
-    tmux new -As `whoami`
+# misc settings
+unsetopt promptcr
+setopt nobeep
+
+export WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
+
+# alc for CLI
+function alc() {
+  w3m "http://eow.alc.co.jp/search?q=$*" | less +30
+}
+
+# macvim
+if [ -f /Applications/MacVim.app/Contents/MacOS/Vim ]; then
+  alias vim="/Applications/MacVim.app/Contents/MacOS/Vim -g --remote-tab-silent"
 fi
 
-# 環境ごとの設定読み込む
+# bundle
+alias be="bundle exec"
+alias bi="bundle install"
+
+# peco
+function peco-cd-ghq {
+  local ghq_dir=$(ghq list | peco --query "$LBUFFER")
+  if [ -n "$ghq_dir" ]; then
+    BUFFER="cd $(git config --global ghq.root)/$ghq_dir"
+    zle accept-line
+    zle clear-screen
+  fi
+}
+
+zle -N peco-cd-ghq
+bindkey '^h' peco-cd-ghq
+
+function tmpdir() {
+  NAME=$(date "+%Y%m%d-%H%M%S")
+  DIR="$HOME/tmp/$NAME"
+  mkdir $DIR
+  cd $DIR
+}
+
+function hi() {
+    pbpaste | highlight --syntax=$1 --font-size=42 --font=Monaco --style=fine_blue --encoding=utf-8 -O rtf | pbcopy
+}
+
+# Load local settings
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
-
-# The next line updates PATH for the Google Cloud SDK.
-source '/Users/hokamura/google-cloud-sdk/path.zsh.inc'
-
-# The next line enables shell command completion for gcloud.
-source '/Users/hokamura/google-cloud-sdk/completion.zsh.inc'
