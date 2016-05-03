@@ -10,7 +10,7 @@ zstyle ':vcs_info:*' enable git svn
 zstyle ':vcs_info:git:*' check-for-changes true
 zstyle ':vcs_info:git:*' stagedstr "+"
 zstyle ':vcs_info:git:*' unstagedstr "*"
-zstyle ':vcs_info:*' formats '%{${fg[red]}%}(%s %b%{${fg[cyan]}%}%c%u%{${fg[red]}%}) %{$reset_color%}'
+zstyle ':vcs_info:*' formats '%{${fg[blue]}%}(%b%{${fg[red]}%}%c%u%{${fg[blue]}%}) %{$reset_color%}'
 
 setopt prompt_subst
 precmd () {
@@ -18,7 +18,7 @@ precmd () {
   if [ -z "${SSH_CONNECTION}" ]; then
     PROMPT="
  %{${fg[yellow]}%}%~%{${reset_color}%} ${vcs_info_msg_0_}
-[%n]$ "
+🍺  "
   else
     PROMPT="
  %{${fg[yellow]}%}%~%{${reset_color}%} ${vcs_info_msg_0_}
@@ -68,9 +68,9 @@ setopt pushd_ignore_dups
 unsetopt promptcr
 
 # lsと補間にでる一覧の色
-export LSCOLORS=gxfxxxxxcxxxxxxxxxgxgx
-export LS_COLORS='di=01;36:ln=01;35:ex=01;32'
-zstyle ':completion:*' list-colors 'di=36' 'ln=35' 'ex=32'
+export LSCOLORS=exfxxxxxcxxxxxxxxxgxgx
+export LS_COLORS='di=01;34:ln=01;35:ex=01;32'
+zstyle ':completion:*' list-colors 'di=34' 'ln=35' 'ex=32'
 
 # デフォルトパーミッションの設定
 umask 022
@@ -94,3 +94,9 @@ fi
 
 # 環境ごとの設定読み込む
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
+
+# The next line updates PATH for the Google Cloud SDK.
+source '/Users/hokamura/google-cloud-sdk/path.zsh.inc'
+
+# The next line enables shell command completion for gcloud.
+source '/Users/hokamura/google-cloud-sdk/completion.zsh.inc'

@@ -39,6 +39,9 @@
   'describe':
     'prefix': 'it'
     'body': 'it(\'$1\', () => {\n});'
+  'constructor':
+    'prefix': 'con'
+    'body': 'constructor() {\n  $1\n}\n'
 
 '.source.coffee':
   'console.log':
@@ -85,4 +88,18 @@
       if err != nil {
       	${1}
       }
+    '''
+
+'.source.ruby':
+  'pp':
+    'prefix': 'pp'
+    'body': '''
+      require 'pp'
+      pp ${1}
+    '''
+  'ap':
+    'prefix': 'ap'
+    'body': '''
+      require 'ap'
+      ap ${1}
     '''

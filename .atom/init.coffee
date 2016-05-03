@@ -1,31 +1,13 @@
 # set PATH
 {execSync} = require 'child_process'
 try
-  process.env.PATH = execSync "#{process.env.SHELL} -c 'echo $PATH'"
+  process.env.PATH = execSync("#{process.env.SHELL} -c 'echo $PATH'").toString()
 catch e
   console.error e
 
-# visual modeで選択しているラインの最初にマルチカーソルをつくる
-atom.workspaceView.command 'custom:beginning-multi-cursor', ->
-  dispachCommand(
-    'editor:split-selections-into-lines'
-    'vim-mode:activate-command-mode'
-    'vim-mode:move-to-beginning-of-line'
-  )
-
 # visual modeのときcmd-cのcopyでvisual mode抜けるようにする
-atom.workspaceView.command 'custom:copy-and-exit-visual-mode', ->
-  dispachCommand 'core:copy', 'vim-mode:activate-command-mode'
-
-# toolbar
-atom.packages.activatePackage('toolbar').then (pkg) =>
-  @toolbar = pkg.mainModule
-  @toolbar.appendButton 'octoface', (-> dispachCommand 'open-on-github:repository'), 'Open On GitHub'
-  @toolbar.appendButton 'browser', 'open-in-browser:open', 'Open In Browser'
-  @toolbar.appendButton 'terminal', 'term2:open', 'Term2 Open'
-  @toolbar.appendButton 'diff-added', 'tmp-project:open', 'Tmp Project Open'
-  @toolbar.appendButton 'book', 'japanese-dictionary:open-by-input', 'Dictionary'
-  @toolbar.appendButton 'gear', 'settings-view:open', 'Open Settings View'
+atom.commands.add 'atom-workspace', 'custom:copy-and-exit-visual-mode', ->
+  dispachCommand 'core:copy', 'vim-mode:activate-normal-mode'
 
 dispachCommand = (commands...) ->
   editor = atom.workspace.getActiveTextEditor()

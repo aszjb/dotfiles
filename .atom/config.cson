@@ -1,75 +1,112 @@
 "*":
-  editor:
-    invisibles: {}
-    lineHeight: 1.4
-    showIndentGuide: true
-    showInvisibles: true
-    scrollPastEnd: true
-    softWrap: true
-    fontSize: 14
+  autocomplete:
+    includeCompletionsFromAllBuffers: true
+  "autocomplete-plus":
+    builtinProviderBlacklist: "N/A"
+    confirmCompletion: "tab"
+    includeCompletionsFromAllBuffers: true
+    navigateCompletions: "ctrl-p,ctrl-n"
+    suggestionListFollows: "Word"
+  "bracket-matcher":
+    autocompleteBrackets: false
+    autocompleteSmartQuotes: false
+  "copy-as-rtf": {}
   core:
+    audioBeep: false
     disabledPackages: [
       "autocomplete"
     ]
+    followSymlinks: false
+    packagesWithKeymapsDisabled: [
+      "autocomplete-plus"
+    ]
+    projectHome: "/Users/hokamura/local/src/github.com/hokaccha"
     themes: [
       "seti-ui"
       "seti-syntax"
     ]
-    audioBeep: false
-    followSymlinks: true
-    projectHome: "/Users/hokamura/local/src/github.com/hokaccha"
+  "cursor-history": {}
+  docblockr: {}
+  editor:
+    invisibles: {}
+    lineHeight: 1.4
+    scrollPastEnd: true
+    showIndentGuide: true
+    showInvisibles: true
+    softWrap: true
+    softWrapHangingIndent: 4
   "exception-reporting":
     userId: "390393ef-fa61-4460-e622-416b9d4ae3cb"
-  welcome:
-    showOnStartup: false
+  "find-and-replace":
+    focusEditorAfterSearch: false
+  "fuzzy-finder": {}
+  "git-plus":
+    includeStagedDiff: false
+    openInPane: false
+  "go-plus": {}
+  "japanese-dictionary": {}
+  "japanese-wrap":
+    characterWidth: {}
+    lineBreakingRule: {}
+  linter:
+    lintOnChange: false
+    lintOnEditorFocus: false
+    lintOnFly: false
+    showErrorPanel: false
+  "linter-erb": {}
+  "linter-eslint":
+    disableWhenNoEslintrcFileInPath: true
+    globalNodePath: "/Users/hokamura/.nodebrew/current"
+    useGlobalEslint: true
+  "linter-jshint": {}
+  "linter-jsonlint": {}
+  "linter-jsxhint": {}
+  "linter-ruby": {}
+  "markdown-preview":
+    breakOnSingleNewline: true
+    liveUpdate: false
+    openPreviewInSplitPane: false
+    useGitHubStyle: true
+  minimap: {}
+  "package-reloader":
+    targets: [
+      "query"
+    ]
   preview:
     _analyticsUserId: "c6efd522-e838-494e-aa5e-b37094797c74"
     liveUpdate: false
     updateOnTabChange: false
+  "project-finder":
+    rootPath: "/Users/hokamura/local/src"
+  react: {}
+  "recent-files-fuzzy-finder":
+    maxFilesToRemember: 100
   script:
     enableExecTime: false
-  "autocomplete-plus":
-    navigateCompletions: "ctrl-p,ctrl-n"
-    includeCompletionsFromAllBuffers: true
-    suggestionListFollows: "Word"
-    builtinProviderBlacklist: "N/A"
-  "bracket-matcher":
-    autocompleteBrackets: false
-    autocompleteSmartQuotes: false
-  "japanese-wrap":
-    characterWidth: {}
-    lineBreakingRule: {}
-  "markdown-preview":
-    breakOnSingleNewline: true
-    liveUpdate: false
-  linter:
-    lintOnChange: false
-    lintOnEditorFocus: false
-  "linter-jshint": {}
-  "linter-jsonlint": {}
-  react: {}
-  "linter-jsxhint": {}
-  "find-and-replace":
-    focusEditorAfterSearch: false
-  minimap: {}
-  "tree-view": {}
-  "vim-mode":
-    useSmartcaseForSearch: true
-  "copy-as-rtf": {}
-  "fuzzy-finder": {}
+  "symbols-tree-view": {}
   term2:
     colors: {}
     cursorBlink: false
-  autocomplete:
-    includeCompletionsFromAllBuffers: true
-  "go-plus": {}
-  toolbar:
-    position: "Right"
-  "recent-files-fuzzy-finder":
-    maxFilesToRemember: 100
-  "project-finder":
-    rootPath: "/Users/hokamura/local/src"
-  "japanese-dictionary": {}
-  "symbols-tree-view": {}
   "tmp-project":
     basePath: "/Users/hokamura/tmp"
+  "tool-bar":
+    position: "Right"
+  toolbar:
+    position: "Right"
+  "tree-view": {}
+  "vim-mode":
+    useSmartcaseForSearch: true
+  welcome:
+    showOnStartup: false
+".diff.source":
+  editor:
+    softWrapHangingIndent: 4
+".erb.html.text":
+  editor:
+    softWrapHangingIndent: 4
+".gfm.source":
+  editor:
+    softWrapHangingIndent: 0
+".ruby.source":
+  editor:
+    softWrapHangingIndent: 4

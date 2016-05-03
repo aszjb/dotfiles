@@ -19,6 +19,7 @@
 	i = !git init && git commit --allow-empty -m 'initial commit'
 	s = !tig status
 	pb = !bash -c 'git remote prune origin && comm -23 <(git branch --merged | grep -v "^*") <(git branch -r | sed -e "s%origin/%%") | xargs git branch -d'
+	fixup = !sh -c 'COMMIT=`git rev-parse ${1:-HEAD}` && git commit --fixup=$COMMIT && GIT_EDITOR=: git rebase -i --autosquash ${COMMIT}^' -
 [push]
 	default = current
 [diff]

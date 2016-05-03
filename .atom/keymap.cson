@@ -1,25 +1,26 @@
 'atom-workspace':
   'cmd-r': 'window:reload'
   'cmd-t': 'application:new-file'
-  'cmd-p': 'project-finder:toggle'
   'cmd-;': 'command-palette:toggle'
   'cmd-h': 'tree-view:toggle-focus'
   'cmd-shift-h': 'tree-view:reveal-active-file'
   'cmd-ctrl-h': 'tree-view:toggle'
   'cmd-n': 'tree-view:add-file'
+  'ctrl-i': 'cursor-history:next'
+  'ctrl-o': 'cursor-history:prev'
+  'ctrl-alt-p': 'fuzzy-finder:toggle-file-finder'
 
 'atom-text-editor':
   'ctrl-u': 'editor:delete-to-beginning-of-line'
 
 '.platform-darwin atom-text-editor':
-  # disable symbols-view:toggle-file-symbols
   'cmd-r': 'unset!'
 
 '.tree-view':
   'cmd-h': 'tree-view:toggle-focus'
 
-'atom-text-editor.vim-mode:not(.command-mode)':
-  'ctrl-j': 'vim-mode:activate-command-mode'
+'atom-text-editor.vim-mode:not(.normal-mode)':
+  'ctrl-j': 'vim-mode:activate-normal-mode'
 
 'atom-text-editor.vim-mode:not(.insert-mode)':
   'space w': 'core:save'
@@ -30,27 +31,18 @@
   'space k b': 'fuzzy-finder:toggle-buffer-finder'
   'space k s': 'symbols-view:toggle-file-symbols'
   'space k m': 'recent-files-fuzzy-finder:toggle-finder'
-  # 'space f m': 'tree-view:move'
-  # '/': 'find-and-replace:show'
-  # 'n': 'find-and-replace:find-next'
-  # 'shift-n': 'find-and-replace:find-previous'
-  # 'ctrl-/': 'project-find:show'
-  # 'space t h': 'find-and-replace:toggle'
+  'space j': 'symbols-view:go-to-declaration'
+  'ctrl-h': 'package-reloader:reload'
+  'ctrl-l': 'query:toggle-connection'
 
 'atom-text-editor.vim-mode.visual-mode':
-  'shift-i': 'custom:beginning-multi-cursor'
   '*': 'find-and-replace:use-selection-as-find-pattern'
   'cmd-c': 'custom:copy-and-exit-visual-mode'
   'shift-D': 'japanese-dictionary:open-by-selection'
 
+'atom-text-editor.vim-mode.insert-mode':
+  'ctrl-y': 'autocomplete-plus:confirm'
+
 'atom-text-editor:not(mini).autocomplete-active':
   'tab': 'snippets:expand'
   'ctrl-y': 'autocomplete-plus:confirm'
-
-# '.platform-darwin .markdown-preview':
-#   'k': 'core:move-up'
-#   'j': 'core:move-down'
-#   'ctrl-u': 'core:page-up'
-#   'ctrl-d': 'core:page-down'
-#   'ctrl-w h': 'window:focus-pane-on-left'
-#   'ctrl-w ctrl-h': 'window:focus-pane-on-left'

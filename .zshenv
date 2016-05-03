@@ -1,15 +1,16 @@
-# パスの設定
-export PATH=$HOME/local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+typeset -U path PATH
+setopt no_global_rcs
+eval `/usr/libexec/path_helper -s`
 
-# nodebrew
-export PATH=$HOME/.nodebrew/current/bin:$PATH
+path=(
+  ./node_modules/.bin
+  $HOME/local/bin
+  $HOME/.nodebrew/current/bin
+  /usr/local/opt/go/libexec/bin
+  $path
+)
 
-# perlbrew
 source ~/perl5/perlbrew/etc/bashrc
-
-# rbenv
 eval "$(rbenv init -)"
 
-# go
 export GOPATH=$HOME/local
-export PATH=/usr/local/opt/go/libexec/bin:$PATH
