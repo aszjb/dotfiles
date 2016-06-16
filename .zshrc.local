@@ -77,12 +77,6 @@ function tmpdir() {
   cd $DIR
 }
 
-function hless() {
-  source-highlight \
-    --failsafe \
-    --infer-lang \
-    -f esc \
-    --style-css-file=$HOME/.dotfiles/.source-highlight/style.css \
-    -i $1 | \
-    less -R --no-init --quit-if-one-screen
+function keynote-highlight() {
+  pbpaste | highlight -O rtf --syntax=$1 --font-size 30 --font Monaco --style leo | pbcopy
 }

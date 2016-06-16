@@ -10,7 +10,7 @@ zstyle ':vcs_info:*' enable git svn
 zstyle ':vcs_info:git:*' check-for-changes true
 zstyle ':vcs_info:git:*' stagedstr "+"
 zstyle ':vcs_info:git:*' unstagedstr "*"
-zstyle ':vcs_info:*' formats '%{${fg[blue]}%}(%b%{${fg[red]}%}%c%u%{${fg[blue]}%}) %{$reset_color%}'
+zstyle ':vcs_info:*' formats '%{${fg[green]}%}(%b%{${fg[red]}%}%c%u%{${fg[green]}%}) %{$reset_color%}'
 
 setopt prompt_subst
 precmd () {
@@ -26,7 +26,7 @@ precmd () {
   fi
 }
 
-PROMPT2='[%n]> ' 
+PROMPT2='🍻  ' 
 
 # 補間
 fpath=(/usr/local/share/zsh-completions $fpath)

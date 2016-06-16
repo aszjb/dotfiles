@@ -33,7 +33,7 @@
   'space k m': 'recent-files-fuzzy-finder:toggle-finder'
   'space j': 'symbols-view:go-to-declaration'
   'ctrl-h': 'package-reloader:reload'
-  'ctrl-l': 'query:toggle-connection'
+  #'ctrl-l': 'query:toggle-connection'
 
 'atom-text-editor.vim-mode.visual-mode':
   '*': 'find-and-replace:use-selection-as-find-pattern'
