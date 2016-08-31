@@ -1,0 +1,23 @@
+set number
+set ignorecase
+set smartcase
+set incsearch
+set blinkcursor
+
+nnoremap ; :
+inoremap <C-j> <esc>
+vnoremap <C-j> <esc>
+nnoremap <Space>w :write<CR>
+nnoremap <Space>q :quit<CR>
+nnoremap gj j
+nnoremap gk k
+vnoremap gj j
+vnoremap gk k
+nnoremap j gj
+nnoremap k gk
+vnoremap j gj
+vnoremap k gk
+nnoremap <Space>th :set hlsearch!<CR>
+nnoremap <C-h> :xhelp<CR>
+
+highlight Search guibg=#914600
