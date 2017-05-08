@@ -75,6 +75,9 @@ zstyle ':completion:*' list-colors 'di=34' 'ln=35' 'ex=32'
 # デフォルトパーミッションの設定
 umask 022
 
+# スラッシュを区切り文字に含める
+WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
+
 # alias
 case "${OSTYPE}" in
 freebsd*|darwin*)
