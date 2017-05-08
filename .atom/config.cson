@@ -1,4 +1,8 @@
 "*":
+  "atom-package-deps":
+    ignored: [
+      "linter-ui-default"
+    ]
   autocomplete:
     includeCompletionsFromAllBuffers: true
   "autocomplete-plus":
@@ -22,9 +26,10 @@
     ]
     projectHome: "/Users/hokamura/local/src/github.com/hokaccha"
     themes: [
-      "seti-ui"
-      "seti-syntax"
+      "seti-classic"
+      "seti-classic-syntax"
     ]
+    titleBar: "custom"
   "cursor-history": {}
   docblockr: {}
   editor:
@@ -44,6 +49,8 @@
     includeStagedDiff: false
     openInPane: false
   "go-plus": {}
+  "goto-definition":
+    performanceMode: true
   "japanese-dictionary": {}
   "japanese-wrap":
     characterWidth: {}
@@ -51,8 +58,6 @@
   linter:
     lintOnChange: false
     lintOnEditorFocus: false
-    lintOnFly: false
-    showErrorPanel: false
   "linter-erb": {}
   "linter-eslint":
     disableWhenNoEslintrcFileInPath: true
@@ -62,6 +67,7 @@
   "linter-jsonlint": {}
   "linter-jsxhint": {}
   "linter-ruby": {}
+  "linter-ui-default": {}
   "markdown-preview":
     breakOnSingleNewline: true
     liveUpdate: false
@@ -83,6 +89,10 @@
     maxFilesToRemember: 100
   script:
     enableExecTime: false
+  "spell-check":
+    locales: [
+      "en-US"
+    ]
   "symbols-tree-view": {}
   term2:
     colors: {}
@@ -96,6 +106,8 @@
   "tree-view": {}
   "vim-mode":
     useSmartcaseForSearch: true
+  "vim-mode-plus":
+    highlightSearch: false
   welcome:
     showOnStartup: false
 ".diff.source":

@@ -9,9 +9,7 @@
   'ctrl-i': 'cursor-history:next'
   'ctrl-o': 'cursor-history:prev'
   'ctrl-alt-p': 'fuzzy-finder:toggle-file-finder'
-
-'atom-text-editor':
-  'ctrl-u': 'editor:delete-to-beginning-of-line'
+  'cmd-b': 'goto-definition:go'
 
 '.platform-darwin atom-text-editor':
   'cmd-r': 'unset!'
@@ -19,29 +17,23 @@
 '.tree-view':
   'cmd-h': 'tree-view:toggle-focus'
 
-'atom-text-editor.vim-mode:not(.normal-mode)':
-  'ctrl-j': 'vim-mode:activate-normal-mode'
-
-'atom-text-editor.vim-mode:not(.insert-mode)':
+'atom-text-editor.vim-mode-plus:not(.insert-mode)':
   'space w': 'core:save'
   'space q': 'core:close'
   'space r': 'script:run'
   'space f': 'grammar-selector:show'
   'space k f': 'fuzzy-finder:toggle-file-finder'
   'space k b': 'fuzzy-finder:toggle-buffer-finder'
-  'space k s': 'symbols-view:toggle-file-symbols'
   'space k m': 'recent-files-fuzzy-finder:toggle-finder'
-  'space j': 'symbols-view:go-to-declaration'
-  'ctrl-h': 'package-reloader:reload'
-  #'ctrl-l': 'query:toggle-connection'
 
-'atom-text-editor.vim-mode.visual-mode':
+'atom-text-editor.vim-mode-plus.visual-mode':
   '*': 'find-and-replace:use-selection-as-find-pattern'
   'cmd-c': 'custom:copy-and-exit-visual-mode'
   'shift-D': 'japanese-dictionary:open-by-selection'
 
-'atom-text-editor.vim-mode.insert-mode':
+'atom-text-editor.vim-mode-plus.insert-mode':
   'ctrl-y': 'autocomplete-plus:confirm'
+  'ctrl-u': 'editor:delete-to-beginning-of-line'
 
 'atom-text-editor:not(mini).autocomplete-active':
   'tab': 'snippets:expand'
