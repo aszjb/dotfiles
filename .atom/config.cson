@@ -107,6 +107,7 @@
   "vim-mode":
     useSmartcaseForSearch: true
   "vim-mode-plus":
+    flashScreenOnSearchHasNoMatch: false
     highlightSearch: false
   welcome:
     showOnStartup: false
