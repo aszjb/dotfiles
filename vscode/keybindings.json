@@ -1,10 +1,10 @@
-// Place your key bindings in this file to overwrite the defaults
 [
     {
         "key": "cmd+o",
         "command": "workbench.action.terminal.toggleTerminal"
     },
-    {        "key": "cmd+t",
+    {
+        "key": "cmd+t",
         "command": "workbench.action.files.newUntitledFile"
     },
     {
@@ -120,5 +120,10 @@
     {
         "key": "cmd+numpad0",
         "command": "-workbench.action.zoomReset"
+    },
+    {
+        "key": "f12",
+        "command": "-editor.action.goToDeclaration",
+        "when": "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
     }
 ]
