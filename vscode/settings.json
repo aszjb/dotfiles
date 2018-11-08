@@ -9,6 +9,7 @@
     "editor.tabCompletion": true,
     "editor.tabSize": 2,
     "editor.autoClosingBrackets": false,
+    "editor.renderLineHighlight": "none",
     "terminal.integrated.fontSize": 14,
     "workbench.editor.enablePreview": false,
     "workbench.editor.enablePreviewFromQuickOpen": false,
@@ -29,6 +30,14 @@
         {
             "before": ["leader", "q"],
             "commands": [{ "command": "workbench.action.closeActiveEditor" }]
+        },
+        {
+            "before": ["j"],
+            "after": ["g", "j"]
+        },
+        {
+            "before": ["k"],
+            "after": ["g", "k"]
         }
     ],
     "ruby.lint": {
@@ -48,7 +57,6 @@
         "json",
         "latex",
         "less",
-        "markdown",
         "php",
         "plaintext",
         "pub",
@@ -65,8 +73,12 @@
     "cSpell.userWords": [
         "ad",
         "backtrace",
+        "bigint",
+        "btree",
         "concat",
+        "datetime",
         "fixnum",
+        "grpc",
         "hashie",
         "httpd",
         "isucon",
@@ -75,6 +87,7 @@
         "nginx",
         "numericality",
         "preload",
+        "proto",
         "rect",
         "repo",
         "resizable",
@@ -96,6 +109,20 @@
         "markdown",
         "html"
     ],
-    "editor.formatOnSave": true,
-    "prettier.requireConfig": true
+    "prettier.requireConfig": true,
+    "[javascript]": {
+        "editor.formatOnSave": true
+    },
+    "[javascriptreact]": {
+        "editor.formatOnSave": true
+    },
+    "[typescript]": {
+        "editor.formatOnSave": true
+    },
+    "[typescriptreact]": {
+        "editor.formatOnSave": true
+    },
+    "[markdown]": {
+        "editor.occurrencesHighlight": false
+    }
 }

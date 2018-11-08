@@ -87,14 +87,6 @@
         "when": "acceptSuggestionOnEnter && editorTextFocus && suggestWidgetVisible && suggestionMakesTextEdit"
     },
     {
-        "key": "cmd+m",
-        "command": "railsTestRunner.runTestAtLine"
-    },
-    {
-        "key": "shift+cmd+m",
-        "command": "railsTestRunner.runAllTestsInFile"
-    },
-    {
         "key": "cmd+b",
         "command": "-workbench.action.toggleSidebarVisibility"
     },
