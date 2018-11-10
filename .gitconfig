@@ -50,5 +50,7 @@
     smudge = git-lfs smudge -- %f
     required = true
     process = git-lfs filter-process
+[init]
+    templatedir = ~/.dotfiles/.git-template
 [include]
     path = ~/.gitconfig.local

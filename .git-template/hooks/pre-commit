@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+
+unless system("git config --local user.email")
+  puts "Please run `git config --local user.email <YOUR_EMAIL_ADDRESS>`"
+  exit 1
+end
