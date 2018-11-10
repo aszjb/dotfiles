@@ -124,5 +124,11 @@
     },
     "[markdown]": {
         "editor.occurrencesHighlight": false
-    }
+    },
+    "vim.visualstar": true,
+    "editor.formatOnPaste": false,
+    "editor.formatOnSave": false,
+    "editor.formatOnType": false,
+    "editor.acceptSuggestionOnCommitCharacter": false,
+    "editor.acceptSuggestionOnEnter": "off"
 }
